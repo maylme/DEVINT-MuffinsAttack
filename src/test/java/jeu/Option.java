@@ -1,3 +1,5 @@
+package jeu;
+
 import java.awt.Font;
 
 import javax.swing.JTextArea;
@@ -20,17 +22,17 @@ public class Option extends FenetreAbstraite{
     
 	// renvoie le fichier wave contenant le message d'accueil
 	protected  String wavAccueil() {
-		return "../ressources/sons/accueilOption.wav";
+		return "ressources/sons/accueilOption.wav";
 	}
 	
 	// renvoie le fichier wave contenant la r�gle du jeu
 	protected  String wavRegleJeu() {
-		return "../ressources/sons/accueilOption.wav";
+		return "ressources/sons/accueilOption.wav";
 	}
 	
 	// renvoie le fichier wave contenant la r�gle du jeu
 	protected  String wavAide() {
-		return "../ressources/sons/aide.wav";
+		return "ressources/sons/aide.wav";
 	}
 
     public void init() {

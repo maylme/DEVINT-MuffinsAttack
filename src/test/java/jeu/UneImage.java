@@ -1,3 +1,5 @@
+package jeu;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
@@ -21,17 +23,17 @@ public class UneImage extends FenetreAbstraite {
 
 	// renvoie le fichier wave contenant le message d'accueil
 	protected  String wavAccueil() {
-		return "../ressources/sons/accueilImage.wav";
+		return "ressources/sons/accueilImage.wav";
 	}
 	
 	// renvoie le fichier wave contenant la r�gle du jeu
 	protected  String wavRegleJeu() {
-		return "../ressources/sons/accueilImage.wav";
+		return "ressources/sons/accueilImage.wav";
 	}
 	
 	// renvoie le fichier wave contenant la r�gle du jeu
 	protected  String wavAide() {
-		return "../ressources/sons/aide.wav";
+		return "ressources/sons/aide.wav";
 	}
     
     // initialise le frame 
@@ -56,7 +58,7 @@ public class UneImage extends FenetreAbstraite {
     	add(theoTexte);
 
     	// une image, voir http://java.sun.com/docs/books/tutorial/uiswing/components/icon.html
-    	ImageIcon icon = new ImageIcon("../ressources/images/theo.JPG");
+    	ImageIcon icon = new ImageIcon("ressources/images/theo.JPG");
     	texte =  "Th�o est dans un label a un fond bleu qui occupe la moiti� de la largeur et le tiers de la hauteur.";
     	// on met l'image dans un label
     	JLabel jl = new JLabel(texte,icon,JLabel.CENTER);
@@ -71,7 +73,7 @@ public class UneImage extends FenetreAbstraite {
     	add(jl);
 
     	// L�a
-    	icon = new ImageIcon("../ressources/images/lea.JPG");
+    	icon = new ImageIcon("ressources/images/lea.JPG");
     	texte = "Ceci est L�a";
     	JLabel jl2 = new JLabel(texte,icon,JLabel.CENTER);
     	add(jl2);

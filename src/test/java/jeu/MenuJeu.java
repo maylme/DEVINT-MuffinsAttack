@@ -1,4 +1,4 @@
-/*  Classe de menu de lancement de l'exemple de jeu.
+package jeu;/*  Classe de menu de lancement de l'exemple de jeu.
  *  Cette classe h�rite de la classe abstraite MenuAbstrait en d�finissant les m�thodes :
  *     - nomOptions qui renvoie la liste des options possibles pour le menu 
  *     - lancerOption qui associe une action � chaque option du menu
@@ -42,12 +42,12 @@ public class MenuJeu extends MenuAbstrait {
 	// renvoie le fichier wave contenant le message d'accueil
 	// ces fichiers doivent �tre plac�s dans ressources/sons/
 	protected  String wavAccueil() {
-		return "../ressources/sons/accueil.wav";
+		return "ressources/sons/accueil.wav";
 	}
 
 	// renvoie le fichier wave contenant la r�gle du jeu
 	protected  String wavRegleJeu() {
-		return "../ressources/sons/accueil.wav";
+		return "ressources/sons/accueil.wav";
 	}
 	
 }

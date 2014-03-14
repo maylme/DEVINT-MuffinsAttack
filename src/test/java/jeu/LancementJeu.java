@@ -1,3 +1,5 @@
+package jeu;
+
 /** classe pour lancer le jeu
  * Elle cr�� simplement une instance de MenuJeu
  * 

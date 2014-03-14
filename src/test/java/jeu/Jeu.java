@@ -1,3 +1,5 @@
+package jeu;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
@@ -35,17 +37,17 @@ public class Jeu extends FenetreAbstraite implements ActionListener{
     
 	// renvoie le fichier wave contenant le message d'accueil
 	protected  String wavAccueil() {
-		return "../ressources/sons/accueil.wav";
+		return "ressources/sons/accueil.wav";
 	}
 	
 	// renvoie le fichier wave contenant la r�gle du jeu
 	protected  String wavRegleJeu() {
-		return "../ressources/sons/aideF1.wav";
+		return "ressources/sons/aideF1.wav";
 	}
 	
 	// renvoie le fichier wave contenant la r�gle du jeu
 	protected  String wavAide() {
-		return "../ressources/sons/aide.wav";
+		return "ressources/sons/aide.wav";
 	}
 
     // d�finition de la m�thode abstraite "init()"
