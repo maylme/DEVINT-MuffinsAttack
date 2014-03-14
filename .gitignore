@@ -1,3 +1,6 @@
 .idea/
 bin/
 doc/
+out/
+*.iml
+lib/
