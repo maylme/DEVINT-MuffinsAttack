@@ -58,7 +58,7 @@ public class Fichier extends FenetreAbstraite implements ActionListener{
  
     	String text = " Voici le chemin vers un fichier score.txt " +
 		"pour y sauver les scores et les param�tres:\n.";
-    	text += "main" + File.separator + "ressources" + File.separator + "score.txt\n\n";
+    	text += "src/main" + File.separator + "ressources" + File.separator + "score.txt\n\n";
     	text+= "Cliquez sur le bouton du haut et v�rifiez si le fichier a �t� cr��\n";
        	text+= "Cliquez sur le bouton du bas pour lire les scores\n\n";
       	text += "Lisez le code de la m�thode actionPerformed pour savoir comment �crire dans le fichier";
@@ -106,7 +106,7 @@ public class Fichier extends FenetreAbstraite implements ActionListener{
     		String text = " voici le chemin vers un fichier score.txt " +
     				"pour y sauver les scores et les param�tres.";
     		voix.playText(text);
-    		String chemin = "main" + File.separator + "ressources" + File.separator + "score.txt";
+    		String chemin = "src/main" + File.separator + "ressources" + File.separator + "score.txt";
     		// �criture dans le fichier score
     		try {
     			FileWriter w = new FileWriter(chemin);
@@ -122,7 +122,7 @@ public class Fichier extends FenetreAbstraite implements ActionListener{
     	}
     	// si c'est le bouton lire
       	if (source.equals(lire)) {
-    		String chemin = "main" + File.separator + "ressources" + File.separator + "score.txt";
+    		String chemin = "src/main" + File.separator + "ressources" + File.separator + "score.txt";
     		// on lit le fichier de score et on fait dire chaque ligne par la synth�se vocale
     		try {
     			BufferedReader l = new BufferedReader(new FileReader(chemin));

@@ -1,12 +1,10 @@
 package jeu;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 
 import devintAPI.FenetreAbstraite;
 
 import java.awt.*;
-import java.awt.event.*;
 
 /** Etend DevintFrame pour avoir un Frame et r�agir aux �v�nements claviers
  * Contient un exemple d'affichage d'image proportionnel � la taille de l'�cran
