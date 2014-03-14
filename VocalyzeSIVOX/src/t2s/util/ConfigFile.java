@@ -51,7 +51,7 @@ import java.util.Properties;
 public class ConfigFile {
 
     // Constantes
-    private static final String DEFAULT_FILE = "ressources/si_vox_ihm.conf";
+    private static final String DEFAULT_FILE = "../ressources/si_vox_ihm.conf";
 
     // Variables privees : 
     private File f = new File(DEFAULT_FILE);

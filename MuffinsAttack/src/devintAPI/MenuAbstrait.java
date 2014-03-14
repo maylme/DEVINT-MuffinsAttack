@@ -1,9 +1,9 @@
-/** Une classe abstraite ï¿½ utiliser pour le menu de lancement du jeu
- *  La classe de menu de votre jeu doit hï¿½riter de cette classe :
- *    - dï¿½finir la mï¿½thode nomOptions qui renvoie un tableau de String qui corresponds aux 
+/** Une classe abstraite à utiliser pour le menu de lancement du jeu
+ *  La classe de menu de votre jeu doit hériter de cette classe :
+ *    - définir la méthode nomOptions qui renvoie un tableau de String qui corresponds aux 
  *    options possibles de votre menu
- *    - dï¿½finir la mï¿½thode lancerOption(int i) qui associe des actions aux options de votre menu 
- *    - dï¿½finir les mï¿½thodes wavAccueil et wavAide qui dï¿½signent le fichier wave ï¿½ lire pour l'accueil
+ *    - définir la méthode lancerOption(int i) qui associe des actions aux options de votre menu 
+ *    - définir les méthodes wavAccueil et wavAide qui désignent le fichier wave à lire pour l'accueil
  *    et l'aide.
  *    
  *  Ne pas modifier cette classe
@@ -24,9 +24,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
+
+import t2s.SIVOXDevint;
 
 public abstract class MenuAbstrait extends DevintFrameListener implements
 		ActionListener {
@@ -40,44 +44,44 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 	// les noms des options
 	private String[] nomOptions;
 
-	// les boutons associï¿½s aux options
+	// les boutons associés aux options
 	private JButton[] boutonOption;
 
 	// le nombre d'options
 	private int nbOption;
 
 	// attributs des textes et des boutons
-	// ï¿½ redï¿½finir dans la classe concrï¿½te si vous le souhaitez
-	// en gardant de forts contrastes et peu de couleurs diffï¿½rentes
+	// à redéfinir dans la classe concrète si vous le souhaitez
+	// en gardant de forts contrastes et peu de couleurs différentes
 	protected Font fonteBouton;
 	protected Color foregroundColor;
 	protected Color backgroundColor;
 
-	// l'option courante qui est sï¿½lectionnï¿½e
+	// l'option courante qui est sélectionnée
 	private int optionCourante;
 
-	// ï¿½lï¿½ments de placement des composants
+	// éléments de placement des composants
 	private GridBagLayout placement; // le layout
 	private GridBagConstraints regles; // les regles de placement
 
-	// ï¿½lï¿½ments graphiques
+	// éléments graphiques
 	protected JPanel entete;
 	protected JLabel lb1;
 	protected LineBorder buttonBorder;
 	protected LineBorder enteteBorder;
 
 	// -------------------------------------------------
-	// les mï¿½thodes abstraites ï¿½ dï¿½finir par hï¿½ritage
+	// les méthodes abstraites à définir par héritage
 
 	/**
-	 * renvoie le tableau contenant le nom des options mï¿½thode abstraite ï¿½
-	 * dï¿½finir par hï¿½ritage
+	 * renvoie le tableau contenant le nom des options méthode abstraite à
+	 * définir par héritage
 	 */
 	protected abstract String[] nomOptions();
 
 	/**
-	 * lance l'action associï¿½e au bouton nï¿½i mï¿½thode abstraite ï¿½ dï¿½finir par
-	 * hï¿½ritage PRECOND : i varie entre 0 et le nombre d'options possibles moins
+	 * lance l'action associée au bouton n°i méthode abstraite à définir par
+	 * héritage PRECOND : i varie entre 0 et le nombre d'options possibles moins
 	 * 1
 	 */
 	protected abstract void lancerOption(int i);
@@ -93,14 +97,14 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 		super(title);
 		nomJeu = title;
 		optionCourante = -1;
-		// mï¿½thode ï¿½ rendre concrï¿½te par hï¿½ritage
+		// méthode à rendre concrète par héritage
 		nomOptions = nomOptions(); 
 		nbOption = nomOptions.length;
-		// on rï¿½cupï¿½re les prï¿½fï¿½rences
+		// on récupère les préférences
 		Preferences pref = Preferences.getData();
 		foregroundColor = pref.getCurrentForegroundColor();
 		backgroundColor = pref.getCurrentBackgroundColor();
-		// crï¿½ï¿½ les ï¿½lï¿½ments de la fenï¿½tre
+		// créé les éléments de la fenêtre
 		creerLayout();
 		creerEntete();
 		creerOption(nomOptions);
@@ -114,19 +118,19 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 	}
 
 	// -------------------------------------------------------
-	// mï¿½thodes utilisï¿½es par le constructeur
+	// méthodes utilisées par le constructeur
 
 	/**
-	 * crï¿½ï¿½ le layout pour placer les composants
+	 * créé le layout pour placer les composants
 	 */
 	private void creerLayout() {
 		placement = new GridBagLayout();
 		regles = new GridBagConstraints();
 		setLayout(placement);
-		// par dï¿½faut on ï¿½tire les composants horizontalement et verticalement
+		// par défaut on étire les composants horizontalement et verticalement
 		regles.fill = GridBagConstraints.BOTH;
-		// par dï¿½faut, tous les composants ont un poids de 1
-		// on les rï¿½partit donc ï¿½quitablement sur la grille
+		// par défaut, tous les composants ont un poids de 1
+		// on les répartit donc équitablement sur la grille
 		regles.weightx = 1;
 		regles.weighty = 1;
 		// espaces au bord des composants
@@ -136,11 +140,11 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 	}
 
 	/**
-	 * crï¿½ï¿½ l'entï¿½te avec le nom du jeu
+	 * créé l'entête avec le nom du jeu
 	 */
 	public void creerEntete() {
 
-		// panel d'entete de la fenï¿½tre
+		// panel d'entete de la fenêtre
 		entete = new JPanel();
 		FlowLayout enteteLayout = new FlowLayout();
 		enteteLayout.setAlignment(FlowLayout.CENTER);
@@ -155,7 +159,7 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 		lb1.setBackground(backgroundColor);
 		entete.add(lb1);
 
-		// placement de l'entete en 1ï¿½re ligne, 1ï¿½re colonne
+		// placement de l'entete en 1ère ligne, 1ère colonne
 		regles.gridx = 1;
 		regles.gridy = 1;
 		placement.setConstraints(entete, regles);
@@ -163,10 +167,10 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 	}
 
 	/**
-	 * creer les boutons associï¿½s aux noms d'options
+	 * creer les boutons associés aux noms d'options
 	 */
 	private void creerOption(String[] noms) {
-		// crï¿½ation des boutons
+		// création des boutons
 		// panel des boutons
 		JPanel boutons = new JPanel();
 		boutons.setLayout(new GridLayout(nbOption, 1));
@@ -178,23 +182,23 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 			creerBouton(i, noms[i]);
 			boutons.add(boutonOption[i]);
 		}
-		// poids relatif de 3 (i.e 3 fois plus grand que l'entï¿½te)
+		// poids relatif de 3 (i.e 3 fois plus grand que l'entête)
 		regles.weighty = 4;
-		// placement des boutons en 2ï¿½me ligne, 1ï¿½re colonne
+		// placement des boutons en 2ème ligne, 1ère colonne
 		regles.gridx = 1;
 		regles.gridy = 2;
 		placement.setConstraints(boutons, regles);
 		add(boutons);
 	}
 
-	// pour crï¿½er un bouton associï¿½ ï¿½ un texte
+	// pour créer un bouton associé à un texte
 	private void creerBouton(int i, String texte) {
 		boutonOption[i] = new JButton();
 		boutonOption[i].setText(texte);
 		setPropertiesButton(boutonOption[i]);
 	}
 
-	// mettre ï¿½ jour les propriï¿½tï¿½s des boutons
+	// mettre à jour les propriétés des boutons
 	protected void setPropertiesButton(JButton b) {
 		b.setFocusable(false);
 		b.setBackground(foregroundColor);
@@ -205,19 +209,19 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 	}
 
 	// -------------------------------------------------------
-	// mï¿½thodes pour rï¿½agir aux ï¿½vï¿½nements clavier
+	// méthodes pour réagir aux évènements clavier
 
 
 	public void keyPressed(KeyEvent e) {
 		// gestion du son d'accueil, des touches F1, ESC, F3 et F4
-		// gï¿½rï¿½ par DevintFrameListener
+		// géré par DevintFrameListener
 		super.keyPressed(e);
-		// enter = sï¿½lectionner l'option
+		// enter = sélectionner l'option
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			// mï¿½thode ï¿½ rendre concrï¿½te par hï¿½ritage
+			// méthode à rendre concrète par héritage
 			lancerOption(optionCourante);  
 		}
-		// se dï¿½placer dans les options vers le bas
+		// se déplacer dans les options vers le bas
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			if (optionCourante == -1) {
 				optionCourante = 0;
@@ -228,7 +232,7 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 				setFocusedButton(optionCourante);
 			}
 		}
-		// se dï¿½placer dans les options vers le haut
+		// se déplacer dans les options vers le haut
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			if (optionCourante == -1) {
 				optionCourante = 0;
@@ -272,7 +276,7 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 	}
 	
 	//-------------------------------------------
-	// mï¿½thodes pour gï¿½rer les couleurs des menus
+	// méthodes pour gérer les couleurs des menus
 
 //	/**
 //	 * @author LOGRE Ivan, MULLER Stephane, GUYADER Erwan
@@ -292,21 +296,21 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
 
 	/**
 	 * Modifie les couleurs de fond et de premier plan pour les menus abstraits
-	 * Cette fonction est appelï¿½e par la fonction "changeColor" de la classe "Preferences"
-	 * ï¿½ chaque fois que l'on presse F3 
+	 * Cette fonction est appelée par la fonction "changeColor" de la classe "Preferences"
+	 * à chaque fois que l'on presse F3 
 	 * 
-	 * Cette fonction peut ï¿½tre rï¿½ï¿½crite dans les classes filles si besoin
+	 * Cette fonction peut être réécrite dans les classes filles si besoin
 	 * @author LOGRE Ivan, MULLER Stephane, GUYADER Erwan, helen
 	 **/
 	public void changeColor() {
-		// on est passï¿½ au jeu de couleurs suivant dans les prï¿½fï¿½rences
-		// on le rï¿½cupï¿½re
+		// on est passé au jeu de couleurs suivant dans les préférences
+		// on le récupère
 		Preferences pref = Preferences.getData();
 		foregroundColor = pref.getCurrentForegroundColor();
 		backgroundColor = pref.getCurrentBackgroundColor();
 		
-		// et on met ï¿½ jour le menu avec ces nouvelles couleurs
-		//entï¿½te
+		// et on met à jour le menu avec ces nouvelles couleurs
+		//entête
 		enteteBorder= new LineBorder(foregroundColor,8);
 		entete.setForeground(foregroundColor);
 		entete.setBackground(backgroundColor);
