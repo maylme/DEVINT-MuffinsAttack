@@ -1,3 +1,0 @@
-Répertoire ressources/lib
-
-Pour mettre les librairies dynamiques dont vous avez besoin
