@@ -1,8 +1,8 @@
 /** 
-Cette classe abstraite est un Frame associï¿½ ï¿½ une instance de voix 
- * SI_VOX et qui implï¿½mente KeyListener.
- * Elle peut servir de classe mï¿½re ï¿½ toutes les fenï¿½tres de vos jeux :
- * il suffit de dï¿½finir la mï¿½thode "init" pour initialiser les ï¿½lï¿½ments du Frame
+Cette classe abstraite est un Frame associé à une instance de voix 
+ * SI_VOX et qui implémente KeyListener.
+ * Elle peut servir de classe mère à toutes les fenêtres de vos jeux :
+ * il suffit de définir la méthode "init" pour initialiser les éléments du Frame
  */
 
 
@@ -12,9 +12,9 @@ import java.awt.event.*;
 
 
 /** Classe abstraite avec un Frame, une instance de SI_VOX pour parler et 
- * qui ï¿½coute les ï¿½vï¿½nements clavier avec gestion des prï¿½fï¿½rences.
- * Par dï¿½faut, un son est lu ï¿½ l'activation de la fenï¿½tre, 
- * on sort de la fenï¿½tre par ESC et on obtient la rï¿½gle du jeu par F1, l'aide par F2
+ * qui écoute les évènements clavier avec gestion des préférences.
+ * Par défaut, un son est lu à l'activation de la fenêtre, 
+ * on sort de la fenêtre par ESC et on obtient la règle du jeu par F1, l'aide par F2
  * 
  * @author helene
  *
@@ -22,49 +22,49 @@ import java.awt.event.*;
 public abstract class FenetreAbstraite extends  DevintFrameListener{
    
     /**
-     * @param title : titre de la fenï¿½tre
+     * @param title : titre de la fenêtre
      */
     public FenetreAbstraite(String title) {
     	super(title);
-       	// mï¿½thode init ï¿½ implï¿½menter, elle construit ce qui est dans le frame
+       	// méthode init à implémenter, elle construit ce qui est dans le frame
        	init();
 	     // visible
     	this.setVisible(true);
     	// a le focus
     	this.requestFocus();
-		voix.playWav(wavAccueil(),true);
+		voix.playWav(wavAccueil());
     }
 
-    /** mï¿½thode abstraite ï¿½ implï¿½menter 
-     * pour dï¿½finir ce qu'il y a dans le Frame
+    /** méthode abstraite à implémenter 
+     * pour définir ce qu'il y a dans le Frame
      */
     protected abstract void init();
     
-    /** mï¿½thode abstraite ï¿½ implï¿½menter
+    /** méthode abstraite à implémenter
      *  
-     * @return le fichier wav contenant le message d'aide (activï¿½ par F2)
+     * @return le fichier wav contenant le message d'aide (activé par F2)
      */
     protected abstract String wavAide();
 
     //////////////////////////////////////////////
-    // Gestion des ï¿½vï¿½nements clavier
+    // Gestion des évènements clavier
     /////////////////////////////////////////////
     public void keyPressed(KeyEvent e) {
-    	// gestion de ESC, F1, F3 et F4 dans la classe mï¿½re (DevintFrameListener)
+    	// gestion de ESC, F1, F3 et F4 dans la classe mère (DevintFrameListener)
     	super.keyPressed(e);
     	// on ajoute la gestion de l'aide quand on presse F2
     	if (e.getKeyCode()==KeyEvent.VK_F2){
-    		voix.playWav(wavAide(),true);
+    		voix.playWav(wavAide());
     	}
     }
 
 	/**
-	 * Pour modifier les couleurs de fond et de premier plan de la fenï¿½tre
-	 * Cette fonction est appelï¿½e par la fonction "changeColor" de la classe "Preferences"
-	 * ï¿½ chaque fois que l'on presse F3 
+	 * Pour modifier les couleurs de fond et de premier plan de la fenêtre
+	 * Cette fonction est appelée par la fonction "changeColor" de la classe "Preferences"
+	 * à chaque fois que l'on presse F3 
 	 * 
-	 * Cette mï¿½thode doit ï¿½tre rï¿½ï¿½crite dans les classes filles 
-	 * si cela n'a pas de sens pour votre jeu, vous la redï¿½finissez en la laissant vide
+	 * Cette méthode doit être réécrite dans les classes filles 
+	 * si cela n'a pas de sens pour votre jeu, vous la redéfinissez en la laissant vide
 	 **/
 	public abstract void changeColor() ;
 	
