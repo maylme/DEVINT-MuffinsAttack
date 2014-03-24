@@ -2,17 +2,12 @@ package muffinattacks;
 
 import devintAPI.FenetreAbstraite;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**
  * Created by Jicé on 24/03/2014.
  */
 public class Jeu extends FenetreAbstraite {
-    public static void main(String[] args) {
-        new Jeu("Muffins Attack");
-    }
-
     private Monde monde;
 
     /**
@@ -28,27 +23,29 @@ public class Jeu extends FenetreAbstraite {
 
         this.setLayout(new BorderLayout());
         this.add(monde, BorderLayout.CENTER);
-
-        monde.jouer();
     }
 
     // renvoie le fichier wave contenant le message d'accueil
-    protected  String wavAccueil() {
+    protected String wavAccueil() {
         return "../ressources/sons/accueil.wav";
     }
 
     // renvoie le fichier wave contenant la r�gle du jeu
-    protected  String wavRegleJeu() {
+    protected String wavRegleJeu() {
         return "../ressources/sons/aideF1.wav";
     }
 
     // renvoie le fichier wave contenant la r�gle du jeu
-    protected  String wavAide() {
+    protected String wavAide() {
         return "../ressources/sons/aide.wav";
     }
 
     @Override
     public void changeColor() {
 
+    }
+
+    public void jouer() {
+        monde.jouer();
     }
 }

@@ -16,13 +16,14 @@ public class Muffin {
 
     /**
      * Instancie un muffin avec une lettre
+     *
      * @param lettre
      */
     public Muffin(char lettre, int taille, int largeurMonde) {
         this.lettre = lettre;
         this.taille = taille;
         this.rand = new Random();
-        this.position = new Point(rand.nextInt(largeurMonde),-taille);
+        this.position = new Point(rand.nextInt(largeurMonde), -taille);
         this.largeurMonde = largeurMonde;
     }
 
@@ -33,12 +34,13 @@ public class Muffin {
     public int zoneX() {
         return largeurMonde - taille;
     }
-   public void grandir() {
-       this.taille += 5;
-   }
+
+    public void grandir() {
+        this.taille += 5;
+    }
 
     public boolean toucheSol(int sol) {
-        return position.getY()+taille > sol;
+        return position.getY() + taille > sol;
     }
 
     public void fallOnce() {
