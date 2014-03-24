@@ -8,7 +8,6 @@ import java.util.Random;
  */
 public class Muffin {
     private static Random rand;
-    private static final int VALEURDECHUTE = 10;
     private char lettre;
     private Point position;
     private int taille;
@@ -27,16 +26,12 @@ public class Muffin {
         this.largeurMonde = largeurMonde;
     }
 
-    public void replace() {
-        position.move(rand.nextInt(largeurMonde), -taille);
+    public void replaceOnTop() {
+        position.move(rand.nextInt(zoneX()), -taille);
     }
 
     public int zoneX() {
         return largeurMonde - taille;
-    }
-
-    public void grandir() {
-        this.taille += 5;
     }
 
     public boolean toucheSol(int sol) {
@@ -44,8 +39,7 @@ public class Muffin {
     }
 
     public void fallOnce() {
-        position.move((int) position.getX(), (int) position.getY() + VALEURDECHUTE);
-        System.out.println("New position: " + position);
+        position.move((int) position.getX(), (int) position.getY() + 1);
     }
 
     public Point getPosition() {
@@ -54,5 +48,12 @@ public class Muffin {
 
     public int getTaille() {
         return taille;
+    }
+
+    public void paint(Graphics g) {
+        int x = (int) position.getX();
+        int y = (int) position.getY();
+        g.drawRect(x, y, taille, taille);
+        g.drawString(String.valueOf(lettre),x+taille/2, y+taille/2);
     }
 }

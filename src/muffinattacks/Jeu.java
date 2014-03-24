@@ -2,6 +2,7 @@ package muffinattacks;
 
 import devintAPI.FenetreAbstraite;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -15,6 +16,7 @@ public class Jeu extends FenetreAbstraite {
      */
     public Jeu(String title) {
         super(title);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     @Override
