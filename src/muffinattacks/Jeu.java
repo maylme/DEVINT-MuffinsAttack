@@ -4,12 +4,15 @@ import devintAPI.FenetreAbstraite;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by Jicé on 24/03/2014.
  */
 public class Jeu extends FenetreAbstraite {
     private Monde monde;
+    private int couleur;
 
     /**
      * @param title : titre de la fenetre
@@ -44,7 +47,8 @@ public class Jeu extends FenetreAbstraite {
 
     @Override
     public void changeColor() {
-
+        //TODO ne fait rien pour le moment, à faire
+        Couleur.getOne(++couleur);
     }
 
     public void jouer() {
