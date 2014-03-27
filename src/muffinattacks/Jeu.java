@@ -4,15 +4,17 @@ import devintAPI.FenetreAbstraite;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
 /**
  * Created by Jicé on 24/03/2014.
  */
-public class Jeu extends FenetreAbstraite {
+public class Jeu extends FenetreAbstraite implements KeyListener {
     private Monde monde;
     private int couleur;
+    private JLabel status;
 
     /**
      * @param title : titre de la fenetre
@@ -24,10 +26,14 @@ public class Jeu extends FenetreAbstraite {
 
     @Override
     protected void init() {
-        monde = new Monde();
+        status = new JLabel("Etat du jeu");
+        monde = new Monde(status);
 
         this.setLayout(new BorderLayout());
+        this.add(status, BorderLayout.NORTH);
         this.add(monde, BorderLayout.CENTER);
+
+        monde.jouer();
     }
 
     // renvoie le fichier wave contenant le message d'accueil
@@ -49,9 +55,5 @@ public class Jeu extends FenetreAbstraite {
     public void changeColor() {
         //TODO ne fait rien pour le moment, à faire
         Couleur.getOne(++couleur);
-    }
-
-    public void jouer() {
-        monde.jouer();
     }
 }

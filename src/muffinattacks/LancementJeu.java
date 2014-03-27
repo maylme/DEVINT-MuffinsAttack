@@ -5,6 +5,6 @@ package muffinattacks;
  */
 public class LancementJeu {
     public static void main(String[] args) {
-        new Jeu("Muffins Attack").jouer();
+        new Jeu("Muffins Attack");
     }
 }

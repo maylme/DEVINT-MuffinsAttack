@@ -12,6 +12,7 @@ public class Muffin {
     private Point position;
     private int taille;
     private int largeurMonde;
+    private Color color;
 
     /**
      * Instancie un muffin avec une lettre
@@ -22,30 +23,55 @@ public class Muffin {
         this.lettre = lettre;
         this.taille = taille;
         this.rand = new Random();
+        color = Color.black;
         this.position = new Point(rand.nextInt(largeurMonde), -taille);
         this.largeurMonde = largeurMonde;
     }
 
+    /**
+     * Réinitialise la valeur de position
+     */
     public void replaceOnTop() {
+        color = Color.black;
         position.move(rand.nextInt(zoneX()), -taille);
     }
 
-    public int zoneX() {
+    /**
+     * Permet de calculer la zone autorisée pour la position horizontale du muffin
+     * @return valeur maximale que peut prendre la valeur x
+     */
+    private int zoneX() {
         return largeurMonde - taille;
     }
 
+    /**
+     * Renvoie true si le muffin à dépassé la valeur sol donnée en paramètre
+     * @param sol la position du sol, un entier
+     * @return un booléen indiquant si le muffin à dépassé la valeur sol ou non
+     */
     public boolean toucheSol(int sol) {
         return position.getY() + taille > sol;
     }
 
+    /**
+     * Permet de faire tomber le muffin d'un pixel
+     */
     public void fallOnce() {
         position.move((int) position.getX(), (int) position.getY() + 1);
     }
 
+    /**
+     * Récupére la position du muffin (point en haut à gauche)
+     * @return Point coordonnées du point supérieur gauche du muffin
+     */
     public Point getPosition() {
         return position;
     }
 
+    /**
+     * Renvoie la taille du muffin
+     * @return la largeur/hauteur occupée par le muffin
+     */
     public int getTaille() {
         return taille;
     }
@@ -53,7 +79,16 @@ public class Muffin {
     public void paint(Graphics g) {
         int x = (int) position.getX();
         int y = (int) position.getY();
+        g.setColor(color);
         g.drawRect(x, y, taille, taille);
         g.drawString(String.valueOf(lettre),x+taille/2, y+taille/2);
+    }
+
+    public void kill() {
+        color = Color.red;
+    }
+
+    public char getLetter() {
+        return lettre;
     }
 }
