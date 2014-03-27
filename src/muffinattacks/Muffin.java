@@ -22,7 +22,7 @@ public class Muffin {
         this.lettre = lettre;
         this.taille = taille;
         this.rand = new Random();
-        this.position = new Point(rand.nextInt(largeurMonde), -taille);
+        this.position = new Point(rand.nextInt(largeurMonde), -3*taille);
         this.largeurMonde = largeurMonde;
     }
 
@@ -88,7 +88,7 @@ public class Muffin {
      * Tue le muffin
      */
     public void killMuffin() {
-        //TODO
+
     }
 
     /**
@@ -98,5 +98,9 @@ public class Muffin {
      */
     public char getLetter() {
         return lettre;
+    }
+
+    public void setLettre(char lettre) {
+        this.lettre = lettre;
     }
 }

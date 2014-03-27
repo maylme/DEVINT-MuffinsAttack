@@ -11,8 +11,9 @@ import java.awt.event.KeyEvent;
  * Created by Jicé on 24/03/2014.
  */
 public class Monde extends JPanel implements ActionListener {
+    private final Jeu jeu;
     private Timer timer;
-    private final int muffinSpeed = 200; // pixel/grow by seconds
+    private final int muffinSpeed = 100; // pixel/grow by seconds
     private Muffin muffin;
     private JLabel status;
     private boolean isStarted;
@@ -20,15 +21,17 @@ public class Monde extends JPanel implements ActionListener {
     private boolean isFallingFinished;
     private Couleur couleur;
 
-    public Monde(JLabel status, Couleur couleur) {
+    public Monde(Jeu jeu, Couleur couleur) {
+        this.jeu = jeu;
+
+        isStarted = false;
+        isPaused = false;
+        isFallingFinished = false;
+
         this.timer = new Timer(1000 / muffinSpeed, this);
-        this.isFallingFinished = false;
-        this.status = status;
+        this.status = jeu.getStatusBar();
         this.couleur = couleur;
         this.setBorder(BorderFactory.createLineBorder(Color.black));
-
-        this.addKeyListener(new MuffinAttackCommands());
-        this.setFocusable(true);
     }
 
     public void jouer() {
@@ -60,16 +63,20 @@ public class Monde extends JPanel implements ActionListener {
     }
 
     public void newMuffin() {
-        // TODO (random letter)
+        char lettre = jeu.getRandomLetter();
+        System.out.println(lettre);
+        jeu.dire("Un nouveau mufine s'attake à la ville ! Appuie sur la touche "+lettre+". Pour le détruire.");
         if (muffin == null) {
-            muffin = new Muffin('A', 40, 500);
+            muffin = new Muffin(lettre, 40, 500);
         } else {
+            muffin.setLettre(lettre);
             muffin.replaceOnTop();
         }
     }
 
     public void muffinFall() {
         if (muffin.toucheSol((int) this.getSize().getHeight() - 60)) {
+            //jeu.dire("Mince. Le mufine a touché la ville.");
             muffinTouchedGround();
         }
         muffin.fallOnce();
@@ -99,23 +106,19 @@ public class Monde extends JPanel implements ActionListener {
         this.setBackground(couleur.getCouleurFond());
     }
 
-    class MuffinAttackCommands extends KeyAdapter {
-        @Override
-        public void keyPressed(KeyEvent e) {
-            if (!isStarted) return;
 
-            int keycode = e.getKeyCode();
+    public boolean getStarted() {
+        return isStarted;
+    }
 
-            if (keycode == KeyEvent.VK_PAUSE) {
-                pause();
-                return;
-            }
+    public boolean getPaused() {
+        return isPaused;
+    }
 
-            if (isPaused) return;
-
-            if (Character.compare(muffin.getLetter(), (char) keycode) == 0) {
-                muffin.killMuffin();
-            }
+    public void lettreEntree(char lettre) {
+        if (Character.compare(muffin.getLetter(), lettre) == 0) {
+            jeu.dire("Le mufine est indestructible pour le moment. Mais c'est très bien !");
+            muffin.killMuffin();
         }
     }
 }
