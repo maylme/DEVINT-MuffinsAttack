@@ -13,29 +13,30 @@ import java.awt.event.KeyEvent;
 public class Monde extends JPanel implements ActionListener {
     private final Jeu jeu;
     private Timer timer;
-    private final int muffinSpeed = 100; // pixel/grow by seconds
     private Muffin muffin;
-    private JLabel status;
     private boolean isStarted;
     private boolean isPaused;
-    private boolean isFallingFinished;
     private Couleur couleur;
+    private int count;
+    private int delay;
 
     public Monde(Jeu jeu, Couleur couleur) {
         this.jeu = jeu;
 
+        count = 0;
+
         isStarted = false;
         isPaused = false;
-        isFallingFinished = false;
 
-        this.timer = new Timer(1000 / muffinSpeed, this);
-        this.status = jeu.getStatusBar();
         this.couleur = couleur;
         this.setBorder(BorderFactory.createLineBorder(Color.black));
+        this.setBackground(couleur.getCouleurFond());
     }
 
     public void jouer() {
-        if (isPaused) return;
+        delay = (int) (15000/(this.getHeight()-100*2));
+        this.timer = new Timer(delay,this);
+
         isStarted = true;
         newMuffin();
         timer.start();
@@ -50,23 +51,18 @@ public class Monde extends JPanel implements ActionListener {
         isPaused = !isPaused;
         if (isPaused) {
             timer.stop();
-            status.setText("pause");
         } else {
             timer.start();
-            status.setText(String.valueOf(timer.getDelay()));
         }
         repaint();
     }
 
-    public void muffinTouchedGround() {
-        isFallingFinished = true;
-    }
-
     public void newMuffin() {
+        jeu.timeReset();
         char lettre = jeu.getRandomLetter();
-        jeu.dire("Un nouveau mufine s'attake à la ville ! Appuie sur la touche "+lettre+". Pour le détruire.");
+        jeu.dire("Un nouveau mufine s'attake à la ville ! Appuie sur la touche "+lettre+", pour le détruire.");
         if (muffin == null) {
-            muffin = new Muffin(lettre, 40, jeu.getWidth());
+            muffin = new Muffin(lettre, 100, jeu.getWidth());
         } else {
             muffin.setLettre(lettre);
             muffin.replaceOnTop();
@@ -74,11 +70,12 @@ public class Monde extends JPanel implements ActionListener {
     }
 
     public void muffinFall() {
-        if (muffin.toucheSol((int) this.getSize().getHeight() - 60)) {
-            //jeu.dire("Mince. Le mufine a touché la ville.");
-            muffinTouchedGround();
-        }
         muffin.fallOnce();
+        count++;
+        if(count > 1000/delay) {
+            jeu.secondeEcoulee();
+            count=0;
+        }
         repaint();
     }
 
@@ -97,17 +94,22 @@ public class Monde extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (isFallingFinished) {
-            isFallingFinished = false;
+        if(jeu.getVies() < 0) {
+            jeu.dire("Le jeu est terminé ! Tu n'as plus de vies.");
+            timer.stop();
+        } else if (jeu.getTimeOut()) {
+            jeu.viePerdue();
             newMuffin();
         } else {
             muffinFall();
         }
+        jeu.updateStatusBar();
     }
 
     public void setColors(Couleur c) {
         this.couleur = c;
         this.setBackground(couleur.getCouleurFond());
+        repaint();
     }
 
 
@@ -120,11 +122,15 @@ public class Monde extends JPanel implements ActionListener {
     }
 
     public void lettreEntree(char lettre) {
-        if (Character.compare(muffin.getLetter(), lettre) == 0) {
+        if (Character.compare(muffin.getLettre(), lettre) == 0) {
             jeu.dire("Bien !");
             killMuffin();
         } else {
              jeu.dire("Non ça c'est la lettre "+lettre+", cherche encore.");
         }
+    }
+
+    public Muffin getMuffin() {
+        return muffin;
     }
 }

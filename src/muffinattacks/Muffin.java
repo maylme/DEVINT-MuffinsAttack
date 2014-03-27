@@ -89,11 +89,13 @@ public class Muffin {
      *
      * @return lettre du muffin
      */
-    public char getLetter() {
+    public char getLettre() {
         return lettre;
     }
 
     public void setLettre(char lettre) {
         this.lettre = lettre;
     }
+
+
 }

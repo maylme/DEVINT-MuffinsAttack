@@ -17,7 +17,10 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     private Monde monde;
     private int couleur;
     private JLabel status;
+
     private int points;
+    private int vies;
+    private int tempsRestant;
 
     /**
      * @param title : titre de la fenetre
@@ -28,9 +31,13 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     @Override
     protected void init() {
-        status = new JLabel("Etat du jeu");
-        monde = new Monde(this, Couleur.NOIRBLANC);
+        points = 0;
+        vies = 3;
+        tempsRestant = 15;
+
         rand = new Random();
+        status = new JLabel("Vies:"+vies+" Points:"+points+" Temps restant:"+tempsRestant);
+        monde = new Monde(this, Couleur.NOIRBLANC);
 
         this.setLayout(new BorderLayout());
         this.add(status, BorderLayout.NORTH);
@@ -49,7 +56,8 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     // renvoie le fichier wave contenant la r�gle du jeu
     protected String wavRegleJeu() {
-        return "../ressources/sons/aideF1.wav";
+        dire("Tu cherche la lettre "+monde.getMuffin().getLettre());
+        return "";
     }
 
     // renvoie le fichier wave contenant la r�gle du jeu
@@ -67,6 +75,10 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     public JLabel getStatusBar() {
         return status;
+    }
+
+    public void updateStatusBar() {
+        status.setText("Vies:"+vies+" Points:"+points+" Temps restant:"+tempsRestant);
     }
 
     public boolean isInAlphabet(char lettre) {
@@ -110,5 +122,25 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     public void ajouterPoint(int i) {
         this.points++;
         status.setText("Points: "+points);
+    }
+
+    public void viePerdue() {
+        this.vies--;
+    }
+
+    public void secondeEcoulee() {
+        this.tempsRestant--;
+    }
+
+    public int getVies() {
+        return vies;
+    }
+
+    public boolean getTimeOut() {
+        return tempsRestant < 0;
+    }
+
+    public void timeReset() {
+        this.tempsRestant = 15;
     }
 }
