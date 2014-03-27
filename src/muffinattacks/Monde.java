@@ -64,10 +64,9 @@ public class Monde extends JPanel implements ActionListener {
 
     public void newMuffin() {
         char lettre = jeu.getRandomLetter();
-        System.out.println(lettre);
         jeu.dire("Un nouveau mufine s'attake à la ville ! Appuie sur la touche "+lettre+". Pour le détruire.");
         if (muffin == null) {
-            muffin = new Muffin(lettre, 40, 500);
+            muffin = new Muffin(lettre, 40, jeu.getWidth());
         } else {
             muffin.setLettre(lettre);
             muffin.replaceOnTop();
@@ -81,6 +80,11 @@ public class Monde extends JPanel implements ActionListener {
         }
         muffin.fallOnce();
         repaint();
+    }
+
+    public void killMuffin() {
+        jeu.ajouterPoint(1);
+        newMuffin();
     }
 
     public void paint(Graphics g) {
@@ -117,8 +121,10 @@ public class Monde extends JPanel implements ActionListener {
 
     public void lettreEntree(char lettre) {
         if (Character.compare(muffin.getLetter(), lettre) == 0) {
-            jeu.dire("Le mufine est indestructible pour le moment. Mais c'est très bien !");
-            muffin.killMuffin();
+            jeu.dire("Bien !");
+            killMuffin();
+        } else {
+             jeu.dire("Non ça c'est la lettre "+lettre+", cherche encore.");
         }
     }
 }

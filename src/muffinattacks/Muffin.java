@@ -85,13 +85,6 @@ public class Muffin {
     }
 
     /**
-     * Tue le muffin
-     */
-    public void killMuffin() {
-
-    }
-
-    /**
      * Renvoie la lettre qui doit être tapée pour tuer ce muffin
      *
      * @return lettre du muffin

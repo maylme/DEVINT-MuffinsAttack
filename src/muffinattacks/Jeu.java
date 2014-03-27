@@ -12,10 +12,12 @@ import java.util.Random;
  * Created by Jicé on 24/03/2014.
  */
 public class Jeu extends FenetreAbstraite implements KeyListener {
+    private static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private Random rand;
     private Monde monde;
     private int couleur;
     private JLabel status;
+    private int points;
 
     /**
      * @param title : titre de la fenetre
@@ -33,7 +35,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         this.setLayout(new BorderLayout());
         this.add(status, BorderLayout.NORTH);
         this.add(monde, BorderLayout.CENTER);
-        dire("Presse la touche EFFE10 pour démarrer le jeu.");
+        dire("Presse la touche EFFE dice pour démarrer le jeu.");
     }
 
     public void dire(String s) {
@@ -67,10 +69,12 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         return status;
     }
 
+    public boolean isInAlphabet(char lettre) {
+        return alphabet.contains(String.valueOf(lettre));
+    }
+
     public char getRandomLetter() {
-        String alphabet = "abcdefghijklmnopqrstuvwxyz";
-        char lettre = alphabet.charAt(rand.nextInt(alphabet.length()));
-        return Character.toUpperCase(lettre);
+        return alphabet.charAt(rand.nextInt(alphabet.length()));
     }
 
     @Override
@@ -89,11 +93,22 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
         if (keycode == KeyEvent.VK_PAUSE) {
             monde.pause();
+            if(monde.getPaused()) dire("Le jeu est en pause.");
+            else dire("Le jeu reprends.");
             return;
         }
 
         if (monde.getPaused()) return;
 
-        monde.lettreEntree((char) keycode);
+        if(!isInAlphabet((char) keycode)) {
+            dire("Attention, c'est une lettre que tu cherches.");
+        } else {
+            monde.lettreEntree((char) keycode);
+        }
+    }
+
+    public void ajouterPoint(int i) {
+        this.points++;
+        status.setText("Points: "+points);
     }
 }
