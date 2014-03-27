@@ -1,9 +1,11 @@
 package muffinattacks;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  * Created by Jicé on 24/03/2014.
@@ -16,11 +18,13 @@ public class Monde extends JPanel implements ActionListener {
     private boolean isStarted;
     private boolean isPaused;
     private boolean isFallingFinished;
+    private Couleur couleur;
 
-    public Monde(JLabel status) {
-        this.timer = new Timer(1000/muffinSpeed, this);
+    public Monde(JLabel status, Couleur couleur) {
+        this.timer = new Timer(1000 / muffinSpeed, this);
         this.isFallingFinished = false;
         this.status = status;
+        this.couleur = couleur;
         this.setBorder(BorderFactory.createLineBorder(Color.black));
 
         this.addKeyListener(new MuffinAttackCommands());
@@ -41,7 +45,7 @@ public class Monde extends JPanel implements ActionListener {
         if (!isStarted) return;
 
         isPaused = !isPaused;
-        if(isPaused) {
+        if (isPaused) {
             timer.stop();
             status.setText("pause");
         } else {
@@ -65,7 +69,7 @@ public class Monde extends JPanel implements ActionListener {
     }
 
     public void muffinFall() {
-        if(muffin.toucheSol((int) this.getSize().getHeight() - 60)) {
+        if (muffin.toucheSol((int) this.getSize().getHeight() - 60)) {
             muffinTouchedGround();
         }
         muffin.fallOnce();
@@ -74,6 +78,7 @@ public class Monde extends JPanel implements ActionListener {
 
     public void paint(Graphics g) {
         super.paint(g);
+        g.setColor(couleur.getCouleurTexte());
         if (muffin != null) {
             muffin.paint(g);
         }
@@ -89,23 +94,27 @@ public class Monde extends JPanel implements ActionListener {
         }
     }
 
+    public void setColors(Couleur c) {
+        this.couleur = c;
+        this.setBackground(couleur.getCouleurFond());
+    }
+
     class MuffinAttackCommands extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
-            if(!isStarted) return;
+            if (!isStarted) return;
 
             int keycode = e.getKeyCode();
 
             if (keycode == KeyEvent.VK_PAUSE) {
-                System.out.println("Pause attempt");
                 pause();
                 return;
             }
 
-            if(isPaused) return;
+            if (isPaused) return;
 
-            if(Character.toLowerCase(muffin.getLetter()) == keycode) {
-                muffin.kill();
+            if (Character.compare(muffin.getLetter(), (char) keycode) == 0) {
+                muffin.killMuffin();
             }
         }
     }

@@ -4,9 +4,7 @@ import devintAPI.FenetreAbstraite;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.awt.event.KeyListener;
 
 /**
  * Created by Jicé on 24/03/2014.
@@ -27,18 +25,18 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     @Override
     protected void init() {
         status = new JLabel("Etat du jeu");
-        monde = new Monde(status);
+        monde = new Monde(status, Couleur.NOIRBLANC);
 
         this.setLayout(new BorderLayout());
         this.add(status, BorderLayout.NORTH);
         this.add(monde, BorderLayout.CENTER);
-
+        voix.playShortText("Le jeu démarre");
         monde.jouer();
     }
 
     // renvoie le fichier wave contenant le message d'accueil
     protected String wavAccueil() {
-        return "../ressources/sons/accueil.wav";
+        return "ressources/sons/accueil.wav";
     }
 
     // renvoie le fichier wave contenant la r�gle du jeu
@@ -48,12 +46,15 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     // renvoie le fichier wave contenant la r�gle du jeu
     protected String wavAide() {
-        return "../ressources/sons/aide.wav";
+        return "ressources/sons/aide.wav";
     }
 
     @Override
     public void changeColor() {
-        //TODO ne fait rien pour le moment, à faire
-        Couleur.getOne(++couleur);
+        System.out.println(couleur);
+        if(couleur == Couleur.values().length) {
+            couleur = 0;
+        }
+        monde.setColors(Couleur.getOne(++couleur));
     }
 }
