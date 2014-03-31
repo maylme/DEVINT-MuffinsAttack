@@ -1,15 +1,15 @@
 package jeu;
 
-/** classe pour lancer le jeu
- * Elle créé simplement une instance de MenuJeu
- * 
+/**
+ * classe pour lancer le jeu Elle crÃ©Ã© simplement une instance de MenuJeu
+ *
  * @author helene
  *
  */
-public class LancementJeu{
+public class LancementJeu {
 
-    public static void main(String args[]){
-        new jeu.MenuJeu("Exemple de jeu");
+    public static void main(String args[]) {
+        new jeu.MenuJeu("Muffins attack");
     }
 
 }

@@ -20,16 +20,10 @@ package jeu;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-
 import devintAPI.FenetreAbstraite;
-
 import java.awt.*;
 import java.awt.event.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Cette classe est un exemple d'utilisation d'un fichier
@@ -40,7 +34,7 @@ import java.io.IOException;
 public class Fichier extends FenetreAbstraite implements ActionListener {
 
     // le bouton pour créer un fichier
-    // doit �tre accessible dans la m�thode actionPerformed 
+    // doit être accessible dans la m�thode actionPerformed 
     private JButton ecrire;
 
     // le bouton pour lire un fichier
@@ -51,7 +45,7 @@ public class Fichier extends FenetreAbstraite implements ActionListener {
         super(title);
     }
 
-    // d�finition de la méthode abstraite "init()"
+    // définition de la méthode abstraite "init()"
     // initialise le frame 
     @Override
     protected void init() {
@@ -63,7 +57,7 @@ public class Fichier extends FenetreAbstraite implements ActionListener {
         text += ".." + File.separator + "ressources" + File.separator + "score.txt\n\n";
         text += "Cliquez sur le bouton du haut et vérifiez si le fichier a été créé\n";
         text += "Cliquez sur le bouton du bas pour lire les scores\n\n";
-        text += "Lisez le code de la méthode actionPerformed pour savoir comment �crire dans le fichier";
+        text += "Lisez le code de la méthode actionPerformed pour savoir comment écrire dans le fichier";
 
         JTextArea lb1 = new JTextArea(text);
         lb1.setLineWrap(true);
@@ -154,16 +148,19 @@ public class Fichier extends FenetreAbstraite implements ActionListener {
     }
 
     // renvoie le fichier wave contenant le message d'accueil
+    @Override
     protected String wavAccueil() {
         return "../ressources/sons/accueilFichier.wav";
     }
 
     // renvoie le fichier wave contenant la règle du jeu
+    @Override
     protected String wavRegleJeu() {
         return "../ressources/sons/accueilFichier.wav";
     }
 
     // renvoie le fichier wave contenant la règle du jeu
+    @Override
     protected String wavAide() {
         return "../ressources/sons/aide.wav";
     }
