@@ -1,11 +1,9 @@
-package muffinattacks;
+package jeu.muffinattacks;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 /**
  * Created by Jicé on 24/03/2014.
@@ -94,7 +92,7 @@ public class Monde extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(jeu.getVies() < 0) {
+        if(jeu.getVies() <= 0) {
             jeu.dire("Le jeu est terminé ! Tu n'as plus de vies.");
             timer.stop();
         } else if (jeu.getTimeOut()) {

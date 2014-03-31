@@ -1,4 +1,4 @@
-package muffinattacks;
+package jeu.muffinattacks;
 
 import java.awt.*;
 import java.util.Random;

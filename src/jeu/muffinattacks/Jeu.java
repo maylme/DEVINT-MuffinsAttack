@@ -1,4 +1,4 @@
-package muffinattacks;
+package jeu.muffinattacks;
 
 import devintAPI.FenetreAbstraite;
 
@@ -43,6 +43,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         this.add(status, BorderLayout.NORTH);
         this.add(monde, BorderLayout.CENTER);
         dire("Presse la touche EFFE dice pour démarrer le jeu.");
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     public void dire(String s) {
@@ -56,7 +57,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     // renvoie le fichier wave contenant la r�gle du jeu
     protected String wavRegleJeu() {
-        dire("Tu cherche la lettre "+monde.getMuffin().getLettre());
+        dire("Tu cherches la lettre "+monde.getMuffin().getLettre());
         return "";
     }
 
@@ -112,16 +113,19 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
         if (monde.getPaused()) return;
 
-        if(!isInAlphabet((char) keycode)) {
-            dire("Attention, c'est une lettre que tu cherches.");
+        if(keycode == KeyEvent.VK_SPACE) {
+            dire("Tu cherches la lettre "+monde.getMuffin().getLettre());
         } else {
-            monde.lettreEntree((char) keycode);
+            if (!isInAlphabet((char) keycode) && !(keycode == KeyEvent.VK_F1 || keycode == KeyEvent.VK_F2 || keycode == KeyEvent.VK_F3 || keycode == KeyEvent.VK_F4)) {
+                dire("Attention, c'est une lettre que tu cherches.");
+            } else {
+                monde.lettreEntree((char) keycode);
+            }
         }
     }
 
     public void ajouterPoint(int i) {
         this.points++;
-        status.setText("Points: "+points);
     }
 
     public void viePerdue() {

@@ -1,8 +1,6 @@
-package muffinattacks;
+package jeu.muffinattacks;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Created by Jicé on 25/03/2014.

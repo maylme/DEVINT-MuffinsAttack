@@ -1,4 +1,4 @@
-package muffinattacks;
+package jeu.muffinattacks;
 
 /**
  * Created by Jicé on 24/03/2014.
