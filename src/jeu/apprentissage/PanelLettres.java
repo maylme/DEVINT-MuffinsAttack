@@ -1,6 +1,6 @@
 package jeu.apprentissage;
 
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.*;
 import java.io.*;
@@ -16,6 +16,7 @@ public class PanelLettres extends JPanel {
 
     public PanelLettres(Apprentissage app) {
         apprentissage = app;
+
         try {
             a = new JLabel(new ImageIcon(ImageIO.read(new File("../ressources/images/apprentissage/a.png"))));
             a.setName("a");
@@ -25,9 +26,16 @@ public class PanelLettres extends JPanel {
         } catch (IOException e) {
             System.err.print("Image manquante ");
         }
-        this.add(a, new GridLayout(1, 1));
-        this.add(b, new GridLayout(1, 2));
-
+        JPanel braille = new JPanel(new GridLayout(0, 10, 20, 20));
+        for(Caractere c:Caractere.values()) {
+            Braille lettre = new Braille(c);
+            braille.add(lettre);
+            //TODO methode à lettre pour changer sa couleur
+        }
+        this.setLayout(new FlowLayout());
+        this.setBackground(Color.BLACK);
+        braille.setBackground(this.getBackground());
+        this.add(braille);
     }
 
     public void releaseLetter(int lettre) {
@@ -64,7 +72,7 @@ public class PanelLettres extends JPanel {
     /**
      * Methode appelée si il n'y a pas d'image. Change la couleur de la lettre
      *
-     * @throws PasDimageException
+     * @throws //PasDimageException
      */
     private void lettreLabelSelected(JLabel lettre) {
         String titreImage = lettre.getName() + "-selected.png";
