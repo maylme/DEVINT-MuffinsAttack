@@ -1,55 +1,83 @@
 /*  Classe de menu de lancement de l'exemple de jeu.
- *  Cette classe hérite de la classe abstraite MenuAbstrait en définissant les méthodes :
+ *  Cette classe hÃ©rite de la classe abstraite MenuAbstrait en dÃ©finissant les mÃ©thodes :
  *     - nomOptions qui renvoie la liste des options possibles pour le menu 
- *     - lancerOption qui associe une action à chaque option du menu
+ *     - lancerOption qui associe une action Ã  chaque option du menu
  *     - wavAccueil() qui renvoie le nom du fichier wav lu lors de l'accueil dans le menu
  *     - wavAide() qui renvoie le nom du fichier wav lu lors de l'activation de la touche F1
  */
-
-package jeu; 
+package jeu;
 
 import devintAPI.MenuAbstrait;
+import jeu.apprentissage.Apprentissage;
+import jeu.muffinattacks.Jeu;
 
 public class MenuJeu extends MenuAbstrait {
 
-	/** constructeur
-	 * @param title : le nom du jeu 
-	 */
-	public MenuJeu(String title) {
-		super(title);
-	}
+    /**
+     * constructeur
+     *
+     * @param title : le nom du jeu
+     */
+    public MenuJeu(String title) {
+        super(title);
+    }
 
-	/** renvoie le nom des options du menu
-     * vous pouvez définir autant d'options que vous voulez
-     **/
-	protected String[] nomOptions() {
-		String[] noms = {"Jouer","Image","Options","Fichiers","Quitter"};
-		return noms;
-	}
+    /**
+     * renvoie le nom des options du menu vous pouvez dÃ©finir autant d'options
+     * que vous voulez
+     *
+     * @return
+     */
+    @Override
+    protected String[] nomOptions() {
+        String[] noms = {"Jouer", "Apprentissage", "Options", "Quitter"};
+        return noms;
+    }
 
-	/** lance l'action associée au bouton n°i
-	 * la numérotation est celle du tableau renvoyé par nomOption
-	 */
-	protected void lancerOption(int i) {
-		switch (i){  
-		case 0 : new Jeu(nomJeu);break;
-		case 1 : new UneImage(nomJeu + ": exemple d'images");break;
-		case 2 : new Option(nomJeu + ": gestion des options");break;
-		case 3 : new Fichier(nomJeu + ": pour écrire dans un fichier");break;
-		case 4 : System.exit(0);
-		default: System.err.println("action non définie");
-		}
-	} 
+    /**
+     * lance l'action associÃ©e au bouton nÂ°i la numÃ©rotation est celle du
+     * tableau renvoyÃ© par nomOption
+     *
+     * @param i
+     */
+    @Override
+    protected void lancerOption(int i) {
+        switch (i) {
+            case 0:
+                new Jeu(nomJeu + " : le jeu");
+                break;
+            case 1:
+                new Apprentissage(nomJeu + ": apprentissage");
+                break;
+            case 2:
+                new Option(nomJeu + ": gestion des options");
+                break;
+            case 3:
+                System.exit(0);
+            default:
+                System.err.println("action non dÃ©finie");
+        }
+    }
 
-	// renvoie le fichier wave contenant le message d'accueil
-	// ces fichiers doivent être placés dans ressources/sons/
-	protected  String wavAccueil() {
-		return "../ressources/sons/accueil.wav";
-	}
+    /**
+     * renvoie le fichier wave contenant le message d'accueil ces fichiers
+     * doivent Ãªtre placÃ©s dans ressources/sons/
+     *
+     * @return
+     */
+    @Override
+    protected String wavAccueil() {
+        return "../ressources/sons/accueil.wav";
+    }
 
-	// renvoie le fichier wave contenant la règle du jeu
-	protected  String wavRegleJeu() {
-		return "../ressources/sons/accueil.wav";
-	}
-	
+    /**
+     * renvoie le fichier wave contenant la rÃ¨gle du jeu
+     *
+     * @return
+     */
+    @Override
+    protected String wavRegleJeu() {
+        return "../ressources/sons/accueil.wav";
+    }
+
 }
