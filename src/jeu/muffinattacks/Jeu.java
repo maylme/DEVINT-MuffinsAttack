@@ -4,14 +4,14 @@ import devintAPI.FenetreAbstraite;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.util.Random;
 
 /**
  * Created by Jicé on 24/03/2014.
  */
 public class Jeu extends FenetreAbstraite implements KeyListener {
+
     private static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private Random rand;
     private Monde monde;
@@ -36,7 +36,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         tempsRestant = 15;
 
         rand = new Random();
-        status = new JLabel("Vies:"+vies+" Points:"+points+" Temps restant:"+tempsRestant);
+        status = new JLabel("Vies:" + vies + " Points:" + points + " Temps restant:" + tempsRestant);
         monde = new Monde(this, Couleur.NOIRBLANC);
 
         this.setLayout(new BorderLayout());
@@ -51,24 +51,26 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     }
 
     // renvoie le fichier wave contenant le message d'accueil
+    @Override
     protected String wavAccueil() {
         return "ressources/sons/accueil.wav";
     }
 
-    // renvoie le fichier wave contenant la r�gle du jeu
+    // renvoie le fichier wave contenant la règle du jeu
+    @Override
     protected String wavRegleJeu() {
-        dire("Tu cherches la lettre "+monde.getMuffin().getLettre());
+        dire("Tu cherches la lettre " + monde.getMuffin().getLettre());
         return "";
     }
 
-    // renvoie le fichier wave contenant la r�gle du jeu
+    // renvoie le fichier wave contenant l'aide du jeu
     protected String wavAide() {
         return "ressources/sons/aide.wav";
     }
 
     @Override
     public void changeColor() {
-        if(couleur == Couleur.values().length) {
+        if (couleur == Couleur.values().length) {
             couleur = 0;
         }
         monde.setColors(Couleur.getOne(++couleur));
@@ -79,7 +81,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     }
 
     public void updateStatusBar() {
-        status.setText("Vies:"+vies+" Points:"+points+" Temps restant:"+tempsRestant);
+        status.setText("Vies:" + vies + " Points:" + points + " Temps restant:" + tempsRestant);
     }
 
     public boolean isInAlphabet(char lettre) {
@@ -96,25 +98,32 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
         int keycode = e.getKeyCode();
 
-        if(!(monde.getStarted()) && (keycode == KeyEvent.VK_F10)) {
+        if (!(monde.getStarted()) && (keycode == KeyEvent.VK_F10)) {
             dire("Le jeu démarre.");
             monde.jouer();
             return;
         }
 
-        if(!(monde.getStarted())) return;
-
-        if (keycode == KeyEvent.VK_PAUSE) {
-            monde.pause();
-            if(monde.getPaused()) dire("Le jeu est en pause.");
-            else dire("Le jeu reprends.");
+        if (!(monde.getStarted())) {
             return;
         }
 
-        if (monde.getPaused()) return;
+        if (keycode == KeyEvent.VK_PAUSE) {
+            monde.pause();
+            if (monde.getPaused()) {
+                dire("Le jeu est en pause.");
+            } else {
+                dire("Le jeu reprends.");
+            }
+            return;
+        }
 
-        if(keycode == KeyEvent.VK_SPACE) {
-            dire("Tu cherches la lettre "+monde.getMuffin().getLettre());
+        if (monde.getPaused()) {
+            return;
+        }
+
+        if (keycode == KeyEvent.VK_SPACE) {
+            dire("Tu cherches la lettre " + monde.getMuffin().getLettre());
         } else {
             if (!isInAlphabet((char) keycode) && !(keycode == KeyEvent.VK_F1 || keycode == KeyEvent.VK_F2 || keycode == KeyEvent.VK_F3 || keycode == KeyEvent.VK_F4)) {
                 dire("Attention, c'est une lettre que tu cherches.");

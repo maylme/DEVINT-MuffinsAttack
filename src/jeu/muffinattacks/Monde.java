@@ -2,13 +2,13 @@ package jeu.muffinattacks;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 /**
  * Created by Jicé on 24/03/2014.
  */
 public class Monde extends JPanel implements ActionListener {
+
     private final Jeu jeu;
     private Timer timer;
     private Muffin muffin;
@@ -32,8 +32,8 @@ public class Monde extends JPanel implements ActionListener {
     }
 
     public void jouer() {
-        delay = (int) (15000/(this.getHeight()-100*2));
-        this.timer = new Timer(delay,this);
+        delay = (int) (15000 / (this.getHeight() - 100 * 2));
+        this.timer = new Timer(delay, this);
 
         isStarted = true;
         newMuffin();
@@ -44,7 +44,9 @@ public class Monde extends JPanel implements ActionListener {
      * Met en ou sort le jeu de pause
      */
     public void pause() {
-        if (!isStarted) return;
+        if (!isStarted) {
+            return;
+        }
 
         isPaused = !isPaused;
         if (isPaused) {
@@ -58,7 +60,7 @@ public class Monde extends JPanel implements ActionListener {
     public void newMuffin() {
         jeu.timeReset();
         char lettre = jeu.getRandomLetter();
-        jeu.dire("Un nouveau mufine s'attake à la ville ! Appuie sur la touche "+lettre+", pour le détruire.");
+        jeu.dire("Un nouveau mufine s'attake à la ville ! Appuie sur la touche " + lettre + ", pour le détruire.");
         if (muffin == null) {
             muffin = new Muffin(lettre, 100, jeu.getWidth());
         } else {
@@ -70,9 +72,9 @@ public class Monde extends JPanel implements ActionListener {
     public void muffinFall() {
         muffin.fallOnce();
         count++;
-        if(count > 1000/delay) {
+        if (count > 1000 / delay) {
             jeu.secondeEcoulee();
-            count=0;
+            count = 0;
         }
         repaint();
     }
@@ -82,6 +84,7 @@ public class Monde extends JPanel implements ActionListener {
         newMuffin();
     }
 
+    @Override
     public void paint(Graphics g) {
         super.paint(g);
         g.setColor(couleur.getCouleurTexte());
@@ -92,7 +95,7 @@ public class Monde extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(jeu.getVies() <= 0) {
+        if (jeu.getVies() <= 0) {
             jeu.dire("Le jeu est terminé ! Tu n'as plus de vies.");
             timer.stop();
         } else if (jeu.getTimeOut()) {
@@ -110,7 +113,6 @@ public class Monde extends JPanel implements ActionListener {
         repaint();
     }
 
-
     public boolean getStarted() {
         return isStarted;
     }
@@ -124,7 +126,7 @@ public class Monde extends JPanel implements ActionListener {
             jeu.dire("Bien !");
             killMuffin();
         } else {
-             jeu.dire("Non ça c'est la lettre "+lettre+", cherche encore.");
+            jeu.dire("Non ça c'est la lettre " + lettre + ", cherche encore.");
         }
     }
 

@@ -6,6 +6,7 @@ import java.awt.*;
  * Created by Jicé on 25/03/2014.
  */
 public enum Couleur {
+
     ORANGENOIR(Color.ORANGE, Color.BLACK, 76),
     ROUGEBLANC(Color.RED, Color.WHITE, 84),
     ROUGEBEIGE(Color.RED, CouleurAjoutee.BEIGE, 78),
@@ -42,7 +43,8 @@ public enum Couleur {
     }
 
     private static class CouleurAjoutee {
-        private static final Color BEIGE = new Color(200,173,127);
+
+        private static final Color BEIGE = new Color(200, 173, 127);
         private static final Color MARRON = new Color(91, 59, 17);
     }
 
@@ -62,5 +64,3 @@ public enum Couleur {
         return Couleur.values()[i];
     }
 }
-
-

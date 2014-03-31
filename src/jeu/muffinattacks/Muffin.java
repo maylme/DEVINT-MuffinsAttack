@@ -7,6 +7,7 @@ import java.util.Random;
  * Created by Jicé on 24/03/2014.
  */
 public class Muffin {
+
     private static Random rand;
     private char lettre;
     private Point position;
@@ -17,12 +18,14 @@ public class Muffin {
      * Instancie un muffin avec une lettre
      *
      * @param lettre
+     * @param taille
+     * @param largeurMonde
      */
     public Muffin(char lettre, int taille, int largeurMonde) {
         this.lettre = lettre;
         this.taille = taille;
         this.rand = new Random();
-        this.position = new Point(rand.nextInt(largeurMonde), -3*taille);
+        this.position = new Point(rand.nextInt(largeurMonde), -3 * taille);
         this.largeurMonde = largeurMonde;
     }
 
@@ -34,7 +37,8 @@ public class Muffin {
     }
 
     /**
-     * Permet de calculer la zone autorisée pour la position horizontale du muffin
+     * Permet de calculer la zone autorisée pour la position horizontale du
+     * muffin
      *
      * @return valeur maximale que peut prendre la valeur x
      */
@@ -96,6 +100,5 @@ public class Muffin {
     public void setLettre(char lettre) {
         this.lettre = lettre;
     }
-
 
 }
