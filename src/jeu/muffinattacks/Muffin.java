@@ -25,7 +25,7 @@ public class Muffin {
         this.lettre = lettre;
         this.taille = taille;
         this.rand = new Random();
-        this.position = new Point(rand.nextInt(largeurMonde), -3 * taille);
+        this.position = new Point();
         this.largeurMonde = largeurMonde;
     }
 
@@ -59,7 +59,7 @@ public class Muffin {
     /**
      * Permet de faire tomber le muffin d'un pixel
      */
-    public void fallOnce() {
+    public void moveOnce() {
         position.move((int) position.getX(), (int) position.getY() + 1);
     }
 
