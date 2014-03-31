@@ -116,7 +116,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         if(keycode == KeyEvent.VK_SPACE) {
             dire("Tu cherches la lettre "+monde.getMuffin().getLettre());
         } else {
-            if (!isInAlphabet((char) keycode) && !(keycode == KeyEvent.VK_F1 || keycode == KeyEvent.VK_F2 || keycode == KeyEvent.VK_F3 || keycode == KeyEvent.VK_F4)) {
+            if (!isInAlphabet((char) keycode)) {
                 dire("Attention, c'est une lettre que tu cherches.");
             } else {
                 monde.lettreEntree((char) keycode);

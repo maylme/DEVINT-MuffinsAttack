@@ -1,16 +1,19 @@
 package jeu.muffinattacks;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 
 /**
  * Created by Jicé on 24/03/2014.
  */
 public class Monde extends JPanel implements ActionListener {
     private final Jeu jeu;
-    private Timer timer;
+    private javax.swing.Timer timerGraphic;
+    private java.util.Timer timerPause;
     private Muffin muffin;
     private boolean isStarted;
     private boolean isPaused;
@@ -22,6 +25,7 @@ public class Monde extends JPanel implements ActionListener {
         this.jeu = jeu;
 
         count = 0;
+        timerPause = new java.util.Timer();
 
         isStarted = false;
         isPaused = false;
@@ -33,11 +37,28 @@ public class Monde extends JPanel implements ActionListener {
 
     public void jouer() {
         delay = (int) (15000/(this.getHeight()-100*2));
-        this.timer = new Timer(delay,this);
+        this.timerGraphic = new Timer(delay,this);
 
         isStarted = true;
+
         newMuffin();
-        timer.start();
+        timerGraphic.start();
+    }
+
+    /** Crée une pause (non annoncée) dans le jeu
+     *
+     * @param seconds le temps (en secondes)
+     */
+    public void pause(int seconds) {
+        TimerTask unpauseTask = new TimerTask() {
+            @Override
+            public void run() {
+                pause();
+            }
+        };
+        System.out.println("Le jeu se met en pause pour "+seconds+" secondes");
+        pause();
+        timerPause.schedule(unpauseTask,seconds*1000);
     }
 
     /**
@@ -48,9 +69,9 @@ public class Monde extends JPanel implements ActionListener {
 
         isPaused = !isPaused;
         if (isPaused) {
-            timer.stop();
+            timerGraphic.stop();
         } else {
-            timer.start();
+            timerGraphic.start();
         }
         repaint();
     }
@@ -58,17 +79,17 @@ public class Monde extends JPanel implements ActionListener {
     public void newMuffin() {
         jeu.timeReset();
         char lettre = jeu.getRandomLetter();
-        jeu.dire("Un nouveau mufine s'attake à la ville ! Appuie sur la touche "+lettre+", pour le détruire.");
+        jeu.dire("Un nouveau mufine attake la ville ! Appuie sur la touche "+lettre+", pour le détruire.");
         if (muffin == null) {
             muffin = new Muffin(lettre, 100, jeu.getWidth());
         } else {
             muffin.setLettre(lettre);
-            muffin.replaceOnTop();
         }
+        muffin.replaceOnTop();
     }
 
     public void muffinFall() {
-        muffin.fallOnce();
+        muffin.moveOnce();
         count++;
         if(count > 1000/delay) {
             jeu.secondeEcoulee();
@@ -79,6 +100,7 @@ public class Monde extends JPanel implements ActionListener {
 
     public void killMuffin() {
         jeu.ajouterPoint(1);
+        pause(3);
         newMuffin();
     }
 
@@ -94,7 +116,7 @@ public class Monde extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(jeu.getVies() <= 0) {
             jeu.dire("Le jeu est terminé ! Tu n'as plus de vies.");
-            timer.stop();
+            timerGraphic.stop();
         } else if (jeu.getTimeOut()) {
             jeu.viePerdue();
             newMuffin();
