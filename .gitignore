@@ -3,3 +3,7 @@
 *.iml
 *.jar
 bin/
+build/
+nbproject/
+build.xml
+manifest.mf
