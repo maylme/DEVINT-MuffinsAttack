@@ -46,18 +46,18 @@ public class Monde extends JPanel implements ActionListener {
     }
 
     /**
-     * Crée une pause (non annoncée) dans le jeu
+     * Crée une pause dans le jeu avant de créer un nouveau muffin
      *
      * @param seconds le temps (en secondes)
      */
-    public void pause(int seconds) {
+    public void pauseNewMuffin(int seconds) {
         TimerTask unpauseTask = new TimerTask() {
             @Override
             public void run() {
+                newMuffin();
                 pause();
             }
         };
-        System.out.println("Le jeu se met en pause pour " + seconds + " secondes");
         pause();
         timerPause.schedule(unpauseTask, seconds * 1000);
     }
@@ -80,8 +80,6 @@ public class Monde extends JPanel implements ActionListener {
     }
 
     public void newMuffin() {
-        // on fait une pause de 3 secondes pour ne pas trop perturber le joueur
-        pause(3);
         jeu.timeReset();
         char lettre = jeu.getRandomLetter();
         jeu.dire("Un nouveau mufine attake la ville ! Appuie sur la touche " + lettre + ", pour le détruire.");
@@ -105,7 +103,7 @@ public class Monde extends JPanel implements ActionListener {
 
     public void killMuffin() {
         jeu.ajouterPoint(1);
-        newMuffin();
+        pauseNewMuffin(3);
     }
 
     @Override
@@ -124,7 +122,8 @@ public class Monde extends JPanel implements ActionListener {
             timerGraphic.stop();
         } else if (jeu.getTimeOut()) {
             jeu.viePerdue();
-            newMuffin();
+            // on fait une pause de 3 secondes pour ne pas trop perturber le joueur
+            pauseNewMuffin(3);
         } else {
             muffinFall();
         }
