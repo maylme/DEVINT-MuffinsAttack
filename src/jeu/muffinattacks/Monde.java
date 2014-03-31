@@ -77,6 +77,8 @@ public class Monde extends JPanel implements ActionListener {
     }
 
     public void newMuffin() {
+        // on fait une pause de 3 secondes pour ne pas trop perturber le joueur
+        pause(3);
         jeu.timeReset();
         char lettre = jeu.getRandomLetter();
         jeu.dire("Un nouveau mufine attake la ville ! Appuie sur la touche "+lettre+", pour le détruire.");
@@ -100,7 +102,6 @@ public class Monde extends JPanel implements ActionListener {
 
     public void killMuffin() {
         jeu.ajouterPoint(1);
-        pause(3);
         newMuffin();
     }
 
@@ -143,8 +144,8 @@ public class Monde extends JPanel implements ActionListener {
 
     public void lettreEntree(char lettre) {
         if (Character.compare(muffin.getLettre(), lettre) == 0) {
-            jeu.dire("Bien !");
             killMuffin();
+            jeu.dire("C'est très bien !");
         } else {
              jeu.dire("Non ça c'est la lettre "+lettre+", cherche encore.");
         }
