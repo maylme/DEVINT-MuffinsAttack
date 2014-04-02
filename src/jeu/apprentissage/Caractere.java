@@ -36,8 +36,8 @@ public enum Caractere {
     int[] points;
     int key;
 
-    Caractere(int[] i, int key) {
-        this.points = i;
+    Caractere(int[] pointsBraille, int key) {
+        this.points = pointsBraille;
         this.key = key;
     }
 

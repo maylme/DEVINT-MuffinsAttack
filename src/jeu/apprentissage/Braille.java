@@ -15,18 +15,25 @@ public class Braille extends JPanel {
     Color change;
     Boolean couleurChangee;
 
-    public Braille(Caractere c) {
+    public Braille(Caractere c, Color defaut, Color change, Color fond) {
         this.caractere = c;
-        this.defaut = Color.WHITE;
         this.couleurChangee = false;
 
         this.setPreferredSize(new Dimension(80,120));
-        //this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        changeCouleurs(defaut, change, fond);
+    }
+
+    public Braille(Caractere c, Color defaut, Color fond) {
+        this(c, defaut, new Color(defaut.getRGB()/2), fond);
+    }
+
+    public Braille(Caractere c, Color fond) {
+        this(c, Color.WHITE, Color.GRAY, fond);
     }
 
     public void changeCouleur() {
         couleurChangee = !couleurChangee;
-        repaint();
+        this.repaint();
     }
 
     public void changeCouleurs(Color defaut, Color change, Color fond) {
@@ -37,6 +44,7 @@ public class Braille extends JPanel {
 
     @Override
     public void paint(Graphics g) {
+        super.paint(g);
         if(!couleurChangee) {
             g.setColor(defaut);
         } else {

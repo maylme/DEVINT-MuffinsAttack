@@ -99,6 +99,7 @@ public class Apprentissage extends FenetreAbstraite {
         Preferences pref = Preferences.getData();
         lb1.setBackground(pref.getCurrentBackgroundColor());
         lb1.setForeground(pref.getCurrentForegroundColor());
+        panel.changeColor(pref.getCurrentForegroundColor(), pref.getCurrentBackgroundColor());
     }
 
 }

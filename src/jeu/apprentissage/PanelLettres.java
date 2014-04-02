@@ -22,7 +22,7 @@ public class PanelLettres extends JPanel {
 
         JPanel braille = new JPanel(new GridLayout(0, 10, 20, 20));
         for(Caractere c:Caractere.values()) {
-            Braille lettre = new Braille(c);
+            Braille lettre = new Braille(c, app.getBackground());
             lettres.put(c.getKey(),lettre);
             braille.add(lettre);
         }
@@ -32,7 +32,20 @@ public class PanelLettres extends JPanel {
         this.add(braille);
     }
 
+    public void changeColor(Color texte, Color fond) {
+        this.setForeground(texte);
+        this.setBackground(fond);
+        for(Braille b:lettres.values()) {
+            b.changeCouleurs(texte,texte.darker().darker(),fond);
+        }
+    }
+
     public void changeLetterColor(int lettre) {
-        lettres.get(lettre).changeCouleur();
+        Braille selected = lettres.get(lettre);
+        if(selected != null) {
+            selected.changeCouleur();
+        } else {
+            System.out.println("la touche "+lettre+" n'est pas référencée");
+        }
     }
 }
