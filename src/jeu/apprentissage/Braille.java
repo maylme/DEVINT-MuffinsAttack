@@ -11,24 +11,36 @@ import java.awt.*;
 public class Braille extends JPanel {
     Caractere caractere;
     int espacementPoints = 4;
-    Couleur c;
+    Color defaut;
+    Color change;
+    Boolean couleurChangee;
 
     public Braille(Caractere c) {
         this.caractere = c;
-        this.c = Couleur.NOIRBLANC;
-
+        this.defaut = Color.WHITE;
+        this.couleurChangee = false;
+        
         this.setPreferredSize(new Dimension(80,120));
         //this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 
     public void changeCouleur() {
-        c = Couleur.NOIRORANGE;
-        this.setBackground(c.getCouleurFond());
+        couleurChangee = !couleurChangee;
+    }
+
+    public void changeCouleurs(Color defaut, Color change, Color fond) {
+        this.defaut = defaut;
+        this.change = change;
+        this.setBackground(fond);
     }
 
     @Override
     public void paint(Graphics g) {
-        g.setColor(c.getCouleurTexte());
+        if(!couleurChangee) {
+            g.setColor(defaut);
+        } else {
+            g.setColor(change);
+        }
         int xMove = this.getWidth()/2;
         int yMove = this.getHeight()/3;
         int taille = xMove-2*espacementPoints;
