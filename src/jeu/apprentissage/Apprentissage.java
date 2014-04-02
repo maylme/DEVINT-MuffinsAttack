@@ -71,7 +71,7 @@ public class Apprentissage extends FenetreAbstraite {
     @Override
     public void keyReleased(KeyEvent e) {
         super.keyReleased(e);
-        panel.releaseLetter(e.getKeyCode());
+        panel.changeLetterColor(e.getKeyCode());
     }
 
     public void dire(String s) {
@@ -83,7 +83,7 @@ public class Apprentissage extends FenetreAbstraite {
     public void keyPressed(KeyEvent e) {
         // appel à la méthode mère qui gére les événements ESC, F1, F3, F4
         super.keyPressed(e);
-        panel.presseLetter(e.getKeyCode());
+        panel.changeLetterColor(e.getKeyCode());
     }
 
     /**

@@ -19,13 +19,14 @@ public class Braille extends JPanel {
         this.caractere = c;
         this.defaut = Color.WHITE;
         this.couleurChangee = false;
-        
+
         this.setPreferredSize(new Dimension(80,120));
         //this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 
     public void changeCouleur() {
         couleurChangee = !couleurChangee;
+        repaint();
     }
 
     public void changeCouleurs(Color defaut, Color change, Color fond) {
