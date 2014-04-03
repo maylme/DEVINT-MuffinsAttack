@@ -63,4 +63,11 @@ public enum Couleur {
     public static Couleur getOne(int i) {
         return Couleur.values()[i];
     }
+
+    public static Color revertColor(Color c) {
+        int r = 255-c.getRed();
+        int g = 255-c.getGreen();
+        int b = 255-c.getBlue();
+        return new Color(r,g,b);
+    }
 }
