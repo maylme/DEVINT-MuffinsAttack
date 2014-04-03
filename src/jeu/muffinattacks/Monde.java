@@ -45,6 +45,11 @@ public class Monde extends JPanel implements ActionListener {
         timerGraphic.start();
     }
 
+    public void arreter() {
+        timerGraphic.stop();
+        timerPause.cancel();
+    }
+
     /**
      * Crée une pause dans le jeu avant de créer un nouveau muffin
      *

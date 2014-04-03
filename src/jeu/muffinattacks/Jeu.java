@@ -47,6 +47,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     }
 
     public void dire(String s) {
+        voix.stop();
         voix.playShortText(s);
     }
 
@@ -108,6 +109,12 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
             return;
         }
 
+        if(keycode == KeyEvent.VK_ESCAPE) {
+            monde.arreter();
+            dire("La partie a été interrompue. La reprise n'est pas encore gérée.");
+            return;
+        }
+
         if (keycode == KeyEvent.VK_PAUSE) {
             monde.pause();
             if (monde.getPaused()) {
@@ -150,7 +157,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     }
 
     public boolean getTimeOut() {
-        return tempsRestant < 0;
+        return tempsRestant <= 0;
     }
 
     public void timeReset() {
