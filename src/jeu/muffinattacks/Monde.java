@@ -25,6 +25,7 @@ public class Monde extends JPanel implements ActionListener {
         this.jeu = jeu;
 
         count = 0;
+        this.timerGraphic = new Timer(200, this);
         timerPause = new java.util.Timer();
 
         isStarted = false;
@@ -35,14 +36,16 @@ public class Monde extends JPanel implements ActionListener {
         this.setBackground(couleur.getCouleurFond());
     }
 
-    public void jouer() {
-        delay = (int) (15000 / (this.getHeight() - 100 * 2));
-        this.timerGraphic = new Timer(delay, this);
-
-        isStarted = true;
-
+    public void jouer(int t) {
+        changerTemps(t);
         newMuffin();
         timerGraphic.start();
+        isStarted = true;
+    }
+
+    public void changerTemps(int t) {
+        delay = (int) ((t*1000) / (this.getHeight() - 40));
+        this.timerGraphic.setDelay(delay);
     }
 
     public void arreter() {
@@ -85,6 +88,7 @@ public class Monde extends JPanel implements ActionListener {
     }
 
     public void newMuffin() {
+        if(jeu.getVies() <= 0) return;
         jeu.timeReset();
         char lettre = jeu.getRandomLetter();
         jeu.dire("Un nouveau mufine attake la ville ! Appuie sur la touche " + lettre + ", pour le détruire.");

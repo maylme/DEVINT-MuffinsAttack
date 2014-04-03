@@ -21,6 +21,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     private int points;
     private int vies;
     private int tempsRestant;
+    private int tempsTotal;
 
     /**
      * @param title : titre de la fenetre
@@ -31,12 +32,8 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     @Override
     protected void init() {
-        points = 0;
-        vies = 3;
-        tempsRestant = 15;
-
         rand = new Random();
-        status = new JLabel("Vies:" + vies + " Points:" + points + " Temps restant:" + tempsRestant);
+        status = new JLabel("Attends le démarrage du jeu");
         monde = new Monde(this, Couleur.NOIRBLANC);
 
         this.setLayout(new BorderLayout());
@@ -44,6 +41,18 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         this.add(monde, BorderLayout.CENTER);
         dire("Presse la touche EFFE dice pour démarrer le jeu.");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+
+    private void preparerJeu() {
+        points = 0;
+        vies = 3;
+        tempsTotal = 15;
+        updateStatusBar();
+    }
+
+    private void preparerMonde() {
+        tempsRestant = tempsTotal;
+        monde.changerTemps(tempsTotal);
     }
 
     public void dire(String s) {
@@ -82,7 +91,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     }
 
     public void updateStatusBar() {
-        status.setText("Vies:" + vies + " Points:" + points + " Temps restant:" + tempsRestant);
+        status.setText("Temps total: "+tempsTotal+" Vies:" + vies + " Points:" + points + " Temps restant:" + tempsRestant);
     }
 
     public boolean isInAlphabet(char lettre) {
@@ -100,8 +109,10 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         int keycode = e.getKeyCode();
 
         if (!(monde.getStarted()) && (keycode == KeyEvent.VK_F10)) {
+            preparerJeu();
+            preparerMonde();
             dire("Le jeu démarre.");
-            monde.jouer();
+            monde.jouer(tempsTotal);
             return;
         }
 
@@ -129,6 +140,22 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
             return;
         }
 
+        if(keycode == KeyEvent.VK_UP) {
+            tempsTotal += 3;
+            tempsRestant += 3;
+            monde.changerTemps(tempsTotal);
+            return;
+        }
+
+        if(keycode == KeyEvent.VK_DOWN) {
+            if(tempsTotal > 3) {
+                tempsTotal -= 3;
+                tempsRestant -= 3;
+                monde.changerTemps(tempsTotal);
+            }
+            return;
+        }
+
         if (keycode == KeyEvent.VK_SPACE) {
             dire("Tu cherches la lettre " + monde.getMuffin().getLettre());
         } else {
@@ -145,10 +172,12 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     }
 
     public void viePerdue() {
+        dire("Tu as perdu une vie ...");
         this.vies--;
     }
 
     public void secondeEcoulee() {
+        //TODO Ajouter des bips pour informer de l'écoulement du temps ?
         this.tempsRestant--;
     }
 
@@ -161,6 +190,6 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     }
 
     public void timeReset() {
-        this.tempsRestant = 15;
+        this.tempsRestant = tempsTotal;
     }
 }
