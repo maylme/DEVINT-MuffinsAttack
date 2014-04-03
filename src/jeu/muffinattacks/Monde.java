@@ -121,6 +121,7 @@ public class Monde extends JPanel implements ActionListener {
         g.setColor(couleur.getCouleurTexte());
         if (muffin != null) {
             muffin.paint(g);
+            g.drawString(String.valueOf(muffin.getLettre()), this.getWidth()-20, this.getHeight()-20);
         }
     }
 

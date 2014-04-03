@@ -85,7 +85,6 @@ public class Muffin {
         int x = (int) position.getX();
         int y = (int) position.getY();
         g.fillRect(x, y, taille, taille);
-        //g.drawString(String.valueOf(lettre), x + taille / 2, y + taille / 2);
     }
 
     /**
