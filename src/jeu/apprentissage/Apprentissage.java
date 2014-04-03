@@ -13,6 +13,7 @@ public class Apprentissage extends FenetreAbstraite {
 
     //liste des label des lettres:
     private PanelLettres panel;
+    private boolean released;
 
     // appel au constructeur de la classe mère
     public Apprentissage(String title) {
@@ -63,15 +64,18 @@ public class Apprentissage extends FenetreAbstraite {
         // on place le premier composant en haut
         this.add(lb1, BorderLayout.NORTH);
 
-        // deuxième label, qui n'est pas géré par les préférences
+        // puis le panel des lettres
         panel = new PanelLettres(this);
+        panel.changeColor(pref.getCurrentForegroundColor(), pref.getCurrentBackgroundColor());
         this.add(panel, BorderLayout.CENTER);
+        released = true;
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         super.keyReleased(e);
         panel.changeLetterColor(e.getKeyCode());
+        released = true;
     }
 
     public void dire(String s) {
@@ -83,7 +87,10 @@ public class Apprentissage extends FenetreAbstraite {
     public void keyPressed(KeyEvent e) {
         // appel à la méthode mère qui gére les événements ESC, F1, F3, F4
         super.keyPressed(e);
-        panel.changeLetterColor(e.getKeyCode());
+        if(released) {
+            panel.changeLetterColor(e.getKeyCode());
+        }
+        released = false;
     }
 
     /**
