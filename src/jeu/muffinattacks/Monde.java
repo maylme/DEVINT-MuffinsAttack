@@ -137,7 +137,6 @@ public class Monde extends JPanel implements ActionListener {
         } else {
             muffinFall();
         }
-        jeu.updateStatusBar();
     }
 
     public void setColors(Couleur c) {

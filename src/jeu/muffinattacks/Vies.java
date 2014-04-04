@@ -29,7 +29,7 @@ public class Vies extends JPanel {
            System.out.println(fileImageCoeur+" n'a pas pu être chargé");
         }
 
-        this.setPreferredSize(new Dimension(0, 40));
+        this.setPreferredSize(new Dimension((coeurImg.getWidth()+ESPACEMENT)*vies, 40));
     }
 
     public void viePerdue() {

@@ -15,6 +15,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     private static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private Random rand;
     private Vies vies;
+    private Temps temps;
     private Monde monde;
     private int couleur;
     private JLabel status;
@@ -35,18 +36,21 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         rand = new Random();
         status = new JLabel("Attends le démarrage du jeu");
         vies = new Vies(3);
+        temps = new Temps(tempsTotal);
         monde = new Monde(this, Couleur.NOIRBLANC);
 
         this.setLayout(new BorderLayout());
 
         JPanel statsJeu = new JPanel(new BorderLayout());
-        statsJeu.add(status, BorderLayout.NORTH);
-        statsJeu.add(vies,BorderLayout.CENTER);
+        statsJeu.setBackground(null);
+        statsJeu.add(vies,BorderLayout.WEST);
+        statsJeu.add(temps,BorderLayout.EAST);
 
         this.add(statsJeu, BorderLayout.NORTH);
         this.add(monde, BorderLayout.CENTER);
+        this.add(status, BorderLayout.SOUTH);
 
-        dire("Presse la touche EFFE dice pour démarrer le jeu.");
+        dire("Presse la touche ESPACE pour démarrer le jeu.");
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
@@ -90,7 +94,9 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         if (couleur == Couleur.values().length) {
             couleur = 0;
         }
-        monde.setColors(Couleur.getOne(++couleur));
+        Couleur c = Couleur.getOne(++couleur);
+        this.setBackground(c.getCouleurFond());
+        monde.setColors(c);
     }
 
     public JLabel getStatusBar() {
@@ -98,6 +104,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     }
 
     public void updateStatusBar() {
+        temps.update(tempsRestant);
         status.setText("Temps total:"+tempsTotal+" Vies:" + vies.getVies() + " Points:" + points + " Temps restant:" + tempsRestant);
     }
 
@@ -115,7 +122,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
         int keycode = e.getKeyCode();
 
-        if (!(monde.getStarted()) && (keycode == KeyEvent.VK_F10)) {
+        if (!(monde.getStarted()) && (keycode == KeyEvent.VK_SPACE)) {
             preparerJeu();
             preparerMonde();
             dire("Le jeu démarre.");
@@ -176,16 +183,19 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     public void ajouterPoint(int i) {
         this.points++;
+        updateStatusBar();
     }
 
     public void viePerdue() {
         dire("Tu as perdu une vie ...");
         vies.viePerdue();
+        updateStatusBar();
     }
 
     public void secondeEcoulee() {
         //TODO Ajouter des bips pour informer de l'écoulement du temps ?
         this.tempsRestant--;
+        updateStatusBar();
     }
 
     public int getVies() {
@@ -198,5 +208,6 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     public void timeReset() {
         this.tempsRestant = tempsTotal;
+        updateStatusBar();
     }
 }
