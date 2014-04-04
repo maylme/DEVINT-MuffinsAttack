@@ -36,7 +36,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         rand = new Random();
         status = new JLabel("Attends le démarrage du jeu");
         vies = new Vies(3);
-        temps = new Temps(tempsTotal);
+        temps = new Temps(0);
         monde = new Monde(this, Couleur.NOIRBLANC);
 
         this.setLayout(new BorderLayout());
@@ -121,6 +121,10 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         super.keyPressed(e);
 
         int keycode = e.getKeyCode();
+
+        if(keycode == KeyEvent.VK_F1 || keycode == KeyEvent.VK_F2 || keycode == KeyEvent.VK_F3 || keycode == KeyEvent.VK_F4) {
+            return;
+        }
 
         if (!(monde.getStarted()) && (keycode == KeyEvent.VK_SPACE)) {
             preparerJeu();

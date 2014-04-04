@@ -14,8 +14,8 @@ public class Temps extends JPanel {
 
     public Temps(int t) {
         this.temps = t;
-        texte = Color.BLACK;
-        this.setBackground(null);
+        texte = Color.WHITE;
+        this.setBackground(Color.BLACK);
 
         this.setPreferredSize(new Dimension(40,40));
     }
@@ -31,9 +31,10 @@ public class Temps extends JPanel {
 
     @Override
     public void paint(Graphics g) {
+        //TODO paint images
         super.paint(g);
         g.setColor(texte);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
         g.drawString(String.valueOf(temps),0,0);
     }
 }
