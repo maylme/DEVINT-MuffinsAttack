@@ -12,25 +12,27 @@ public class Braille extends JPanel {
     Color defaut;
     Color change;
     Boolean couleurChangee;
+    Apprentissage apprentissage;
 
-    public Braille(Caractere c, Color defaut, Color change, Color fond) {
+    public Braille(Apprentissage a, Caractere c, Color defaut, Color change, Color fond) {
         this.caractere = c;
         this.couleurChangee = false;
+        this.apprentissage = a;
 
         this.setPreferredSize(new Dimension(80, 120));
         changeCouleurs(defaut, change, fond);
     }
 
-    public Braille(Caractere c, Color defaut, Color fond) {
-        this(c, defaut, new Color(defaut.getRGB() / 2), fond);
-    }
-
-    public Braille(Caractere c, Color fond) {
-        this(c, Color.WHITE, Color.GRAY, fond);
+    public Braille(Apprentissage a,Caractere c, Color fond) {
+        this(a,c, Color.WHITE, Color.GRAY, fond);
     }
 
     public void changeCouleur() {
         couleurChangee = !couleurChangee;
+
+        if (couleurChangee == true){
+            apprentissage.direLettre(caractere.name());
+        }
         this.repaint();
     }
 

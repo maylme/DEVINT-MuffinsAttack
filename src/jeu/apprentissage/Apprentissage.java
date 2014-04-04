@@ -79,7 +79,15 @@ public class Apprentissage extends FenetreAbstraite {
     }
 
     public void dire(String s) {
+        voix.stop();
         voix.playShortText(s);
+    }
+
+    public void direLettre(String lettre) {
+        voix.stop();
+        String chemin = "../ressources/sons/alphabet/"+lettre.toLowerCase()+".wav";
+        System.out.println(chemin);
+        voix.playWav(chemin);
     }
 
     // �v�nements clavier

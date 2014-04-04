@@ -26,7 +26,7 @@ public class PanelLettres extends JPanel {
 
         braille = new JPanel(new GridLayout(0, 10, 20, 20));
         for(Caractere c:Caractere.values()) {
-            Braille lettre = new Braille(c, app.getBackground());
+            Braille lettre = new Braille(app, c, app.getBackground());
             lettres.put(c.getKey(),lettre);
             braille.add(lettre);
         }
