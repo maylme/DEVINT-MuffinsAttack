@@ -14,12 +14,12 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     private static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private Random rand;
+    private Vies vies;
     private Monde monde;
     private int couleur;
     private JLabel status;
 
     private int points;
-    private int vies;
     private int tempsRestant;
     private int tempsTotal;
 
@@ -34,18 +34,25 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     protected void init() {
         rand = new Random();
         status = new JLabel("Attends le démarrage du jeu");
+        vies = new Vies(3);
         monde = new Monde(this, Couleur.NOIRBLANC);
 
         this.setLayout(new BorderLayout());
-        this.add(status, BorderLayout.NORTH);
+
+        JPanel statsJeu = new JPanel(new BorderLayout());
+        statsJeu.add(status, BorderLayout.NORTH);
+        statsJeu.add(vies,BorderLayout.CENTER);
+
+        this.add(statsJeu, BorderLayout.NORTH);
         this.add(monde, BorderLayout.CENTER);
+
         dire("Presse la touche EFFE dice pour démarrer le jeu.");
+
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     private void preparerJeu() {
         points = 0;
-        vies = 3;
         tempsTotal = 15;
         updateStatusBar();
     }
@@ -91,7 +98,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     }
 
     public void updateStatusBar() {
-        status.setText("Temps total: "+tempsTotal+" Vies:" + vies + " Points:" + points + " Temps restant:" + tempsRestant);
+        status.setText("Temps total:"+tempsTotal+" Vies:" + vies.getVies() + " Points:" + points + " Temps restant:" + tempsRestant);
     }
 
     public boolean isInAlphabet(char lettre) {
@@ -173,7 +180,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     public void viePerdue() {
         dire("Tu as perdu une vie ...");
-        this.vies--;
+        vies.viePerdue();
     }
 
     public void secondeEcoulee() {
@@ -182,7 +189,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     }
 
     public int getVies() {
-        return vies;
+        return vies.getVies();
     }
 
     public boolean getTimeOut() {
