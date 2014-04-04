@@ -45,9 +45,6 @@ public class Vies extends JPanel {
             if(imageChargee) {
                 g.drawImage(coeurImg, x, 0, null);
                 x += coeurImg.getWidth()+ESPACEMENT;
-            } else {
-                x+= 50;
-                g.drawString("Coeur", x, 0);
             }
         }
     }
