@@ -25,6 +25,7 @@ public class PanelLettres extends JPanel {
         this.lettres = new HashMap<Integer, Braille>();
 
         braille = new JPanel(new GridLayout(0, 10, 20, 20));
+        braille.setBackground(null);
         for(Caractere c:Caractere.values()) {
             Braille lettre = new Braille(app, c, app.getBackground());
             lettres.put(c.getKey(),lettre);
@@ -37,7 +38,6 @@ public class PanelLettres extends JPanel {
     public void changeColor(Color texte, Color fond) {
         this.setForeground(texte);
         this.setBackground(fond);
-        braille.setBackground(fond);
         for(Braille b:lettres.values()) {
             b.changeCouleurs(texte, Couleur.revertColor(texte),fond);
         }
