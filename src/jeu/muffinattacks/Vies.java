@@ -29,6 +29,7 @@ public class Vies extends JPanel {
            System.out.println(fileImageCoeur+" n'a pas pu être chargé");
         }
 
+        this.setBackground(null);
         this.setPreferredSize(new Dimension((coeurImg.getWidth()+ESPACEMENT)*vies, 40));
     }
 

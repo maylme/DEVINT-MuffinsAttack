@@ -1,5 +1,9 @@
 package jeu.apprentissage;
 
+import jeu.muffinattacks.Couleur;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 /**
@@ -47,5 +51,72 @@ public enum Caractere {
 
     public int getKey() {
         return key;
+    }
+
+    public static void paint(Graphics g, Point pos, Dimension d, Caractere c, Boolean couleurChangee, Color defaut, Color change, int espacementPoints) {
+        if (!couleurChangee) {
+            g.setColor(defaut);
+        } else {
+            g.setColor(change);
+        }
+        int x = (int) pos.getX();
+        int y = (int) pos.getY();
+        int xMove = (int) d.getWidth() / 2;
+        int yMove = (int) d.getHeight() / 3;
+        int taille = xMove - 2 * espacementPoints;
+        for (int i : c.getPoints()) {
+            switch (i) {
+                case 1:
+                    g.fillOval(x+espacementPoints, y+espacementPoints, taille, taille);
+                    if (couleurChangee) {
+                        g.setColor(defaut);
+                        g.drawOval(x+espacementPoints, y+espacementPoints, taille, taille);
+                        g.setColor(change);
+                    }
+                    break;
+                case 2:
+                    g.fillOval(x+xMove + espacementPoints, y+espacementPoints, taille, taille);
+                    if (couleurChangee) {
+                        g.setColor(defaut);
+                        g.drawOval(xMove + espacementPoints, y+espacementPoints, taille, taille);
+                        g.setColor(change);
+                    }
+                    break;
+                case 3:
+                    g.fillOval(x+espacementPoints, y+yMove + espacementPoints, taille, taille);
+                    if (couleurChangee) {
+                        g.setColor(defaut);
+                        g.drawOval(x+espacementPoints, y+yMove + espacementPoints, taille, taille);
+                        g.setColor(change);
+                    }
+                    break;
+                case 4:
+                    g.fillOval(x+xMove + espacementPoints, y+yMove + espacementPoints, taille, taille);
+                    if (couleurChangee) {
+                        g.setColor(defaut);
+                        g.drawOval(x+xMove + espacementPoints, y+yMove + espacementPoints, taille, taille);
+                        g.setColor(change);
+                    }
+                    break;
+                case 5:
+                    g.fillOval(x+espacementPoints, y+ 2 * yMove + espacementPoints, taille, taille);
+                    if (couleurChangee) {
+                        g.setColor(defaut);
+                        g.drawOval(x+espacementPoints, y+ 2 * yMove + espacementPoints, taille, taille);
+                        g.setColor(change);
+                    }
+                    break;
+                case 6:
+                    g.fillOval(x+xMove + espacementPoints, y+ 2 * yMove + espacementPoints, taille, taille);
+                    if (couleurChangee) {
+                        g.setColor(defaut);
+                        g.drawOval(x+xMove + espacementPoints, y+ 2 * yMove + espacementPoints, taille, taille);
+                        g.setColor(change);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

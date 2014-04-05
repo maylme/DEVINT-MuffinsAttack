@@ -1,5 +1,7 @@
 package jeu.muffinattacks;
 
+import jeu.apprentissage.Caractere;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -13,6 +15,7 @@ public class Muffin {
     private Point position;
     private int taille;
     private int largeurMonde;
+    private Caractere caractere;
 
     /**
      * Instancie un muffin avec une lettre
@@ -23,9 +26,10 @@ public class Muffin {
      */
     public Muffin(char lettre, int taille, int largeurMonde) {
         this.lettre = lettre;
+        this.caractere = Caractere.valueOf(String.valueOf(lettre));
         this.taille = taille;
         this.rand = new Random();
-        this.position = new Point();
+        this.position = new Point(0,0);
         this.largeurMonde = largeurMonde;
     }
 
@@ -85,6 +89,7 @@ public class Muffin {
         int x = (int) position.getX();
         int y = (int) position.getY();
         g.fillRect(x, y, taille, taille);
+        Caractere.paint(g, position, new Dimension(taille-taille/3, taille), caractere, false, Color.BLACK, null, 4);
     }
 
     /**
@@ -98,6 +103,6 @@ public class Muffin {
 
     public void setLettre(char lettre) {
         this.lettre = lettre;
+        this.caractere = Caractere.valueOf(String.valueOf(lettre));
     }
-
 }

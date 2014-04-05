@@ -42,7 +42,8 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         this.setLayout(new BorderLayout());
 
         JPanel statsJeu = new JPanel(new BorderLayout());
-        statsJeu.setBackground(null);
+        statsJeu.setBackground(Color.BLACK);
+        statsJeu.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         statsJeu.add(vies,BorderLayout.WEST);
         statsJeu.add(temps,BorderLayout.EAST);
 
@@ -51,8 +52,6 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         this.add(status, BorderLayout.SOUTH);
 
         dire("Presse la touche ESPACE pour démarrer le jeu.");
-
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     private void preparerJeu() {
