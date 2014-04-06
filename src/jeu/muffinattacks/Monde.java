@@ -94,13 +94,14 @@ public class Monde extends JPanel implements ActionListener {
         if (jeu.getVies() <= 0) return;
         jeu.timeReset();
         char lettre = jeu.getRandomLetter();
-        jeu.dire("Un nouveau mufine attake la ville ! Appuie sur la touche " + lettre + ", pour le détruire.");
         if (muffin == null) {
             muffin = new Muffin(lettre, 100, jeu.getWidth());
         } else {
             muffin.setLettre(lettre);
         }
         muffin.replaceOnTop();
+        jeu.dire("Un nouveau mufine attake la ville ! Appuie sur la lettre ");
+        jeu.direLettrePause(String.valueOf(muffin.getLettre()), 2.8);
     }
 
     public void muffinFall() {
