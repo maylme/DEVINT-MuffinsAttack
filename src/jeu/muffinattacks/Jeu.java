@@ -5,7 +5,8 @@ import devintAPI.FenetreAbstraite;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Random;
+import java.util.*;
+import java.util.Timer;
 
 /**
  * Created by Jicé on 24/03/2014.
@@ -23,6 +24,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     private int points;
     private int tempsRestant;
     private int tempsTotal;
+    private Timer timerPause;
 
     /**
      * @param title : titre de la fenetre
@@ -38,6 +40,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         vies = new Vies(3);
         temps = new Temps(0);
         monde = new Monde(this, Couleur.NOIRBLANC);
+        timerPause = new Timer();
 
         this.setLayout(new BorderLayout());
 
@@ -65,9 +68,52 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         monde.changerTemps(tempsTotal);
     }
 
+
+
+
+
+    /**
+     * Utilise sivox pour lire la phrase donnée en paramètres
+     * <br />La phrase est lue aprés le paramètres secondes
+     * @param chaine la phrase à lire
+     * @param secondes le temps à attendre avant la lecture
+     */
+    public void direPause(final String chaine, double secondes) {
+        TimerTask unpauseTask = new TimerTask() {
+            @Override
+            public void run() {
+                dire(chaine);
+            }
+        };
+        timerPause.schedule(unpauseTask, (int) secondes * 1000);
+    }
+
+    /**
+     * Lit la lettre correspondante du fichier audio dans le dossier
+     * <br />ressources/sons/alphabet/
+     * @param lettre la lettre à dire
+     * @param secondes le temps à attendre avant la lecture
+     */
+    public void direLettrePause(final String lettre, double secondes) {
+        TimerTask unpauseTask = new TimerTask() {
+            @Override
+            public void run() {
+                direLettre(lettre);
+            }
+        };
+        timerPause.schedule(unpauseTask, (int) secondes * 1000);
+    }
+
+
     public void dire(String s) {
         voix.stop();
         voix.playShortText(s);
+    }
+
+    public void direLettre(String lettre) {
+        voix.stop();
+        String chemin = "../ressources/sons/alphabet/"+lettre.toLowerCase()+".wav";
+        voix.playWav(chemin);
     }
 
     // renvoie le fichier wave contenant le message d'accueil
@@ -139,6 +185,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
         if(keycode == KeyEvent.VK_ESCAPE) {
             monde.arreter();
+            timerPause.cancel();
             dire("La partie a été interrompue. La reprise n'est pas encore gérée.");
             return;
         }
