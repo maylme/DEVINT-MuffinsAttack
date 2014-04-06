@@ -41,11 +41,8 @@ public class PanelLettres extends JPanel {
             JLabel alphaLettre = new JLabel(name);
             alphaLettre.setHorizontalAlignment(0); //centrage du text
 
-            //NE MARCHE PAS////////////////////////////////////////////////////////////////////////////
-            alphaLettre.setForeground(app.getForeground()); //ne marche pas: accorder la couleur
-            Font font = new Font("Arial",Font.BOLD,12);
-            alphaLettre.setFont(font);
-            ///////////////////////////////////////////////////////////////////////////////////////////
+            alphaLettre.setForeground(app.getForeground()); //pourquoi c'est pas bleu?!
+            alphaLettre.setFont(new java.awt.Font("Arial", Font.BOLD, 40));
 
             uneLettre.add(alphaLettre, BorderLayout.NORTH);
             uneLettre.add(lettre, BorderLayout.SOUTH);
