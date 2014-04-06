@@ -1,28 +1,32 @@
 package jeu.muffinattacks;
 
 import javax.swing.*;
-import javax.swing.Timer;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.TimerTask;
 
 /**
  * Created by Jicé on 24/03/2014.
  */
 public class Monde extends JPanel implements ActionListener {
-
     private final Jeu jeu;
     private javax.swing.Timer timerGraphic;
     private java.util.Timer timerPause;
+
     private Muffin muffin;
+
     private boolean isStarted;
     private boolean isPaused;
+
     private Couleur couleur;
+
     private int count;
     private int delay;
 
     public Monde(Jeu jeu, Couleur couleur) {
         this.jeu = jeu;
+        this.couleur = couleur;
 
         count = 0;
         this.timerGraphic = new Timer(200, this);
@@ -31,8 +35,7 @@ public class Monde extends JPanel implements ActionListener {
         isStarted = false;
         isPaused = false;
 
-        this.couleur = couleur;
-        this.setBorder(BorderFactory.createLineBorder(Color.black));
+        this.setBorder(BorderFactory.createLineBorder(couleur.getCouleurTexte()));
         this.setBackground(couleur.getCouleurFond());
     }
 
@@ -44,7 +47,7 @@ public class Monde extends JPanel implements ActionListener {
     }
 
     public void changerTemps(int t) {
-        delay = (int) ((t*1000) / (this.getHeight() - 40));
+        delay = (int) ((t * 1000) / (this.getHeight() - 40));
         this.timerGraphic.setDelay(delay);
     }
 
@@ -88,7 +91,7 @@ public class Monde extends JPanel implements ActionListener {
     }
 
     public void newMuffin() {
-        if(jeu.getVies() <= 0) return;
+        if (jeu.getVies() <= 0) return;
         jeu.timeReset();
         char lettre = jeu.getRandomLetter();
         jeu.dire("Un nouveau mufine attake la ville ! Appuie sur la touche " + lettre + ", pour le détruire.");
@@ -121,7 +124,8 @@ public class Monde extends JPanel implements ActionListener {
         g.setColor(couleur.getCouleurTexte());
         if (muffin != null) {
             muffin.paint(g);
-            g.drawString(String.valueOf(muffin.getLettre()), this.getWidth()-20, this.getHeight()-20);
+            g.setColor(couleur.getCouleurTexte());
+            g.drawString(String.valueOf(muffin.getLettre()), this.getWidth() - 20, this.getHeight() - 20);
         }
     }
 
