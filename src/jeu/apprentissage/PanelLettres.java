@@ -27,12 +27,32 @@ public class PanelLettres extends JPanel {
         braille = new JPanel(new GridLayout(0, 10, 20, 20));
         braille.setBackground(null);
         for(Caractere c:Caractere.values()) {
+            //panel de braille + lettre (unitaire)
+            JPanel uneLettre = new JPanel();
+            uneLettre.setBackground(null);
+            uneLettre.setLayout(new BorderLayout());
+
+            // la lettre en version braille
             Braille lettre = new Braille(app, c, app.getBackground());
             lettres.put(c.getKey(),lettre);
-            braille.add(lettre);
+
+            //la lettre en version alpha:
+            String name =c.name();
+            JLabel alphaLettre = new JLabel(name);
+            alphaLettre.setHorizontalAlignment(0); //centrage du text
+
+            alphaLettre.setForeground(app.getForeground()); //pourquoi c'est pas bleu?!
+            alphaLettre.setFont(new java.awt.Font("Arial", Font.BOLD, 40));
+
+            uneLettre.add(alphaLettre, BorderLayout.NORTH);
+            uneLettre.add(lettre, BorderLayout.SOUTH);
+
+            braille.add(uneLettre);
+
         }
         this.setLayout(new FlowLayout());
         this.add(braille);
+
     }
 
     public void changeColor(Color texte, Color fond) {
