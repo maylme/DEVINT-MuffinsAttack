@@ -185,6 +185,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
         if(keycode == KeyEvent.VK_ESCAPE) {
             monde.arreter();
+            timerPause.cancel();
             dire("La partie a été interrompue. La reprise n'est pas encore gérée.");
             return;
         }
