@@ -18,36 +18,25 @@ public class Muffin {
     private Caractere caractere;
 
     /**
-     * Instancie un muffin avec une lettre
+     * Instancie un muffin avec une lettre et sa taille
      *
      * @param lettre
      * @param taille
-     * @param largeurMonde
      */
-    public Muffin(char lettre, int taille, int largeurMonde) {
+    public Muffin(char lettre, int taille) {
         this.lettre = lettre;
         this.caractere = Caractere.valueOf(String.valueOf(lettre));
         this.taille = taille;
         this.rand = new Random();
         this.position = new Point(0,0);
-        this.largeurMonde = largeurMonde;
+        this.largeurMonde = 100;
     }
 
     /**
      * Réinitialise la valeur de position
      */
-    public void replaceOnTop() {
-        position.move(rand.nextInt(zoneX()), -taille);
-    }
-
-    /**
-     * Permet de calculer la zone autorisée pour la position horizontale du
-     * muffin
-     *
-     * @return valeur maximale que peut prendre la valeur x
-     */
-    private int zoneX() {
-        return largeurMonde - taille;
+    public void replaceOnTop(int largeurMonde) {
+        position.move(rand.nextInt(largeurMonde-taille), -taille);
     }
 
     /**

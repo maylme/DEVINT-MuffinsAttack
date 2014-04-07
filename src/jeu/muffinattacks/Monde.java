@@ -29,8 +29,9 @@ public class Monde extends JPanel implements ActionListener {
         this.couleur = couleur;
 
         count = 0;
-        this.timerGraphic = new Timer(200, this);
+        timerGraphic = new Timer(200, this);
         timerPause = new java.util.Timer();
+        muffin = null;
 
         isStarted = false;
         isPaused = false;
@@ -44,6 +45,9 @@ public class Monde extends JPanel implements ActionListener {
         newMuffin();
         timerGraphic.start();
         isStarted = true;
+        newMuffinPause(5);
+        jeu.jouerEnregistrement("attention_muffins_attaquent_la_ville");
+        jeu.jouerEnregistrementPause("Pour_les_detruires",2);
     }
 
     public void changerTemps(int t) {
@@ -58,10 +62,9 @@ public class Monde extends JPanel implements ActionListener {
 
     /**
      * Crée une pause dans le jeu avant de créer un nouveau muffin
-     *
      * @param seconds le temps (en secondes)
      */
-    public void pauseNewMuffin(int seconds) {
+    public void newMuffinPause(int seconds) {
         TimerTask unpauseTask = new TimerTask() {
             @Override
             public void run() {
@@ -90,18 +93,21 @@ public class Monde extends JPanel implements ActionListener {
         repaint();
     }
 
+    /**
+     * Recycle l'objet Muffin existant en un muffin avec une nouvelle lettre
+     * <br />Instancie un muffin si aucun n'existe
+     */
     public void newMuffin() {
         if (jeu.getVies() <= 0) return;
         jeu.timeReset();
         char lettre = jeu.getRandomLetter();
-        if (muffin == null) {
-            muffin = new Muffin(lettre, 100, jeu.getWidth());
+        if(muffin == null) {
+            muffin = new Muffin(lettre,100);
         } else {
             muffin.setLettre(lettre);
         }
-        muffin.replaceOnTop();
-        jeu.dire("Un nouveau mufine attake la ville ! Appuie sur la lettre ");
-        jeu.direLettrePause(String.valueOf(muffin.getLettre()), 3);
+        muffin.replaceOnTop(jeu.getWidth());
+        jeu.direLettre(String.valueOf(muffin.getLettre()));
     }
 
     public void muffinFall() {
@@ -115,8 +121,9 @@ public class Monde extends JPanel implements ActionListener {
     }
 
     public void killMuffin() {
+        jeu.jouerEnregistrement("muffin_detruit");
+        newMuffinPause(3);
         jeu.ajouterPoint(1);
-        pauseNewMuffin(3);
     }
 
     @Override
@@ -138,7 +145,7 @@ public class Monde extends JPanel implements ActionListener {
         } else if (jeu.getTimeOut()) {
             jeu.viePerdue();
             // on fait une pause de 3 secondes pour ne pas trop perturber le joueur
-            pauseNewMuffin(3);
+            newMuffinPause(3);
         } else {
             muffinFall();
         }
@@ -161,7 +168,6 @@ public class Monde extends JPanel implements ActionListener {
     public void lettreEntree(char lettre) {
         if (Character.compare(muffin.getLettre(), lettre) == 0) {
             killMuffin();
-            jeu.dire("C'est très bien !");
         } else {
             jeu.dire("Non ça c'est la lettre " + lettre + ", cherche encore.");
         }

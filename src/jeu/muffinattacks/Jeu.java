@@ -68,10 +68,6 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         monde.changerTemps(tempsTotal);
     }
 
-
-
-
-
     /**
      * Utilise sivox pour lire la phrase donnée en paramètres
      * <br />La phrase est lue aprés le paramètres secondes
@@ -104,6 +100,21 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         timerPause.schedule(unpauseTask, (int) secondes * 1000);
     }
 
+    /**
+     * Joue l'enregistrement du dossier donné par le fichier string.wav
+     * <br />Après le temps donnée secondes
+     * @param string Enregistrement
+     * @param secondes
+     */
+    public void jouerEnregistrementPause(final String string, int secondes) {
+        TimerTask unpauseTask = new TimerTask() {
+            @Override
+            public void run() {
+                jouerEnregistrement(string);
+            }
+        };
+        timerPause.schedule(unpauseTask, (int) secondes * 1000);
+    }
 
     public void dire(String s) {
         voix.stop();
@@ -116,22 +127,26 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         voix.playWav(chemin);
     }
 
+    public void jouerEnregistrement(String nom) {
+        voix.stop();
+        voix.playWav("../ressources/sons/jeu/"+nom+".wav");
+    }
+
     // renvoie le fichier wave contenant le message d'accueil
     @Override
     protected String wavAccueil() {
-        return "ressources/sons/accueil.wav";
+        return "";
     }
 
     // renvoie le fichier wave contenant la règle du jeu
     @Override
     protected String wavRegleJeu() {
-        dire("Tu cherches la lettre " + monde.getMuffin().getLettre());
         return "";
     }
 
     // renvoie le fichier wave contenant l'aide du jeu
     protected String wavAide() {
-        return "ressources/sons/aide.wav";
+        return "../ressources/sons/aide.wav";
     }
 
     @Override
