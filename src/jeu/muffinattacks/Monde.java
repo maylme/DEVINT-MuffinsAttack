@@ -9,12 +9,15 @@ import java.util.TimerTask;
 /**
  * Created by Jicé on 24/03/2014.
  */
-public class Monde extends JPanel implements ActionListener {
+public class Monde extends JPanel {
     private final Jeu jeu;
     private javax.swing.Timer timerGraphic;
     private java.util.Timer timerPause;
 
     private Muffin muffin;
+    private boolean effacement;
+    private int effaceActuel;
+    private javax.swing.Timer timerEffacement;
 
     private boolean isStarted;
     private boolean isPaused;
@@ -23,14 +26,18 @@ public class Monde extends JPanel implements ActionListener {
 
     private int count;
     private int delay;
+    private final static int pauseEntreMuffins = 2;
 
     public Monde(Jeu jeu, Couleur couleur) {
         this.jeu = jeu;
         this.couleur = couleur;
 
         count = 0;
-        timerGraphic = new Timer(200, this);
+        timerGraphic = new Timer(200, new GraphicsTime());
         timerPause = new java.util.Timer();
+        timerEffacement = new Timer(100,new EffacementTime());
+        this.effaceActuel = 0;
+
         muffin = null;
 
         isStarted = false;
@@ -47,7 +54,7 @@ public class Monde extends JPanel implements ActionListener {
         isStarted = true;
         newMuffinPause(5);
         jeu.jouerEnregistrement("attention_muffins_attaquent_la_ville");
-        jeu.jouerEnregistrementPause("Pour_les_detruires",2);
+        jeu.jouerEnregistrementPause("Pour_les_detruires", 2);
     }
 
     public void changerTemps(int t) {
@@ -106,7 +113,7 @@ public class Monde extends JPanel implements ActionListener {
         } else {
             muffin.setLettre(lettre);
             jeu.jouerEnregistrement("vite_appuie_sur");
-            jeu.direLettrePause(String.valueOf(muffin.getLettre()),1);
+            jeu.direLettrePause(String.valueOf(muffin.getLettre()),1.1);
         }
         muffin.replaceOnTop(jeu.getWidth());
     }
@@ -123,32 +130,42 @@ public class Monde extends JPanel implements ActionListener {
 
     public void killMuffin() {
         jeu.jouerEnregistrement("muffin_detruit");
-        newMuffinPause(3);
+        effacerMuffin();
+        newMuffinPause(pauseEntreMuffins);
         jeu.ajouterPoint(1);
+    }
+
+    public void effacerMuffin() {
+        timerEffacement.setDelay((muffin.getTaille()/(pauseEntreMuffins*60))/1000);
+        timerEffacement.start();
+        effacement = true;
+        effaceActuel = 0;
+    }
+
+    private void dessineMuffinPartiel(Graphics g) {
+        Point position = muffin.getPosition();
+        int x1 = (int) position.getX();
+        int y1 = (int) position.getY()+effaceActuel;
+        int x2 = (int) muffin.getTaille();
+        int y2 = (int) muffin.getTaille()-effaceActuel;
+        g.setColor(Color.RED);
+        g.fillRect(x1, y1, x2, y2);
+        System.out.println("Muffin efface ligne de (" + x1 + "," + y1 + ") à (" + x2 + "," + y2 + ")");
+        effaceActuel++;
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        g.setColor(couleur.getCouleurTexte());
-        if (muffin != null) {
-            muffin.paint(g);
-            g.setColor(couleur.getCouleurTexte());
-            g.drawString(String.valueOf(muffin.getLettre()), this.getWidth() - 20, this.getHeight() - 20);
-        }
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (jeu.getVies() <= 0) {
-            jeu.dire("Le jeu est terminé ! Tu n'as plus de vies.");
-            timerGraphic.stop();
-        } else if (jeu.getTimeOut()) {
-            jeu.viePerdue();
-            // on fait une pause de 3 secondes pour ne pas trop perturber le joueur
-            newMuffinPause(3);
+        if(effacement) {
+            dessineMuffinPartiel(g);
         } else {
-            muffinFall();
+            g.setColor(couleur.getCouleurTexte());
+            if (muffin != null) {
+                muffin.paint(g);
+                g.setColor(couleur.getCouleurTexte());
+                g.drawString(String.valueOf(muffin.getLettre()), this.getWidth() - 20, this.getHeight() - 20);
+            }
         }
     }
 
@@ -176,5 +193,34 @@ public class Monde extends JPanel implements ActionListener {
 
     public Muffin getMuffin() {
         return muffin;
+    }
+
+    private class EffacementTime implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(effaceActuel <= muffin.getTaille()) {
+                repaint();
+            } else {
+                timerEffacement.stop();
+                effacement=false;
+                effaceActuel = 0;
+            }
+        }
+    }
+
+    private class GraphicsTime implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (jeu.getVies() <= 0) {
+                jeu.dire("Le jeu est terminé ! Tu n'as plus de vies.");
+                timerGraphic.stop();
+            } else if (jeu.getTimeOut()) {
+                jeu.viePerdue();
+                // on fait une pause de 3 secondes pour ne pas trop perturber le joueur
+                newMuffinPause(3);
+            } else {
+                muffinFall();
+            }
+        }
     }
 }

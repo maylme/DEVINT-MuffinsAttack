@@ -54,7 +54,8 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         this.add(monde, BorderLayout.CENTER);
         this.add(status, BorderLayout.SOUTH);
 
-        dire("Presse la touche ESPACE pour démarrer le jeu.");
+        //dire("Presse la touche ESPACE pour démarrer le jeu.");
+        jouerEnregistrementPause("espace_pour_demarer",2);
     }
 
     private void preparerJeu() {

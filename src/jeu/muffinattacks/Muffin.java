@@ -2,19 +2,20 @@ package jeu.muffinattacks;
 
 import jeu.apprentissage.Caractere;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
 /**
  * Created by Jicé on 24/03/2014.
  */
 public class Muffin {
-
     private static Random rand;
     private char lettre;
     private Point position;
     private int taille;
-    private int largeurMonde;
     private Caractere caractere;
 
     /**
@@ -29,7 +30,6 @@ public class Muffin {
         this.taille = taille;
         this.rand = new Random();
         this.position = new Point(0,0);
-        this.largeurMonde = 100;
     }
 
     /**
