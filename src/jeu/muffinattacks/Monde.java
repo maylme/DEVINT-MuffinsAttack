@@ -136,7 +136,7 @@ public class Monde extends JPanel {
     }
 
     public void effacerMuffin() {
-        int delay = (int) (muffin.getTaille()/(pauseEntreMuffins*1000));
+        int delay = (int) ((muffin.getTaille()/2)/(pauseEntreMuffins*1000));
         timerEffacement.setDelay(delay);
         timerEffacement.start();
         effacement = true;
@@ -151,7 +151,6 @@ public class Monde extends JPanel {
         int y2 = (int) muffin.getTaille()-effaceActuel*2;
         g.setColor(Color.RED);
         g.fillRect(x1, y1, x2, y2);
-        System.out.println("Muffin efface ligne de (" + x1 + "," + y1 + ") à (" + x2 + "," + y2 + ")");
         effaceActuel++;
     }
 
@@ -199,7 +198,7 @@ public class Monde extends JPanel {
     private class EffacementTime implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(effaceActuel <= muffin.getTaille()) {
+            if(effaceActuel <= muffin.getTaille()/2) {
                 repaint();
             } else {
                 timerEffacement.stop();
