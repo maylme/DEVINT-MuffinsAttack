@@ -16,12 +16,12 @@ public class SelectionCouleur extends JPanel {
     public SelectionCouleur() {
         this.choixCouleur = new ArrayList<ChoixCouleur>();
 
-        for(Couleur c:Couleur.values()) {
+        for (Couleur c : Couleur.values()) {
             this.choixCouleur.add(new ChoixCouleur(c));
         }
 
-        this.setLayout(new GridLayout(0,6,10,10));
-        for(ChoixCouleur choix:choixCouleur) {
+        this.setLayout(new GridLayout(0, 6, 10, 10));
+        for (ChoixCouleur choix : choixCouleur) {
             this.add(choix);
         }
     }

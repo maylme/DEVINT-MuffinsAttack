@@ -101,7 +101,7 @@ public class Monde extends JPanel implements ActionListener {
         }
         muffin.replaceOnTop();
         jeu.dire("Un nouveau mufine attake la ville ! Appuie sur la lettre ");
-        jeu.direLettrePause(String.valueOf(muffin.getLettre()), 2.9);
+        jeu.direLettrePause(String.valueOf(muffin.getLettre()), 3);
     }
 
     public void muffinFall() {
