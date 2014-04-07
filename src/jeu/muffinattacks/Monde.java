@@ -26,7 +26,7 @@ public class Monde extends JPanel {
 
     private int count;
     private int delay;
-    private final static int pauseEntreMuffins = 2;
+    private final static double pauseEntreMuffins = 1.5;
 
     public Monde(Jeu jeu, Couleur couleur) {
         this.jeu = jeu;
@@ -71,7 +71,7 @@ public class Monde extends JPanel {
      * Crée une pause dans le jeu avant de créer un nouveau muffin
      * @param seconds le temps (en secondes)
      */
-    public void newMuffinPause(int seconds) {
+    public void newMuffinPause(double seconds) {
         TimerTask unpauseTask = new TimerTask() {
             @Override
             public void run() {
@@ -80,7 +80,7 @@ public class Monde extends JPanel {
             }
         };
         pause();
-        timerPause.schedule(unpauseTask, seconds * 1000);
+        timerPause.schedule(unpauseTask, (int) seconds * 1000);
     }
 
     /**
@@ -112,7 +112,7 @@ public class Monde extends JPanel {
             muffin = new Muffin(lettre,100);
         } else {
             muffin.setLettre(lettre);
-            jeu.jouerEnregistrement("vite_appuie_sur");
+            //jeu.jouerEnregistrement("vite_appuie_sur");
             jeu.direLettrePause(String.valueOf(muffin.getLettre()),1.1);
         }
         muffin.replaceOnTop(jeu.getWidth());
@@ -136,7 +136,8 @@ public class Monde extends JPanel {
     }
 
     public void effacerMuffin() {
-        timerEffacement.setDelay((muffin.getTaille()/(pauseEntreMuffins*60))/1000);
+        int delay = (int) (muffin.getTaille()/(pauseEntreMuffins*1000));
+        timerEffacement.setDelay(delay);
         timerEffacement.start();
         effacement = true;
         effaceActuel = 0;
