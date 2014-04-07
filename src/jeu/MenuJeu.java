@@ -9,10 +9,13 @@ package jeu;
 
 import devintAPI.MenuAbstrait;
 import jeu.apprentissage.Apprentissage;
+import jeu.muffinattacks.Couleur;
 import jeu.muffinattacks.Jeu;
+import jeu.utilisateur.Utilisateur;
 
 public class MenuJeu extends MenuAbstrait {
 
+    private Utilisateur user;
     /**
      * constructeur
      *
@@ -80,4 +83,9 @@ public class MenuJeu extends MenuAbstrait {
         return "../ressources/sons/accueil.wav";
     }
 
+    private void actualiserCouleurs() {
+       Couleur c = user.getCouleurPreferee();
+       this.setBackground(c.getCouleurFond());
+       this.setForeground(c.getCouleurTexte());
+    }
 }
