@@ -195,6 +195,10 @@ public class Monde extends JPanel {
         return muffin;
     }
 
+    public boolean getDemarre() {
+        return isStarted;
+    }
+
     private class EffacementTime implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {

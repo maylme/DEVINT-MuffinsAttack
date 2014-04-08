@@ -25,6 +25,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     private int tempsRestant;
     private int tempsTotal;
     private Timer timerPause;
+    private boolean timerCancelled;
 
     /**
      * @param title : titre de la fenetre
@@ -55,7 +56,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         this.add(status, BorderLayout.SOUTH);
 
         //dire("Presse la touche ESPACE pour démarrer le jeu.");
-        jouerEnregistrementPause("espace_pour_demarer",2);
+        jouerEnregistrementPause("espace_pour_demarrer",2);
     }
 
     private void preparerJeu() {
@@ -82,6 +83,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
                 dire(chaine);
             }
         };
+        if(timerCancelled) timerUncancel();
         timerPause.schedule(unpauseTask, (int) secondes * 1000);
     }
 
@@ -98,6 +100,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
                 direLettre(lettre);
             }
         };
+        if(timerCancelled) timerUncancel();
         timerPause.schedule(unpauseTask, (int) secondes * 1000);
     }
 
@@ -114,7 +117,13 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
                 jouerEnregistrement(string);
             }
         };
+        if(timerCancelled) timerUncancel();
         timerPause.schedule(unpauseTask, (int) secondes * 1000);
+    }
+
+    private void timerUncancel() {
+        timerPause = new Timer();
+        timerCancelled = false;
     }
 
     public void dire(String s) {
@@ -142,12 +151,19 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     // renvoie le fichier wave contenant la règle du jeu
     @Override
     protected String wavRegleJeu() {
+        jouerEnregistrement("muffins_attaquent_la_ville");
+        jouerEnregistrementPause("tu_as_3_vie", 2);
+        jouerEnregistrementPause("Pour_les_detruires",3);
         return "";
     }
 
     // renvoie le fichier wave contenant l'aide du jeu
     protected String wavAide() {
-        return "../ressources/sons/aide.wav";
+        if(!monde.getDemarre()) {
+            return "../ressources/sons/jeu/espace_pour_demarrer.wav";
+        } else {
+            return "../ressources/sons/jeu/Pour_les_detruires.wav";
+        }
     }
 
     @Override
@@ -190,6 +206,8 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         if (!(monde.getStarted()) && (keycode == KeyEvent.VK_SPACE)) {
             preparerJeu();
             preparerMonde();
+            timerPause.cancel();
+            timerCancelled = true;
             dire("Le jeu démarre.");
             monde.jouer(tempsTotal);
             return;
@@ -221,16 +239,16 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         }
 
         if(keycode == KeyEvent.VK_UP) {
-            tempsTotal += 3;
-            tempsRestant += 3;
+            tempsTotal += 2;
+            tempsRestant += 2;
             monde.changerTemps(tempsTotal);
             return;
         }
 
         if(keycode == KeyEvent.VK_DOWN) {
             if(tempsTotal > 3) {
-                tempsTotal -= 3;
-                tempsRestant -= 3;
+                tempsTotal -= 2;
+                tempsRestant -= 2;
                 monde.changerTemps(tempsTotal);
             }
             return;
