@@ -61,8 +61,10 @@ public class Monde extends JPanel {
     }
 
     public void arreter() {
+        pause();
         timerGraphic.stop();
-        timerPause.cancel();
+        isStarted = false;
+        repaint();
     }
 
     /**

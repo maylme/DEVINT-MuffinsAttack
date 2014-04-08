@@ -19,9 +19,9 @@ public class Vies extends JPanel {
     private boolean imageChargee;
     private Jeu jeu;
 
-    public Vies(Jeu jeu, int vies) {
+    public Vies(Jeu jeu) {
         this.jeu = jeu;
-        this.vies = vies;
+        this.vies = 3;
         this.imageChargee = false;
         try {
             this.coeurImg = ImageIO.read(new File(fileImageCoeur));
@@ -54,5 +54,10 @@ public class Vies extends JPanel {
 
     public int getVies() {
         return vies;
+    }
+
+    public void setVies(int n) {
+        this.vies = n;
+        repaint();
     }
 }

@@ -38,7 +38,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     protected void init() {
         rand = new Random();
         status = new JLabel("Attends le démarrage du jeu");
-        vies = new Vies(this,3);
+        vies = new Vies(this);
         temps = new Temps(0);
         monde = new Monde(this, Couleur.NOIRBLANC);
         timerPause = new Timer();
@@ -60,8 +60,9 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     }
 
     private void preparerJeu() {
+        vies.setVies(3);
         points = 0;
-        tempsTotal = 15;
+        tempsTotal = 6;
         updateStatusBar();
     }
 
@@ -176,10 +177,6 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         monde.setColors(c);
     }
 
-    public JLabel getStatusBar() {
-        return status;
-    }
-
     public void updateStatusBar() {
         temps.update(tempsRestant);
         status.setText("Temps total:"+tempsTotal+" Vies:" + vies.getVies() + " Points:" + points + " Temps restant:" + tempsRestant);
@@ -208,7 +205,6 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
             preparerMonde();
             timerPause.cancel();
             timerCancelled = true;
-            dire("Le jeu démarre.");
             monde.jouer(tempsTotal);
             return;
         }
