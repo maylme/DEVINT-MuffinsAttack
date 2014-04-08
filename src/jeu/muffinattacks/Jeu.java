@@ -38,7 +38,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     protected void init() {
         rand = new Random();
         status = new JLabel("Attends le démarrage du jeu");
-        vies = new Vies(3);
+        vies = new Vies(this,3);
         temps = new Temps(0);
         monde = new Monde(this, Couleur.NOIRBLANC);
         timerPause = new Timer();
@@ -239,17 +239,13 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         }
 
         if(keycode == KeyEvent.VK_UP) {
-            tempsTotal += 2;
-            tempsRestant += 2;
-            monde.changerTemps(tempsTotal);
+            changerTemps(2);
             return;
         }
 
         if(keycode == KeyEvent.VK_DOWN) {
-            if(tempsTotal > 3) {
-                tempsTotal -= 2;
-                tempsRestant -= 2;
-                monde.changerTemps(tempsTotal);
+            if(tempsTotal > 2) {
+                changerTemps(-2);
             }
             return;
         }
@@ -265,13 +261,19 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         }
     }
 
+    private void changerTemps(int i) {
+        tempsTotal += i;
+        tempsRestant += i;
+        monde.changerTemps(tempsTotal);
+        updateStatusBar();
+    }
+
     public void ajouterPoint(int i) {
         this.points++;
         updateStatusBar();
     }
 
     public void viePerdue() {
-        dire("Tu as perdu une vie ...");
         vies.viePerdue();
         updateStatusBar();
     }
@@ -293,5 +295,17 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     public void timeReset() {
         this.tempsRestant = tempsTotal;
         updateStatusBar();
+    }
+
+    public void jeuFini() {
+        monde.arreter();
+        jouerEnregistrement("fin");
+    }
+
+    public void timeOut() {
+        jouerEnregistrement("muffin_tombé");
+        viePerdue();
+        // on fait une pause de 3 secondes pour ne pas trop perturber le joueur
+        monde.newMuffinPause(3);
     }
 }

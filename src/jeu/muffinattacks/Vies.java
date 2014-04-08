@@ -17,9 +17,10 @@ public class Vies extends JPanel {
     private int vies;
     private BufferedImage coeurImg;
     private boolean imageChargee;
+    private Jeu jeu;
 
-    public Vies(int vies) {
-
+    public Vies(Jeu jeu, int vies) {
+        this.jeu = jeu;
         this.vies = vies;
         this.imageChargee = false;
         try {
@@ -35,6 +36,7 @@ public class Vies extends JPanel {
 
     public void viePerdue() {
         this.vies--;
+        jeu.jouerEnregistrementPause(String.valueOf(vies),1);
         repaint();
     }
 

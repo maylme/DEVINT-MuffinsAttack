@@ -38,10 +38,10 @@ public class Monde extends JPanel {
         timerEffacement = new Timer(100,new EffacementTime());
         this.effaceActuel = 0;
 
-        muffin = null;
+        muffin = new Muffin('A',100);
 
         isStarted = false;
-        isPaused = false;
+        isPaused = true;
 
         this.setBorder(BorderFactory.createLineBorder(couleur.getCouleurTexte()));
         this.setBackground(couleur.getCouleurFond());
@@ -49,16 +49,14 @@ public class Monde extends JPanel {
 
     public void jouer(int t) {
         changerTemps(t);
-        newMuffin();
-        timerGraphic.start();
-        isStarted = true;
+
         newMuffinPause(5);
         jeu.jouerEnregistrement("attention_muffins_attaquent_la_ville");
         jeu.jouerEnregistrementPause("Pour_les_detruires", 2);
     }
 
     public void changerTemps(int t) {
-        delay = (int) ((t * 1000) / (this.getHeight() - 40));
+        delay = (int) ((t * 1000) / (this.getHeight() - (muffin.getTaille()+40)));
         this.timerGraphic.setDelay(delay);
     }
 
@@ -87,9 +85,7 @@ public class Monde extends JPanel {
      * Met en ou sort le jeu de pause
      */
     public void pause() {
-        if (!isStarted) {
-            return;
-        }
+        if (!isStarted) return;
 
         isPaused = !isPaused;
         if (isPaused) {
@@ -98,6 +94,7 @@ public class Monde extends JPanel {
             timerGraphic.start();
         }
         repaint();
+        System.out.println("Pause");
     }
 
     /**
@@ -105,25 +102,26 @@ public class Monde extends JPanel {
      * <br />Instancie un muffin si aucun n'existe
      */
     public void newMuffin() {
-        if (jeu.getVies() <= 0) return;
-        jeu.timeReset();
-        char lettre = jeu.getRandomLetter();
-        if(muffin == null) {
-            muffin = new Muffin(lettre,100);
-        } else {
-            muffin.setLettre(lettre);
-            //jeu.jouerEnregistrement("vite_appuie_sur");
-            jeu.direLettrePause(String.valueOf(muffin.getLettre()),1.1);
+        if(!isStarted) {
+            isStarted = true;
+            timerGraphic.start();
         }
+        if (jeu.getVies() <= 0) return;
+        char lettre = jeu.getRandomLetter();
+        jeu.timeReset();
         muffin.replaceOnTop(jeu.getWidth());
+        muffin.setLettre(lettre);
+        //jeu.jouerEnregistrement("vite_appuie_sur");
+        jeu.direLettre(String.valueOf(muffin.getLettre()));
+        System.out.println("Nouveau muffin lancé");
     }
 
     public void muffinFall() {
         muffin.moveOnce();
         count++;
         if (count > 1000 / delay) {
-            jeu.secondeEcoulee();
             count = 0;
+            jeu.secondeEcoulee();
         }
         repaint();
     }
@@ -135,6 +133,10 @@ public class Monde extends JPanel {
         jeu.ajouterPoint(1);
     }
 
+    /**
+     * Efface le muffin avec une animation graphique
+     * <br />A appeler quand on a pressé sur la bonne touche
+     */
     public void effacerMuffin() {
         int delay = (int) ((muffin.getTaille()/2)/(pauseEntreMuffins*1000));
         timerEffacement.setDelay(delay);
@@ -143,6 +145,11 @@ public class Monde extends JPanel {
         effaceActuel = 0;
     }
 
+    /**
+     * Redessine le muffin de façon réduite à chaque appel
+     * <br />Pour réinitialiser l'action de cette fonction, il faut réinitialiser la variable effacement à 0
+     * @param g
+     */
     private void dessineMuffinPartiel(Graphics g) {
         Point position = muffin.getPosition();
         int x1 = (int) position.getX();
@@ -157,6 +164,7 @@ public class Monde extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        if(!isStarted) return;
         if(effacement) {
             dessineMuffinPartiel(g);
         } else {
@@ -187,7 +195,8 @@ public class Monde extends JPanel {
         if (Character.compare(muffin.getLettre(), lettre) == 0) {
             killMuffin();
         } else {
-            jeu.dire("Non ça c'est la lettre " + lettre + ", cherche encore.");
+            //TODO Voix quand ce n'est pas la bonne lettre
+
         }
     }
 
@@ -216,12 +225,9 @@ public class Monde extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (jeu.getVies() <= 0) {
-                jeu.dire("Le jeu est terminé ! Tu n'as plus de vies.");
-                timerGraphic.stop();
+                jeu.jeuFini();
             } else if (jeu.getTimeOut()) {
-                jeu.viePerdue();
-                // on fait une pause de 3 secondes pour ne pas trop perturber le joueur
-                newMuffinPause(3);
+                jeu.timeOut();
             } else {
                 muffinFall();
             }
