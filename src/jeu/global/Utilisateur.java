@@ -18,8 +18,8 @@ public class Utilisateur extends JPanel {
         // création d'un utilisateur
         this.identifiant = identifiant;
         this.couleursPreferees = new ArrayList<Couleurs>();
-        this.couleursPreferees.add(Couleurs.VERTBLANC);
         this.couleursPreferees.add(Couleurs.NOIRJAUNE);
+        this.couleursPreferees.add(Couleurs.VERTBLANC);
         this.couleursPreferees.add(Couleurs.BEIGEROUGE);
         this.couleursChoisies = 0;
     }

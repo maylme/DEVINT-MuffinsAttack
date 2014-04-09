@@ -8,7 +8,7 @@ import jeu.global.couleurs.SelectionCouleurs;
 import jeu.global.Utilisateur;
 
 /**
- * Cette classe est un exemple d'interface pour les options
+ * Cette classe représente les options
  *
  */
 public class Option extends FenetreAbstraite {
@@ -29,6 +29,7 @@ public class Option extends FenetreAbstraite {
     @Override
     protected String wavRegleJeu() {
         return "../ressources/sons/accueilOption.wav";
+        voix.direPause("");
     }
 
     // renvoie le fichier wave contenant la règle du jeu

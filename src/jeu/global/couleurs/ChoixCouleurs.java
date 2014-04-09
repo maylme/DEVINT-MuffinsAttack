@@ -2,6 +2,7 @@ package jeu.global.couleurs;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -68,7 +69,7 @@ public class ChoixCouleurs extends JPanel {
     }
 
 
-    private class EcouteurSouris implements MouseListener {
+    private class EcouteurSouris extends MouseAdapter {
         private ChoixCouleurs cc;
 
         public EcouteurSouris(ChoixCouleurs cc) {
@@ -78,22 +79,6 @@ public class ChoixCouleurs extends JPanel {
         @Override
         public void mouseClicked(MouseEvent e) {
             cc.overlay();
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
         }
     }
 
