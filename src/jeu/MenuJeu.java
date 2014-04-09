@@ -9,16 +9,17 @@ package jeu;
 
 import devintAPI.MenuAbstrait;
 import jeu.apprentissage.Apprentissage;
-import jeu.muffinattacks.Couleurs;
+import jeu.global.couleurs.Couleurs;
 import jeu.muffinattacks.Jeu;
-import jeu.utilisateur.Utilisateur;
+import jeu.global.Utilisateur;
 
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
-import java.util.ArrayList;
 import java.util.Collection;
 
 public class MenuJeu extends MenuAbstrait {
     private Utilisateur utilisateur;
+    private String[] noms;
 
     /**
      * constructeur
@@ -37,7 +38,7 @@ public class MenuJeu extends MenuAbstrait {
      */
     @Override
     protected String[] nomOptions() {
-        String[] noms = {"Jouer", "Apprentissage", "Options", "Quitter"};
+        noms = new String[]{"Jouer", "Apprentissage", "Options", "Quitter"};
         return noms;
     }
 
@@ -99,7 +100,29 @@ public class MenuJeu extends MenuAbstrait {
 
     public void setUtilisateur(Utilisateur u) {
         this.utilisateur = u;
+        changeColor();
     }
 
+    //@Override
+    public void changeColor() {
+        utilisateur.couleursSuivantes();
+        Couleurs couleursUtilisateur = utilisateur.getCouleursChoisies();
+        foregroundColor = couleursUtilisateur.getCouleurTexte();
+        backgroundColor = couleursUtilisateur.getCouleurFond();
 
+        //entête
+        enteteBorder = new LineBorder(foregroundColor,8);
+        entete.setForeground(foregroundColor);
+        entete.setBackground(backgroundColor);
+        entete.setBorder(enteteBorder);
+        //label
+        lb1.setForeground(foregroundColor);
+        lb1.setBackground(backgroundColor);
+        //panel
+        this.getContentPane().setForeground(foregroundColor);
+        this.getContentPane().setBackground(backgroundColor);
+        //boutons
+        this.buttonBorder = new CompoundBorder(new LineBorder(foregroundColor,5),new LineBorder(backgroundColor,3));
+        this.refreshButtons();
+    }
 }

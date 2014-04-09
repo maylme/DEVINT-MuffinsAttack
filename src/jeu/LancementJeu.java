@@ -1,6 +1,6 @@
 package jeu;
 
-import jeu.utilisateur.Utilisateur;
+import jeu.global.Utilisateur;
 
 /**
  * classe pour lancer le jeu Elle créé simplement une instance de MenuJeu

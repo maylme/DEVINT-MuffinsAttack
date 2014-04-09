@@ -1,6 +1,8 @@
 package jeu.apprentissage;
 
-import jeu.muffinattacks.Couleurs;
+import jeu.global.caracteres.Braille;
+import jeu.global.caracteres.Caractere;
+import jeu.global.couleurs.Couleurs;
 
 import java.awt.*;
 import java.util.HashMap;

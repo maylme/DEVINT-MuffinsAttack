@@ -1,5 +1,7 @@
 package jeu.muffinattacks;
 
+import jeu.global.couleurs.Couleurs;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

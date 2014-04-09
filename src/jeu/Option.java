@@ -4,8 +4,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 import devintAPI.*;
-import jeu.utilisateur.SelectionCouleurs;
-import jeu.utilisateur.Utilisateur;
+import jeu.global.couleurs.SelectionCouleurs;
+import jeu.global.Utilisateur;
 
 /**
  * Cette classe est un exemple d'interface pour les options

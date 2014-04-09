@@ -1,4 +1,6 @@
-package jeu.apprentissage;
+package jeu.global.caracteres;
+
+import jeu.apprentissage.Apprentissage;
 
 import javax.swing.*;
 import java.awt.*;

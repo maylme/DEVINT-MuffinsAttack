@@ -1,6 +1,7 @@
 package jeu.muffinattacks;
 
 import devintAPI.FenetreAbstraite;
+import jeu.global.couleurs.Couleurs;
 
 import javax.swing.*;
 import java.awt.*;

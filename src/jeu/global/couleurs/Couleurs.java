@@ -1,4 +1,4 @@
-package jeu.muffinattacks;
+package jeu.global.couleurs;
 
 import java.awt.*;
 

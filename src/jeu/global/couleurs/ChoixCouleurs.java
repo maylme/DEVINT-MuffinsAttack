@@ -1,6 +1,4 @@
-package jeu.utilisateur;
-
-import jeu.muffinattacks.Couleurs;
+package jeu.global.couleurs;
 
 import javax.swing.*;
 import java.awt.*;

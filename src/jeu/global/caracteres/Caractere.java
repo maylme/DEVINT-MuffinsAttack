@@ -1,4 +1,4 @@
-package jeu.apprentissage;
+package jeu.global.caracteres;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

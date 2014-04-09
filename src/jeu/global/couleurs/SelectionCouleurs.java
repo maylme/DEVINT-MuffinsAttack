@@ -1,6 +1,4 @@
-package jeu.utilisateur;
-
-import jeu.muffinattacks.Couleurs;
+package jeu.global.couleurs;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +30,6 @@ public class SelectionCouleurs extends JPanel {
             for (Couleurs c : couleurs) {
                 if (actual.isCouleurs(c)) {
                     actual.setSelected();
-                    System.out.println(actual.getCouleurs()+" ("+c+") set to "+actual.isSelected());
                 }
             }
         }
