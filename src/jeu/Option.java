@@ -40,7 +40,6 @@ public class Option extends FenetreAbstraite {
     @Override
     public void init() {
         selectioncouleurs = new SelectionCouleurs();
-        selectioncouleurs.setConfiguration(utilisateur.getCouleursPreferees());
 
         this.setLayout(new BorderLayout());
         this.add(selectioncouleurs, BorderLayout.CENTER);
@@ -48,17 +47,23 @@ public class Option extends FenetreAbstraite {
 
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
+        System.out.println(utilisateur.getCouleursPreferees());
+        selectioncouleurs.setConfiguration(utilisateur.getCouleursPreferees());
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         super.keyPressed(e);
         if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            utilisateur.setCouleursPreferees(selectioncouleurs.getSelectedCouleurs());
+            if(utilisateur != null) {
+                utilisateur.setCouleursPreferees(selectioncouleurs.getSelectedCouleurs());
+            }
         }
 
     }
 
     @Override
-    public void changeColor() {}
+    public void changeColor() {
+
+    }
 }

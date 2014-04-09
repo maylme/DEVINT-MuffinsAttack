@@ -13,11 +13,13 @@ import jeu.muffinattacks.Couleurs;
 import jeu.muffinattacks.Jeu;
 import jeu.utilisateur.Utilisateur;
 
+import javax.swing.border.LineBorder;
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class MenuJeu extends MenuAbstrait {
-    private Utilisateur user;
+    private Utilisateur utilisateur;
+
     /**
      * constructeur
      *
@@ -55,7 +57,7 @@ public class MenuJeu extends MenuAbstrait {
                 new Apprentissage(nomJeu + ": apprentissage");
                 break;
             case 2:
-                new Option(nomJeu + ": gestion des options");
+                (new Option(nomJeu + ": gestion des options")).setUtilisateur(utilisateur);
                 break;
             case 3:
                 System.exit(0);
@@ -86,9 +88,18 @@ public class MenuJeu extends MenuAbstrait {
     }
 
     private void actualiserCouleurs() {
-       Collection<Couleurs> couleurs = user.getCouleursPreferees();
-       Couleurs c = ((Couleurs[]) couleurs.toArray())[0];
+        Couleurs c = Couleurs.NOIRBLANC;
+        if(utilisateur != null) {
+            Collection<Couleurs> couleurs = utilisateur.getCouleursPreferees();
+            c = ((Couleurs[]) couleurs.toArray())[0];
+        }
        this.setBackground(c.getCouleurFond());
        this.setForeground(c.getCouleurTexte());
     }
+
+    public void setUtilisateur(Utilisateur u) {
+        this.utilisateur = u;
+    }
+
+
 }

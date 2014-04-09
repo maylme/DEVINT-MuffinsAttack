@@ -32,6 +32,7 @@ public class SelectionCouleurs extends JPanel {
             for (Couleurs c : couleurs) {
                 if (actual.isCouleurs(c)) {
                     actual.setSelected();
+                    System.out.println(actual.getCouleurs()+" ("+c+") set to "+actual.isSelected());
                 }
             }
         }

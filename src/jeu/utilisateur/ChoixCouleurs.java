@@ -53,7 +53,7 @@ public class ChoixCouleurs extends JPanel {
     }
 
     public boolean isCouleurs(Couleurs couleurs) {
-        return couleurs.equals(couleurs);
+        return this.couleurs.equals(couleurs);
     }
 
     public void setSelected() {
