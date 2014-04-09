@@ -1,6 +1,7 @@
 package jeu.muffinattacks;
 
 import jeu.global.caracteres.Caractere;
+import jeu.global.couleurs.Couleurs;
 
 import java.awt.*;
 import java.util.Random;
@@ -13,6 +14,7 @@ public class Muffin {
     private char lettre;
     private Point position;
     private int taille;
+    private Couleurs couleurs;
     private Caractere caractere;
 
     /**
@@ -27,6 +29,7 @@ public class Muffin {
         this.taille = taille;
         this.rand = new Random();
         this.position = new Point(0,0);
+        this.couleurs = Couleurs.NOIRBLANC;
     }
 
     /**
@@ -74,8 +77,9 @@ public class Muffin {
     public void paint(Graphics g) {
         int x = (int) position.getX();
         int y = (int) position.getY();
+        g.setColor(couleurs.getCouleurTexte());
         g.fillRect(x, y, taille, taille);
-        Caractere.paint(g, position, new Dimension(taille-taille/3, taille), caractere, false, Color.BLACK, null, 4);
+        Caractere.paint(g, position, new Dimension(taille-taille/3, taille), caractere, false, couleurs.getCouleurFond(), null, 4);
     }
 
     /**
@@ -90,5 +94,9 @@ public class Muffin {
     public void setLettre(char lettre) {
         this.lettre = lettre;
         this.caractere = Caractere.valueOf(String.valueOf(lettre));
+    }
+
+    public void setCouleurs(Couleurs couleurs) {
+        this.couleurs = couleurs;
     }
 }

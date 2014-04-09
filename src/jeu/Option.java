@@ -29,7 +29,6 @@ public class Option extends FenetreAbstraite {
     @Override
     protected String wavRegleJeu() {
         return "../ressources/sons/accueilOption.wav";
-        voix.direPause("");
     }
 
     // renvoie le fichier wave contenant la règle du jeu

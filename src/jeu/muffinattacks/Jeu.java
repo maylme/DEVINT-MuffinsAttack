@@ -1,6 +1,7 @@
 package jeu.muffinattacks;
 
 import devintAPI.FenetreAbstraite;
+import jeu.global.Utilisateur;
 import jeu.global.couleurs.Couleurs;
 
 import javax.swing.*;
@@ -13,13 +14,13 @@ import java.util.Timer;
  * Created by Jicé on 24/03/2014.
  */
 public class Jeu extends FenetreAbstraite implements KeyListener {
+    private Utilisateur utilisateur;
 
     private static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private Random rand;
     private Vies vies;
     private Temps temps;
     private Monde monde;
-    private int couleur;
     private JLabel status;
 
     private int points;
@@ -27,6 +28,9 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     private int tempsTotal;
     private Timer timerPause;
     private boolean timerCancelled;
+    private boolean aide;
+    private JPanel statsJeu;
+    private Couleurs couleursUtilisateur;
 
     /**
      * @param title : titre de la fenetre
@@ -41,12 +45,14 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         status = new JLabel("Attends le démarrage du jeu");
         vies = new Vies(this);
         temps = new Temps(0);
+        aide = true;
+
         monde = new Monde(this, Couleurs.NOIRBLANC);
         timerPause = new Timer();
 
         this.setLayout(new BorderLayout());
 
-        JPanel statsJeu = new JPanel(new BorderLayout());
+        statsJeu = new JPanel(new BorderLayout());
         statsJeu.setBackground(Color.BLACK);
         statsJeu.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         statsJeu.add(vies,BorderLayout.WEST);
@@ -57,7 +63,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         this.add(status, BorderLayout.SOUTH);
 
         //dire("Presse la touche ESPACE pour démarrer le jeu.");
-        jouerEnregistrementPause("espace_pour_demarrer",2);
+        jouerEnregistrementPause("espace_pour_demarrer",1);
     }
 
     private void preparerJeu() {
@@ -170,11 +176,13 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     @Override
     public void changeColor() {
-        if (couleur == Couleurs.values().length) {
-            couleur = 0;
-        }
-        Couleurs c = Couleurs.getOne(++couleur);
+        this.setCouleurs(utilisateur.getCouleursChoisies());
+    }
+
+    public void setCouleurs(Couleurs c) {
         this.setBackground(c.getCouleurFond());
+        statsJeu.setBackground(c.getCouleurFond());
+        temps.changeCouleur(c.getCouleurTexte());
         monde.setColors(c);
     }
 
@@ -198,6 +206,16 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         int keycode = e.getKeyCode();
 
         if(keycode == KeyEvent.VK_F1 || keycode == KeyEvent.VK_F2 || keycode == KeyEvent.VK_F3 || keycode == KeyEvent.VK_F4) {
+            return;
+        }
+
+        if(keycode == KeyEvent.VK_F12) {
+            aide = !aide;
+            if(aide) {
+                dire("Assistance Vocale activée.");
+            } else {
+                dire("Assistance Vocale éteinte");
+            }
             return;
         }
 
@@ -304,5 +322,13 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         viePerdue();
         // on fait une pause de 3 secondes pour ne pas trop perturber le joueur
         monde.newMuffinPause(3);
+    }
+
+    public boolean aideActive() {
+        return aide;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 }

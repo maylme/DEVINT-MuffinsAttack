@@ -52,7 +52,9 @@ public class MenuJeu extends MenuAbstrait {
     protected void lancerOption(int i) {
         switch (i) {
             case 0:
-                new Jeu(nomJeu + " : le jeu");
+                Jeu j = new Jeu(nomJeu + " : le jeu");
+                j.setUtilisateur(utilisateur);
+                j.setCouleurs(utilisateur.getCouleursChoisies());
                 break;
             case 1:
                 new Apprentissage(nomJeu + ": apprentissage");

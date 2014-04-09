@@ -12,7 +12,7 @@ import java.io.IOException;
  * Created by Jicé on 04/04/2014.
  */
 public class Vies extends JPanel {
-    private static final String fileImageCoeur = "../ressources/images/muffinsattack/coeur.png";
+    private static final String fileImageCoeur = "../ressources/images/muffinsattack/coeur_86.png";
     private static final int ESPACEMENT = 10;
     private int vies;
     private BufferedImage coeurImg;
@@ -31,7 +31,7 @@ public class Vies extends JPanel {
         }
 
         this.setBackground(null);
-        this.setPreferredSize(new Dimension((coeurImg.getWidth()+ESPACEMENT)*vies, 40));
+        this.setPreferredSize(new Dimension((coeurImg.getWidth()+ESPACEMENT)*vies, hauteurVies()));
     }
 
     public void viePerdue() {
@@ -54,6 +54,10 @@ public class Vies extends JPanel {
 
     public int getVies() {
         return vies;
+    }
+
+    public int hauteurVies() {
+        return coeurImg.getHeight();
     }
 
     public void setVies(int n) {

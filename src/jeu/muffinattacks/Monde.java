@@ -28,7 +28,7 @@ public class Monde extends JPanel {
 
     private int count;
     private int delay;
-    private final static double pauseEntreMuffins = 1.5;
+    private final static double pauseEntreMuffins = 1;
 
     public Monde(Jeu jeu, Couleurs couleurs) {
         this.jeu = jeu;
@@ -116,7 +116,9 @@ public class Monde extends JPanel {
         muffin.replaceOnTop(jeu.getWidth());
         muffin.setLettre(lettre);
         //jeu.jouerEnregistrement("vite_appuie_sur");
-        jeu.direLettre(String.valueOf(muffin.getLettre()));
+        if(jeu.aideActive()) {
+            jeu.direLettre(String.valueOf(muffin.getLettre()));
+        }
         System.out.println("Nouveau muffin lancé");
     }
 
@@ -172,11 +174,12 @@ public class Monde extends JPanel {
         if(effacement) {
             dessineMuffinPartiel(g);
         } else {
-            g.setColor(couleurs.getCouleurTexte());
             if (muffin != null) {
                 muffin.paint(g);
                 g.setColor(couleurs.getCouleurTexte());
-                g.drawString(String.valueOf(muffin.getLettre()), this.getWidth() - 20, this.getHeight() - 20);
+                if(jeu.aideActive()) {
+                    g.drawString(String.valueOf(muffin.getLettre()), this.getWidth() - 20, this.getHeight() - 20);
+                }
             }
         }
     }
@@ -184,6 +187,7 @@ public class Monde extends JPanel {
     public void setColors(Couleurs c) {
         this.couleurs = c;
         this.setBackground(couleurs.getCouleurFond());
+        muffin.setCouleurs(c);
         repaint();
     }
 
