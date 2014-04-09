@@ -5,7 +5,7 @@ import java.awt.*;
 /**
  * Created by Jicé on 25/03/2014.
  */
-public enum Couleur {
+public enum Couleurs {
 
     ORANGENOIR(Color.ORANGE, Color.BLACK, 76),
     ROUGEBLANC(Color.RED, Color.WHITE, 84),
@@ -36,7 +36,7 @@ public enum Couleur {
     private Color couleurTexte;
     private int contraste;
 
-    private Couleur(Color fond, Color texte, int contraste) {
+    private Couleurs(Color fond, Color texte, int contraste) {
         this.couleurFond = fond;
         this.couleurTexte = texte;
         this.contraste = contraste;
@@ -60,8 +60,8 @@ public enum Couleur {
         return contraste;
     }
 
-    public static Couleur getOne(int i) {
-        return Couleur.values()[i];
+    public static Couleurs getOne(int i) {
+        return Couleurs.values()[i];
     }
 
     public static Color revertColor(Color c) {

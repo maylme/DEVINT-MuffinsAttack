@@ -40,7 +40,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         status = new JLabel("Attends le démarrage du jeu");
         vies = new Vies(this);
         temps = new Temps(0);
-        monde = new Monde(this, Couleur.NOIRBLANC);
+        monde = new Monde(this, Couleurs.NOIRBLANC);
         timerPause = new Timer();
 
         this.setLayout(new BorderLayout());
@@ -169,10 +169,10 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     @Override
     public void changeColor() {
-        if (couleur == Couleur.values().length) {
+        if (couleur == Couleurs.values().length) {
             couleur = 0;
         }
-        Couleur c = Couleur.getOne(++couleur);
+        Couleurs c = Couleurs.getOne(++couleur);
         this.setBackground(c.getCouleurFond());
         monde.setColors(c);
     }

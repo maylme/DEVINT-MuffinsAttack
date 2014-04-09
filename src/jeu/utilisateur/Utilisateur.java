@@ -1,26 +1,30 @@
 package jeu.utilisateur;
 
-import jeu.muffinattacks.Couleur;
+import jeu.muffinattacks.Couleurs;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by Jicé on 06/04/2014.
  */
 public class Utilisateur extends JPanel {
     private String identifiant;
-    private Couleur couleurPreferee;
+    private Collection<Couleurs> couleursPreferees;
 
     public Utilisateur(String identifiant) {
+        // création d'un utilisateur
         this.identifiant = identifiant;
-        this.couleurPreferee = Couleur.NOIRBLANC;
+        this.couleursPreferees = new ArrayList<Couleurs>();
+        this.couleursPreferees.add(Couleurs.NOIRBLANC);
     }
 
-    public Couleur getCouleurPreferee() {
-        return couleurPreferee;
+    public Collection<Couleurs> getCouleursPreferees() {
+        return couleursPreferees;
     }
 
-    public void setCouleurPreferee(Couleur c) {
-        this.couleurPreferee = c;
+    public void setCouleursPreferees(Collection<Couleurs> couleursPreferees) {
+        this.couleursPreferees = couleursPreferees;
     }
 }

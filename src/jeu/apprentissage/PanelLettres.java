@@ -1,16 +1,10 @@
 package jeu.apprentissage;
 
-import jeu.muffinattacks.Couleur;
+import jeu.muffinattacks.Couleurs;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.image.*;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class PanelLettres extends JPanel {
@@ -59,7 +53,7 @@ public class PanelLettres extends JPanel {
         this.setForeground(texte);
         this.setBackground(fond);
         for(Braille b:lettres.values()) {
-            b.changeCouleurs(texte, Couleur.revertColor(texte),fond);
+            b.changeCouleurs(texte, Couleurs.revertColor(texte),fond);
         }
     }
 

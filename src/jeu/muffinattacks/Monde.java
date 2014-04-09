@@ -22,15 +22,15 @@ public class Monde extends JPanel {
     private boolean isStarted;
     private boolean isPaused;
 
-    private Couleur couleur;
+    private Couleurs couleurs;
 
     private int count;
     private int delay;
     private final static double pauseEntreMuffins = 1.5;
 
-    public Monde(Jeu jeu, Couleur couleur) {
+    public Monde(Jeu jeu, Couleurs couleurs) {
         this.jeu = jeu;
-        this.couleur = couleur;
+        this.couleurs = couleurs;
 
         count = 0;
         timerGraphic = new Timer(200, new GraphicsTime());
@@ -43,8 +43,8 @@ public class Monde extends JPanel {
         isStarted = false;
         isPaused = true;
 
-        this.setBorder(BorderFactory.createLineBorder(couleur.getCouleurTexte()));
-        this.setBackground(couleur.getCouleurFond());
+        this.setBorder(BorderFactory.createLineBorder(couleurs.getCouleurTexte()));
+        this.setBackground(couleurs.getCouleurFond());
     }
 
     public void jouer(int t) {
@@ -170,18 +170,18 @@ public class Monde extends JPanel {
         if(effacement) {
             dessineMuffinPartiel(g);
         } else {
-            g.setColor(couleur.getCouleurTexte());
+            g.setColor(couleurs.getCouleurTexte());
             if (muffin != null) {
                 muffin.paint(g);
-                g.setColor(couleur.getCouleurTexte());
+                g.setColor(couleurs.getCouleurTexte());
                 g.drawString(String.valueOf(muffin.getLettre()), this.getWidth() - 20, this.getHeight() - 20);
             }
         }
     }
 
-    public void setColors(Couleur c) {
-        this.couleur = c;
-        this.setBackground(couleur.getCouleurFond());
+    public void setColors(Couleurs c) {
+        this.couleurs = c;
+        this.setBackground(couleurs.getCouleurFond());
         repaint();
     }
 

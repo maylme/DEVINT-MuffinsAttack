@@ -1,6 +1,6 @@
 package jeu.utilisateur;
 
-import jeu.muffinattacks.Couleur;
+import jeu.muffinattacks.Couleurs;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,13 +10,13 @@ import java.awt.event.MouseListener;
 /**
  * Created by Jicé on 06/04/2014.
  */
-public class ChoixCouleur extends JPanel {
+public class ChoixCouleurs extends JPanel {
     private static final int ESPACEMENT = 20;
-    private Couleur couleurs;
+    private Couleurs couleurs;
     private JLabel jlabel;
     private boolean selected;
 
-    public ChoixCouleur(Couleur c) {
+    public ChoixCouleurs(Couleurs c) {
         this.couleurs = c;
         this.selected = false;
 
@@ -35,6 +35,10 @@ public class ChoixCouleur extends JPanel {
 
     public void overlay() {
         this.selected = !selected;
+        refresh();
+    }
+
+    public void refresh() {
         if (selected) {
             this.setBorder(BorderFactory.
                     createCompoundBorder(BorderFactory.createLineBorder(couleurs.getCouleurFond(), 5),
@@ -44,11 +48,32 @@ public class ChoixCouleur extends JPanel {
         }
     }
 
+    public Couleurs getCouleurs() {
+        return couleurs;
+    }
+
+    public boolean isCouleurs(Couleurs couleurs) {
+        return couleurs.equals(couleurs);
+    }
+
+    public void setSelected() {
+        this.selected = true;
+        refresh();
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public Couleurs getCouleur() {
+        return couleurs;
+    }
+
 
     private class EcouteurSouris implements MouseListener {
-        private ChoixCouleur cc;
+        private ChoixCouleurs cc;
 
-        public EcouteurSouris(ChoixCouleur cc) {
+        public EcouteurSouris(ChoixCouleurs cc) {
             this.cc = cc;
         }
 
