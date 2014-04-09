@@ -162,7 +162,6 @@ public class Monde extends JPanel {
         int y1 = (int) position.getY()+effaceActuel;
         int x2 = (int) muffin.getTaille();
         int y2 = (int) muffin.getTaille()-effaceActuel*2;
-        g.setColor(Color.RED);
         g.fillRect(x1, y1, x2, y2);
         effaceActuel++;
     }

@@ -30,7 +30,6 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     private boolean timerCancelled;
     private boolean aide;
     private JPanel statsJeu;
-    private Couleurs couleursUtilisateur;
 
     /**
      * @param title : titre de la fenetre
