@@ -57,7 +57,9 @@ public class MenuJeu extends MenuAbstrait {
                 j.setCouleurs(utilisateur.getCouleursChoisies());
                 break;
             case 1:
-                new Apprentissage(nomJeu + ": apprentissage");
+                Apprentissage a = new Apprentissage(nomJeu + ": apprentissage");
+                a.setUtilisateur(utilisateur);
+                a.changeColor();
                 break;
             case 2:
                 (new Option(nomJeu + ": gestion des options")).setUtilisateur(utilisateur);

@@ -68,7 +68,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     private void preparerJeu() {
         vies.setVies(3);
         points = 0;
-        tempsTotal = 6;
+        tempsTotal = 25;
         updateStatusBar();
     }
 

@@ -5,8 +5,11 @@ import java.awt.event.KeyEvent;
 import javax.swing.JTextArea;
 import devintAPI.FenetreAbstraite;
 import devintAPI.Preferences;
+import jeu.global.Utilisateur;
+import jeu.global.couleurs.Couleurs;
 
 public class Apprentissage extends FenetreAbstraite {
+    Utilisateur utilisateur;
 
     //un label est une variable d'instance car il doit être accessible dans la méthode changeColor, qui gère les préférences
     private JTextArea lb1;
@@ -110,11 +113,13 @@ public class Apprentissage extends FenetreAbstraite {
      */
     @Override
     public void changeColor() {
-        // on récupère les couleurs de base dans la classe Preferences 
-        Preferences pref = Preferences.getData();
-        lb1.setBackground(pref.getCurrentBackgroundColor());
-        lb1.setForeground(pref.getCurrentForegroundColor());
-        panel.changeColor(pref.getCurrentForegroundColor(), pref.getCurrentBackgroundColor());
+        Couleurs c = utilisateur.getCouleursChoisies();
+        lb1.setBackground(c.getCouleurFond());
+        lb1.setForeground(c.getCouleurTexte());
+        panel.changeColor(c.getCouleurTexte(), c.getCouleurFond());
     }
 
+    public void setUtilisateur(Utilisateur u) {
+        this.utilisateur = u;
+    }
 }

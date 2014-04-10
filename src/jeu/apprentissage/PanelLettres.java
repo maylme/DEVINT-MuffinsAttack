@@ -5,11 +5,13 @@ import jeu.global.caracteres.Caractere;
 import jeu.global.couleurs.Couleurs;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.*;
 
 public class PanelLettres extends JPanel {
+    private ArrayList<JLabel> alphaLettres;
     private JPanel braille;
     private Apprentissage apprentissage;
     private Map<Integer,Braille> lettres;
@@ -18,6 +20,7 @@ public class PanelLettres extends JPanel {
     public PanelLettres(Apprentissage app) {
         apprentissage = app;
 
+        this.alphaLettres = new ArrayList<JLabel>();
         this.lettres = new HashMap<Integer, Braille>();
 
         braille = new JPanel(new GridLayout(0, 10, 20, 20));
@@ -34,13 +37,14 @@ public class PanelLettres extends JPanel {
 
             //la lettre en version alpha:
             String name =c.name();
-            JLabel alphaLettre = new JLabel(name);
-            alphaLettre.setHorizontalAlignment(0); //centrage du text
+            JLabel label = new JLabel(name);
+            alphaLettres.add(label);
+            label.setHorizontalAlignment(0); //centrage du text
 
-            alphaLettre.setForeground(app.getForeground()); //pourquoi c'est pas bleu?!
-            alphaLettre.setFont(new java.awt.Font("Arial", Font.BOLD, 40));
+            label.setForeground(app.getForeground()); //pourquoi c'est pas bleu?!
+            label.setFont(new java.awt.Font("Arial", Font.BOLD, 40));
 
-            uneLettre.add(alphaLettre, BorderLayout.NORTH);
+            uneLettre.add(label, BorderLayout.NORTH);
             uneLettre.add(lettre, BorderLayout.SOUTH);
 
             braille.add(uneLettre);
@@ -54,6 +58,9 @@ public class PanelLettres extends JPanel {
     public void changeColor(Color texte, Color fond) {
         this.setForeground(texte);
         this.setBackground(fond);
+        for(JLabel alphaLettre:alphaLettres) {
+            alphaLettre.setForeground(texte);
+        }
         for(Braille b:lettres.values()) {
             b.changeCouleurs(texte, Couleurs.revertColor(texte),fond);
         }
