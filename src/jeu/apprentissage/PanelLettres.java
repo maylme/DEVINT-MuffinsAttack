@@ -25,14 +25,25 @@ public class PanelLettres extends JPanel {
 
         braille = new JPanel(new GridLayout(0, 10, 20, 20));
         braille.setBackground(null);
+
+        this.setLayout(new FlowLayout());
+        this.add(braille);
+    }
+
+    public void afficherLettres(int i) {
         for(Caractere c:Caractere.values()) {
+
+            if (--i< 0){
+                break;
+            }
+
             //panel de braille + lettre (unitaire)
             JPanel uneLettre = new JPanel();
             uneLettre.setBackground(null);
             uneLettre.setLayout(new BorderLayout());
 
             // la lettre en version braille
-            Braille lettre = new Braille(app, c, app.getBackground());
+            Braille lettre = new Braille(apprentissage, c, apprentissage.getBackground());
             lettres.put(c.getKey(),lettre);
 
             //la lettre en version alpha:
@@ -41,8 +52,8 @@ public class PanelLettres extends JPanel {
             alphaLettres.add(label);
             label.setHorizontalAlignment(0); //centrage du text
 
-            label.setForeground(app.getForeground()); //pourquoi c'est pas bleu?!
-            label.setFont(new java.awt.Font("Arial", Font.BOLD, 40));
+            label.setForeground(apprentissage.getForeground()); //pourquoi c'est pas bleu?!
+            label.setFont(new Font("Arial", Font.BOLD, 40));
 
             uneLettre.add(label, BorderLayout.NORTH);
             uneLettre.add(lettre, BorderLayout.SOUTH);
@@ -50,9 +61,6 @@ public class PanelLettres extends JPanel {
             braille.add(uneLettre);
 
         }
-        this.setLayout(new FlowLayout());
-        this.add(braille);
-
     }
 
     public void changeColor(Color texte, Color fond) {

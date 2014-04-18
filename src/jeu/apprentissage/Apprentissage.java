@@ -7,6 +7,7 @@ import devintAPI.FenetreAbstraite;
 import devintAPI.Preferences;
 import jeu.global.Utilisateur;
 import jeu.global.couleurs.Couleurs;
+import jeu.global.difficultes.Niveau;
 
 public class Apprentissage extends FenetreAbstraite {
     Utilisateur utilisateur;
@@ -17,6 +18,7 @@ public class Apprentissage extends FenetreAbstraite {
     //liste des label des lettres:
     private PanelLettres panel;
     private boolean released;
+    private Niveau niveau;
 
     // appel au constructeur de la classe mère
     public Apprentissage(String title) {
@@ -121,5 +123,14 @@ public class Apprentissage extends FenetreAbstraite {
 
     public void setUtilisateur(Utilisateur u) {
         this.utilisateur = u;
+    }
+
+    public void setNiveau(Niveau n) {
+        this.niveau = n;
+        panel.afficherLettres(niveau.getNbLettres());
+    }
+
+    public int getNbLettresNiveau() {
+        return niveau.getNbLettres();
     }
 }

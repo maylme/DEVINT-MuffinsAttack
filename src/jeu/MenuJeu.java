@@ -10,6 +10,7 @@ package jeu;
 import devintAPI.MenuAbstrait;
 import jeu.apprentissage.Apprentissage;
 import jeu.global.couleurs.Couleurs;
+import jeu.global.difficultes.Niveau;
 import jeu.muffinattacks.Jeu;
 import jeu.global.Utilisateur;
 
@@ -59,6 +60,7 @@ public class MenuJeu extends MenuAbstrait {
             case 1:
                 Apprentissage a = new Apprentissage(nomJeu + ": apprentissage");
                 a.setUtilisateur(utilisateur);
+                a.setNiveau(Niveau.DEUX); // PAR DEFAULT !!! 
                 a.changeColor();
                 break;
             case 2:
