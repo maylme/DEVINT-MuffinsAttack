@@ -31,7 +31,7 @@ public class Utilisateur extends JPanel {
 
     public Couleurs getCouleursChoisies() {
         if(couleursPreferees.isEmpty()) return Couleurs.BLEUBLANC;
-        return (Couleurs) (couleursPreferees.toArray())[couleursChoisies-1];
+        return (Couleurs) (couleursPreferees.toArray())[couleursChoisies];
     }
 
     public void couleursSuivantes() {
