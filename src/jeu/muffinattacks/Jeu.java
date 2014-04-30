@@ -3,6 +3,10 @@ package jeu.muffinattacks;
 import devintAPI.FenetreAbstraite;
 import jeu.global.Utilisateur;
 import jeu.global.couleurs.Couleurs;
+import jeu.muffinattacks.infobar.InfoBar;
+import jeu.muffinattacks.infobar.Niveaux;
+import jeu.muffinattacks.infobar.Temps;
+import jeu.muffinattacks.infobar.Vies;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,10 +22,9 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     private static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private Random rand;
-    private Vies vies;
-    private Temps temps;
+
+    private InfoBar infoBar;
     private Monde monde;
-    private JLabel status;
 
     private int points;
     private int tempsRestant;
@@ -29,7 +32,6 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     private Timer timerPause;
     private boolean timerCancelled;
     private boolean aide;
-    private JPanel statsJeu;
 
     /**
      * @param title : titre de la fenetre
@@ -41,32 +43,24 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     @Override
     protected void init() {
         rand = new Random();
-        status = new JLabel("Attends le démarrage du jeu");
-        vies = new Vies(this);
-        temps = new Temps(0);
+
         aide = true;
 
+        infoBar = new InfoBar(this);
         monde = new Monde(this, Couleurs.NOIRBLANC);
         timerPause = new Timer();
 
         this.setLayout(new BorderLayout());
 
-        statsJeu = new JPanel(new BorderLayout());
-        statsJeu.setBackground(Color.BLACK);
-        statsJeu.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-        statsJeu.add(vies,BorderLayout.WEST);
-        statsJeu.add(temps,BorderLayout.EAST);
-
-        this.add(statsJeu, BorderLayout.NORTH);
+        this.add(infoBar, BorderLayout.NORTH);
         this.add(monde, BorderLayout.CENTER);
-        this.add(status, BorderLayout.SOUTH);
 
         //dire("Presse la touche ESPACE pour démarrer le jeu.");
         jouerEnregistrementPause("espace_pour_demarrer",1);
     }
 
     private void preparerJeu() {
-        vies.setVies(3);
+        infoBar.setVies(3);
         points = 0;
         tempsTotal = 25;
         updateStatusBar();
@@ -180,14 +174,12 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     public void setCouleurs(Couleurs c) {
         this.setBackground(c.getCouleurFond());
-        statsJeu.setBackground(c.getCouleurFond());
-        temps.changeCouleur(c.getCouleurTexte());
+        infoBar.changeCouleur(c);
         monde.setColors(c);
     }
 
     public void updateStatusBar() {
-        temps.update(tempsRestant);
-        status.setText("Temps total:"+tempsTotal+" Vies:" + vies.getVies() + " Points:" + points + " Temps restant:" + tempsRestant);
+        infoBar.updateTime(tempsRestant);
     }
 
     public boolean isInAlphabet(char lettre) {
@@ -288,7 +280,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     }
 
     public void viePerdue() {
-        vies.viePerdue();
+        infoBar.viePerdue();
         updateStatusBar();
     }
 
@@ -299,7 +291,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     }
 
     public int getVies() {
-        return vies.getVies();
+        return infoBar.getNbVies();
     }
 
     public boolean getTimeOut() {

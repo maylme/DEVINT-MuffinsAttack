@@ -1,4 +1,6 @@
-package jeu.muffinattacks;
+package jeu.muffinattacks.infobar;
+
+import jeu.muffinattacks.Jeu;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

@@ -1,4 +1,4 @@
-package jeu.muffinattacks;
+package jeu.muffinattacks.infobar;
 
 import sun.font.FontFamily;
 

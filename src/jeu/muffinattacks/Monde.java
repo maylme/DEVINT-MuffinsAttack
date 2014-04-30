@@ -160,8 +160,8 @@ public class Monde extends JPanel {
         Point position = muffin.getPosition();
         int x1 = (int) position.getX();
         int y1 = (int) position.getY()+effaceActuel;
-        int x2 = (int) muffin.getTaille();
-        int y2 = (int) muffin.getTaille()-effaceActuel*2;
+        int x2 = muffin.getTaille();
+        int y2 = muffin.getTaille()-effaceActuel*2;
         g.fillRect(x1, y1, x2, y2);
         effaceActuel++;
     }
