@@ -1,5 +1,6 @@
 package jeu.muffinattacks.infobar;
 
+import jeu.global.couleurs.Couleurs;
 import sun.font.FontFamily;
 
 import javax.swing.*;
@@ -9,31 +10,20 @@ import java.awt.*;
  * Created by Jicé on 04/04/2014.
  */
 public class Temps extends JPanel {
-    private int temps;
-    private Color texte;
+    private JLabel temps;
 
     public Temps(int t) {
-        this.temps = t;
-        texte = Color.WHITE;
-
+        this.temps = new JLabel(String.valueOf(t));
+        this.temps.setFont(new Font("TimesRoman", Font.PLAIN, 60));
         this.setBackground(null);
-        this.setPreferredSize(new Dimension(100,84));
+        this.add(temps,CENTER_ALIGNMENT);
     }
 
-    public void changeCouleur(Color texte) {
-        this.texte = texte;
+    public void setCouleurs(Couleurs couleurs) {
+        this.temps.setForeground(couleurs.getCouleurTexte());
     }
 
     public void update(int t) {
-        this.temps = t;
-        repaint();
-    }
-
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        g.setColor(texte);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 84));
-        g.drawString(String.valueOf(temps), 0, 74);
+        this.temps.setText(String.valueOf(t));
     }
 }

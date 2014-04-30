@@ -21,6 +21,7 @@ public class Utilisateur extends JPanel {
         this.identifiant = identifiant;
         this.couleursPreferees = new ArrayList<Couleurs>();
         this.couleursChoisies = 0;
+        this.niveau = Niveau.UN;
     }
 
     public Collection<Couleurs> getCouleursPreferees() {
@@ -44,5 +45,9 @@ public class Utilisateur extends JPanel {
         if(++couleursChoisies > couleursPreferees.toArray().length) {
             couleursChoisies = 1;
         }
+    }
+
+    public Niveau getNiveau() {
+        return niveau;
     }
 }

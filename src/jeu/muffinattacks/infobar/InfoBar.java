@@ -1,6 +1,7 @@
 package jeu.muffinattacks.infobar;
 
 import jeu.global.couleurs.Couleurs;
+import jeu.global.difficultes.Niveau;
 import jeu.muffinattacks.Jeu;
 
 import javax.swing.*;
@@ -20,10 +21,11 @@ public class InfoBar extends JPanel {
         niveaux = new Niveaux(jeu);
 
         this.setLayout(new BorderLayout());
-        this.setBackground(Color.BLACK);
-        this.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         this.add(vies, BorderLayout.WEST);
+        this.add(niveaux, BorderLayout.CENTER);
         this.add(temps, BorderLayout.EAST);
+
+        this.setBackground(Color.BLACK);
     }
 
     public void viePerdue() {
@@ -36,7 +38,8 @@ public class InfoBar extends JPanel {
 
     public void changeCouleur(Couleurs couleurs) {
         this.setBackground(couleurs.getCouleurFond());
-        temps.setForeground(couleurs.getCouleurTexte());
+        temps.setCouleurs(couleurs);
+        niveaux.setCouleurs(couleurs);
     }
 
     public void updateTime(int tempsRestant) {
@@ -45,5 +48,13 @@ public class InfoBar extends JPanel {
 
     public void setVies(int n) {
         vies.setVies(n);
+    }
+
+    public void setNiveau(Niveau niveau) {
+        niveaux.setNiveau(niveau);
+    }
+
+    public void setScore(int points) {
+        niveaux.setScore(points);
     }
 }

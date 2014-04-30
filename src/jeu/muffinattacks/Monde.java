@@ -40,7 +40,7 @@ public class Monde extends JPanel {
         timerEffacement = new Timer(100,new EffacementTime());
         this.effaceActuel = 0;
 
-        muffin = new Muffin('A',100);
+        muffin = new Muffin();
 
         isStarted = false;
         isPaused = true;
@@ -51,7 +51,9 @@ public class Monde extends JPanel {
 
     public void jouer(int t) {
         changerTemps(t);
-
+        isStarted = true;
+        timerGraphic.start();
+        pause();
         newMuffinPause(5);
         jeu.jouerEnregistrement("attention_muffins_attaquent_la_ville");
         jeu.jouerEnregistrementPause("Pour_les_detruires", 2);
@@ -78,7 +80,6 @@ public class Monde extends JPanel {
             @Override
             public void run() {
                 newMuffin();
-                pause();
             }
         };
         pause();
@@ -106,12 +107,11 @@ public class Monde extends JPanel {
      * <br />Instancie un muffin si aucun n'existe
      */
     public void newMuffin() {
-        if(!isStarted) {
-            isStarted = true;
-            timerGraphic.start();
+        if(isPaused) {
+            pause();
         }
         if (jeu.getVies() <= 0) return;
-        char lettre = jeu.getRandomLetter();
+        String lettre = String.valueOf(jeu.getRandomLetter());
         jeu.timeReset();
         muffin.replaceOnTop(jeu.getWidth());
         muffin.setLettre(lettre);
@@ -151,27 +151,13 @@ public class Monde extends JPanel {
         effaceActuel = 0;
     }
 
-    /**
-     * Redessine le muffin de façon réduite à chaque appel
-     * <br />Pour réinitialiser l'action de cette fonction, il faut réinitialiser la variable effacement à 0
-     * @param g
-     */
-    private void dessineMuffinPartiel(Graphics g) {
-        Point position = muffin.getPosition();
-        int x1 = (int) position.getX();
-        int y1 = (int) position.getY()+effaceActuel;
-        int x2 = muffin.getTaille();
-        int y2 = muffin.getTaille()-effaceActuel*2;
-        g.fillRect(x1, y1, x2, y2);
-        effaceActuel++;
-    }
-
     @Override
     public void paint(Graphics g) {
         super.paint(g);
         if(!isStarted) return;
         if(effacement) {
-            dessineMuffinPartiel(g);
+            muffin.dessineMuffinPartiel(g, effaceActuel);
+            effaceActuel++;
         } else {
             if (muffin != null) {
                 muffin.paint(g);
@@ -199,7 +185,7 @@ public class Monde extends JPanel {
     }
 
     public void lettreEntree(char lettre) {
-        if (Character.compare(muffin.getLettre(), lettre) == 0) {
+        if (Character.compare(muffin.getLettre().charAt(0),lettre) == 0) {
             killMuffin();
         } else {
             //TODO Voix quand ce n'est pas la bonne lettre
@@ -209,10 +195,6 @@ public class Monde extends JPanel {
 
     public Muffin getMuffin() {
         return muffin;
-    }
-
-    public boolean getDemarre() {
-        return isStarted;
     }
 
     private class EffacementTime implements ActionListener {

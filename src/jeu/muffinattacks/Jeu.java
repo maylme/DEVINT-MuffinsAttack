@@ -20,7 +20,6 @@ import java.util.Timer;
 public class Jeu extends FenetreAbstraite implements KeyListener {
     private Utilisateur utilisateur;
 
-    private static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private Random rand;
 
     private InfoBar infoBar;
@@ -60,10 +59,11 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     }
 
     private void preparerJeu() {
-        infoBar.setVies(3);
         points = 0;
         tempsTotal = 25;
-        updateStatusBar();
+        infoBar.updateTime(tempsTotal);
+        infoBar.setVies(3);
+        infoBar.setNiveau(utilisateur.getNiveau());
     }
 
     private void preparerMonde() {
@@ -160,7 +160,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     // renvoie le fichier wave contenant l'aide du jeu
     protected String wavAide() {
-        if(!monde.getDemarre()) {
+        if(!monde.getStarted()) {
             return "../ressources/sons/jeu/espace_pour_demarrer.wav";
         } else {
             return "../ressources/sons/jeu/Pour_les_detruires.wav";
@@ -178,16 +178,16 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         monde.setColors(c);
     }
 
-    public void updateStatusBar() {
-        infoBar.updateTime(tempsRestant);
+    public String getAlphabet() {
+        return utilisateur.getNiveau().getAlphabet();
     }
 
     public boolean isInAlphabet(char lettre) {
-        return alphabet.contains(String.valueOf(lettre));
+        return getAlphabet().contains(String.valueOf(lettre));
     }
 
     public char getRandomLetter() {
-        return alphabet.charAt(rand.nextInt(alphabet.length()));
+        return getAlphabet().charAt(rand.nextInt(getAlphabet().length()));
     }
 
     @Override
@@ -210,12 +210,8 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
             return;
         }
 
-        if (!(monde.getStarted()) && (keycode == KeyEvent.VK_SPACE)) {
-            preparerJeu();
-            preparerMonde();
-            timerPause.cancel();
-            timerCancelled = true;
-            monde.jouer(tempsTotal);
+        if (keycode == KeyEvent.VK_SPACE) {
+            demarrerJeu();
             return;
         }
 
@@ -267,27 +263,34 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         }
     }
 
+    private void demarrerJeu() {
+        if(monde.getStarted() || utilisateur == null)
+            return;
+        preparerJeu();
+        preparerMonde();
+        timerPause.cancel();
+        timerCancelled = true;
+        monde.jouer(tempsTotal);
+    }
+
     private void changerTemps(int i) {
         tempsTotal += i;
         tempsRestant += i;
         monde.changerTemps(tempsTotal);
-        updateStatusBar();
+        infoBar.updateTime(tempsRestant);
     }
 
     public void ajouterPoint(int i) {
-        this.points++;
-        updateStatusBar();
+        infoBar.setScore(++points);
     }
 
     public void viePerdue() {
         infoBar.viePerdue();
-        updateStatusBar();
     }
 
     public void secondeEcoulee() {
         //TODO Ajouter des bips pour informer de l'écoulement du temps ?
-        this.tempsRestant--;
-        updateStatusBar();
+        infoBar.updateTime(--tempsRestant);
     }
 
     public int getVies() {
@@ -300,7 +303,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     public void timeReset() {
         this.tempsRestant = tempsTotal;
-        updateStatusBar();
+        infoBar.updateTime(tempsRestant);
     }
 
     public void jeuFini() {
@@ -321,5 +324,9 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
     }
 }
