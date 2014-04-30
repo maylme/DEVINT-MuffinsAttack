@@ -25,7 +25,7 @@ public class Niveaux extends JPanel {
         this.score = new Score(100);
 
         this.setLayout(new BorderLayout());
-        this.add(niveau,BorderLayout.WEST);
+        this.add(niveau,BorderLayout.EAST);
         this.add(score, BorderLayout.CENTER);
         this.setBackground(null);
     }
@@ -40,7 +40,7 @@ public class Niveaux extends JPanel {
     }
 
     public void setNiveau(Niveau niveau) {
-        this.niveau.setText(" - Niveau: "+niveau.name()+"");
+        this.niveau.setText("Niveau: "+niveau.toString()+"");
         this.score.setObjectif(niveau.getObjectif());
     }
 }

@@ -57,7 +57,7 @@ public class Jeu extends FenetreAbstraite {
 
     private void preparerJeu() {
         points = 0;
-        tempsTotal = 3500;
+        tempsTotal = 20000;
         infoBar.setTempsTotal(tempsTotal);
         infoBar.setVies(3);
         infoBar.setNiveau(utilisateur.getNiveau());
@@ -212,7 +212,6 @@ public class Jeu extends FenetreAbstraite {
 
         if (keycode == KeyEvent.VK_SPACE) {
             demarrerJeu();
-            return;
         }
 
         if (!(monde.getStarted())) {
@@ -226,7 +225,7 @@ public class Jeu extends FenetreAbstraite {
             return;
         }
 
-        if (keycode == KeyEvent.VK_PAUSE) {
+        if (keycode == KeyEvent.VK_F11 || keycode == KeyEvent.VK_PAUSE) {
             monde.pause();
             if (monde.getPaused()) {
                 dire("Le jeu est en pause.");
@@ -236,19 +235,22 @@ public class Jeu extends FenetreAbstraite {
             return;
         }
 
-        if (monde.getPaused()) {
-            return;
-        }
-
-        if (keycode == KeyEvent.VK_UP) {
-            changerTemps(2000);
-            return;
-        }
-
-        if (keycode == KeyEvent.VK_DOWN) {
-            if (tempsTotal > 2000) {
-                changerTemps(-2000);
+        /*if(monde.getPaused()) {
+            if (keycode == KeyEvent.VK_UP) {
+                changerTemps(500);
+                return;
             }
+
+            if (keycode == KeyEvent.VK_DOWN) {
+                if (tempsTotal > 500) {
+                    changerTemps(-500);
+                }
+                return;
+            }
+        }*/
+
+        if(monde.getPaused()) {
+            dire("Le jeu est en pause.");
             return;
         }
 
@@ -256,7 +258,8 @@ public class Jeu extends FenetreAbstraite {
             dire("Tu cherches la lettre " + monde.getMuffin().getLettre());
         } else {
             if (!isInAlphabet((char) keycode)) {
-                dire("Attention, c'est une lettre que tu cherches.");
+                dire("Mauvaise touche ! La touche numéro " +keycode+" ne fait pas partie du dictionnaire");
+                System.out.println(keycode);
             } else {
                 monde.lettreEntree((char) keycode);
             }
@@ -282,6 +285,23 @@ public class Jeu extends FenetreAbstraite {
 
     public void ajouterPoint(int i) {
         infoBar.setScore(++points);
+        verifierCapacitesJoueur();
+    }
+
+    private void verifierCapacitesJoueur() {
+        // si le joueur appuie vite sur la touche
+        if(tempsRestant >= tempsTotal-tempsTotal/3) {
+            // augmente la vitesse de 25%
+            this.changerTemps(-tempsTotal/4);
+        }
+        // si les points du joueur on dépassé le seuil du niveau
+        if(points >= utilisateur.getNiveau().getObjectif()) {
+            // niveau suivant
+            utilisateur.niveauSuivant();
+            infoBar.setNiveau(utilisateur.getNiveau());
+            // temps multiplié par 2
+            this.changerTemps(tempsTotal);
+        }
     }
 
     public void viePerdue() {

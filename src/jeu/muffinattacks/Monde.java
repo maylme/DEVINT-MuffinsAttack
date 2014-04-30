@@ -26,7 +26,6 @@ public class Monde extends JPanel {
 
     private Couleurs couleurs;
 
-    private int count;
     private int delay;
     private final static double pauseEntreMuffins = 1;
 
@@ -34,7 +33,7 @@ public class Monde extends JPanel {
         this.jeu = jeu;
         this.couleurs = couleurs;
 
-        timerGraphic = new Timer(200, new GraphicsTime());
+        timerGraphic = new Timer(0, new GraphicsTime());
         timerPause = new java.util.Timer();
         timerEffacement = new Timer(100,new EffacementTime());
         this.effaceActuel = 0;
@@ -63,8 +62,13 @@ public class Monde extends JPanel {
      * @param t
      */
     public void changerTemps(int t) {
-        delay = t / (this.getHeight() - muffin.getTaille());
+        delay = t/(this.getHeight()-muffin.getTaille());
         this.timerGraphic.setDelay(delay);
+        if(delay == 0) {
+            muffin.changerSaut((this.getHeight()-muffin.getTaille()) / t);
+            delay = 1;
+            this.timerGraphic.setDelay(0);
+        }
     }
 
     public void arreter() {
@@ -82,7 +86,7 @@ public class Monde extends JPanel {
         TimerTask unpauseTask = new TimerTask() {
             @Override
             public void run() {
-                newMuffin();
+                newMuffin(); pause();
             }
         };
         pause();
@@ -98,11 +102,13 @@ public class Monde extends JPanel {
         isPaused = !isPaused;
         if (isPaused) {
             timerGraphic.stop();
+            System.out.println("Pause");
         } else {
             timerGraphic.start();
+            System.out.println("Reprise");
+
         }
         repaint();
-        System.out.println("Pause");
     }
 
     /**
@@ -110,9 +116,6 @@ public class Monde extends JPanel {
      * <br />Instancie un muffin si aucun n'existe
      */
     public void newMuffin() {
-        if(isPaused) {
-            pause();
-        }
         if (jeu.getVies() <= 0) return;
         String lettre = String.valueOf(jeu.getRandomLetter());
         jeu.timeReset();
@@ -122,12 +125,11 @@ public class Monde extends JPanel {
         if(jeu.aideActive()) {
             jeu.direLettre(String.valueOf(muffin.getLettre()));
         }
-        System.out.println("Nouveau muffin lancé");
     }
 
     public void muffinFall() {
         muffin.moveOnce();
-        jeu.tempsEcoule(timerGraphic.getDelay());
+        jeu.tempsEcoule(delay);
         repaint();
     }
 

@@ -50,4 +50,8 @@ public class Utilisateur extends JPanel {
     public Niveau getNiveau() {
         return niveau;
     }
+
+    public void niveauSuivant() {
+        niveau = niveau.suivant();
+    }
 }

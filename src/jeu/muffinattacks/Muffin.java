@@ -16,6 +16,7 @@ public class Muffin {
     private int taille;
     private Couleurs couleurs;
     private Caractere caractere;
+    private int sautMuffin;
 
     /**
      * Instancie un muffin non affiché de taille 100px
@@ -26,6 +27,7 @@ public class Muffin {
         this.caractere = null;
         this.taille = 100;
         this.position = new Point(0,0);
+        this.sautMuffin = 1;
     }
 
     /**
@@ -39,7 +41,7 @@ public class Muffin {
      * Permet de faire tomber le muffin d'un pixel
      */
     public void moveOnce() {
-        position.move((int) position.getX(), (int) position.getY() + 1);
+        position.move((int) position.getX(), (int) position.getY() + sautMuffin);
     }
 
     /**
@@ -91,5 +93,9 @@ public class Muffin {
 
     public void setCouleurs(Couleurs couleurs) {
         this.couleurs = couleurs;
+    }
+
+    public void changerSaut(int n) {
+        this.sautMuffin = n;
     }
 }

@@ -4,37 +4,33 @@ import jeu.global.couleurs.Couleurs;
 
 import javax.swing.*;
 import java.awt.*;
-import java.text.DecimalFormat;
 
 /**
  * @author Jean-Christophe Isoard
  */
 public class Temps extends JPanel {
-    private static DecimalFormat formateur;
     private int tempsTotal;
     private int tempsEcoule;
     private Couleurs couleurs;
+    private static final int epaisseur = 30;
 
     /**
-     * Configure un nouvel afficheur avec le temps en millisecondes
-     * @param t
+     * Configure un nouvel afficheur
      */
-    public Temps(int t) {
-        this.tempsTotal = t;
+    public Temps() {
+        this.tempsTotal = 1;
         this.tempsEcoule = 0;
         this.setBackground(null);
-        this.setPreferredSize(new Dimension(100,0));
+        this.setPreferredSize(new Dimension(0,epaisseur+2));
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        int atteint = tempsEcoule*360/tempsTotal;
-        int taille = this.getHeight()-10;
+        int atteint = tempsEcoule*this.getWidth()/tempsTotal;
         g.setColor(couleurs.getCouleurTexte());
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
-        g.drawArc(0, 5, taille, taille, 0, 360);
-        g.fillArc(0, 5, taille, taille, 0, 360-atteint);
+        g.drawRect(0, 0, this.getWidth()-1, epaisseur);
+        g.fillRect(0, 0, atteint, epaisseur);
     }
 
     public void setCouleurs(Couleurs couleurs) {
@@ -56,6 +52,7 @@ public class Temps extends JPanel {
      */
     public void forward(int t) {
         tempsEcoule += t;
+        System.out.println(tempsEcoule);
         repaint();
     }
 

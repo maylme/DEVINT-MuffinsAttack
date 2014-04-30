@@ -17,13 +17,13 @@ public class InfoBar extends JPanel {
 
     public InfoBar(Jeu jeu) {
         vies = new Vies(jeu);
-        temps = new Temps(1000);
+        temps = new Temps();
         niveaux = new Niveaux(jeu);
 
         this.setLayout(new BorderLayout());
         this.add(vies, BorderLayout.WEST);
         this.add(niveaux, BorderLayout.CENTER);
-        this.add(temps, BorderLayout.EAST);
+        this.add(temps, BorderLayout.SOUTH);
 
         this.setBackground(Color.BLACK);
     }
