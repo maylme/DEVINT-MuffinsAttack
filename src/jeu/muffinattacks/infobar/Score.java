@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by Jicé on 30/04/2014.
+ * @author Jean-Christophe Isoard
  */
 public class Score extends JPanel {
     private int score;
@@ -23,7 +23,7 @@ public class Score extends JPanel {
         this.couleurs = Couleurs.NOIRBLANC;
         this.add(texte);
         this.setBackground(null);
-        this.setPreferredSize(new Dimension(200,80));
+        this.setPreferredSize(new Dimension(200, 80));
     }
 
     @Override

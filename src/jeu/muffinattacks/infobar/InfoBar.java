@@ -17,7 +17,7 @@ public class InfoBar extends JPanel {
 
     public InfoBar(Jeu jeu) {
         vies = new Vies(jeu);
-        temps = new Temps(0);
+        temps = new Temps(1000);
         niveaux = new Niveaux(jeu);
 
         this.setLayout(new BorderLayout());
@@ -42,8 +42,8 @@ public class InfoBar extends JPanel {
         niveaux.setCouleurs(couleurs);
     }
 
-    public void updateTime(int tempsRestant) {
-        temps.update(tempsRestant);
+    public void setTempsTotal(int tempsRestant) {
+        temps.setTempsTotal(tempsRestant);
     }
 
     public void setVies(int n) {
@@ -56,5 +56,13 @@ public class InfoBar extends JPanel {
 
     public void setScore(int points) {
         niveaux.setScore(points);
+    }
+
+    public void forwardTime(int t) {
+        temps.forward(t);
+    }
+
+    public void resetTime() {
+        temps.reset();
     }
 }

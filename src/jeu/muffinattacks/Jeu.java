@@ -4,20 +4,17 @@ import devintAPI.FenetreAbstraite;
 import jeu.global.Utilisateur;
 import jeu.global.couleurs.Couleurs;
 import jeu.muffinattacks.infobar.InfoBar;
-import jeu.muffinattacks.infobar.Niveaux;
-import jeu.muffinattacks.infobar.Temps;
-import jeu.muffinattacks.infobar.Vies;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.KeyEvent;
+import java.util.Random;
 import java.util.Timer;
+import java.util.TimerTask;
 
 /**
- * Created by Jicé on 24/03/2014.
+ * @author Jean-Christophe Isoard
  */
-public class Jeu extends FenetreAbstraite implements KeyListener {
+public class Jeu extends FenetreAbstraite {
     private Utilisateur utilisateur;
 
     private Random rand;
@@ -55,13 +52,13 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         this.add(monde, BorderLayout.CENTER);
 
         //dire("Presse la touche ESPACE pour démarrer le jeu.");
-        jouerEnregistrementPause("espace_pour_demarrer",1);
+        jouerEnregistrementPause("espace_pour_demarrer", 1);
     }
 
     private void preparerJeu() {
         points = 0;
-        tempsTotal = 25;
-        infoBar.updateTime(tempsTotal);
+        tempsTotal = 3500;
+        infoBar.setTempsTotal(tempsTotal);
         infoBar.setVies(3);
         infoBar.setNiveau(utilisateur.getNiveau());
     }
@@ -74,7 +71,8 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     /**
      * Utilise sivox pour lire la phrase donnée en paramètres
      * <br />La phrase est lue aprés le paramètres secondes
-     * @param chaine la phrase à lire
+     *
+     * @param chaine   la phrase à lire
      * @param secondes le temps à attendre avant la lecture
      */
     public void direPause(final String chaine, double secondes) {
@@ -84,14 +82,15 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
                 dire(chaine);
             }
         };
-        if(timerCancelled) timerUncancel();
+        if (timerCancelled) timerUncancel();
         timerPause.schedule(unpauseTask, (int) secondes * 1000);
     }
 
     /**
      * Lit la lettre correspondante du fichier audio dans le dossier
      * <br />ressources/sons/alphabet/
-     * @param lettre la lettre à dire
+     *
+     * @param lettre   la lettre à dire
      * @param secondes le temps à attendre avant la lecture
      */
     public void direLettrePause(final String lettre, double secondes) {
@@ -101,24 +100,25 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
                 direLettre(lettre);
             }
         };
-        if(timerCancelled) timerUncancel();
+        if (timerCancelled) timerUncancel();
         timerPause.schedule(unpauseTask, (int) secondes * 1000);
     }
 
     /**
      * Joue l'enregistrement du dossier donné par le fichier string.wav
      * <br />Après le temps donnée secondes
-     * @param string Enregistrement
+     *
+     * @param string   Enregistrement
      * @param secondes
      */
-    public void jouerEnregistrementPause(final String string, int secondes) {
+    public void jouerEnregistrementPause(final String string, double secondes) {
         TimerTask unpauseTask = new TimerTask() {
             @Override
             public void run() {
                 jouerEnregistrement(string);
             }
         };
-        if(timerCancelled) timerUncancel();
+        if (timerCancelled) timerUncancel();
         timerPause.schedule(unpauseTask, (int) secondes * 1000);
     }
 
@@ -134,13 +134,13 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     public void direLettre(String lettre) {
         voix.stop();
-        String chemin = "../ressources/sons/alphabet/"+lettre.toLowerCase()+".wav";
+        String chemin = "../ressources/sons/alphabet/" + lettre.toLowerCase() + ".wav";
         voix.playWav(chemin);
     }
 
     public void jouerEnregistrement(String nom) {
         voix.stop();
-        voix.playWav("../ressources/sons/jeu/"+nom+".wav");
+        voix.playWav("../ressources/sons/jeu/" + nom + ".wav");
     }
 
     // renvoie le fichier wave contenant le message d'accueil
@@ -154,13 +154,13 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     protected String wavRegleJeu() {
         jouerEnregistrement("muffins_attaquent_la_ville");
         jouerEnregistrementPause("tu_as_3_vie", 2);
-        jouerEnregistrementPause("Pour_les_detruires",3);
+        jouerEnregistrementPause("Pour_les_detruires", 3);
         return "";
     }
 
     // renvoie le fichier wave contenant l'aide du jeu
     protected String wavAide() {
-        if(!monde.getStarted()) {
+        if (!monde.getStarted()) {
             return "../ressources/sons/jeu/espace_pour_demarrer.wav";
         } else {
             return "../ressources/sons/jeu/Pour_les_detruires.wav";
@@ -196,13 +196,13 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
         int keycode = e.getKeyCode();
 
-        if(keycode == KeyEvent.VK_F1 || keycode == KeyEvent.VK_F2 || keycode == KeyEvent.VK_F3 || keycode == KeyEvent.VK_F4) {
+        if (keycode == KeyEvent.VK_F1 || keycode == KeyEvent.VK_F2 || keycode == KeyEvent.VK_F3 || keycode == KeyEvent.VK_F4) {
             return;
         }
 
-        if(keycode == KeyEvent.VK_F12) {
+        if (keycode == KeyEvent.VK_F12) {
             aide = !aide;
-            if(aide) {
+            if (aide) {
                 dire("Assistance Vocale activée.");
             } else {
                 dire("Assistance Vocale éteinte");
@@ -219,7 +219,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
             return;
         }
 
-        if(keycode == KeyEvent.VK_ESCAPE) {
+        if (keycode == KeyEvent.VK_ESCAPE) {
             monde.arreter();
             timerPause.cancel();
             dire("La partie a été interrompue. La reprise n'est pas encore gérée.");
@@ -240,14 +240,14 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
             return;
         }
 
-        if(keycode == KeyEvent.VK_UP) {
-            changerTemps(2);
+        if (keycode == KeyEvent.VK_UP) {
+            changerTemps(2000);
             return;
         }
 
-        if(keycode == KeyEvent.VK_DOWN) {
-            if(tempsTotal > 2) {
-                changerTemps(-2);
+        if (keycode == KeyEvent.VK_DOWN) {
+            if (tempsTotal > 2000) {
+                changerTemps(-2000);
             }
             return;
         }
@@ -264,7 +264,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     }
 
     private void demarrerJeu() {
-        if(monde.getStarted() || utilisateur == null)
+        if (monde.getStarted() || utilisateur == null)
             return;
         preparerJeu();
         preparerMonde();
@@ -277,7 +277,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         tempsTotal += i;
         tempsRestant += i;
         monde.changerTemps(tempsTotal);
-        infoBar.updateTime(tempsRestant);
+        infoBar.setTempsTotal(tempsTotal);
     }
 
     public void ajouterPoint(int i) {
@@ -286,11 +286,6 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     public void viePerdue() {
         infoBar.viePerdue();
-    }
-
-    public void secondeEcoulee() {
-        //TODO Ajouter des bips pour informer de l'écoulement du temps ?
-        infoBar.updateTime(--tempsRestant);
     }
 
     public int getVies() {
@@ -303,7 +298,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     public void timeReset() {
         this.tempsRestant = tempsTotal;
-        infoBar.updateTime(tempsRestant);
+        infoBar.resetTime();
     }
 
     public void jeuFini() {
@@ -322,11 +317,16 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         return aide;
     }
 
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
     }
 
-    public Utilisateur getUtilisateur() {
-        return utilisateur;
+    public void tempsEcoule(int temps) {
+        tempsRestant -= temps;
+        infoBar.forwardTime(temps);
     }
 }

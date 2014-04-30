@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.Random;
 
 /**
- * Created by Jicé on 24/03/2014.
+ * @author Jean-Christophe Isoard
  */
 public class Muffin {
     private static Random rand;

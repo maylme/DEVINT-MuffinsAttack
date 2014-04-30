@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.TimerTask;
 
 /**
- * Created by Jicé on 24/03/2014.
+ * @author Jean-Christophe Isoard
  */
 public class Monde extends JPanel {
     private final Jeu jeu;
@@ -34,7 +34,6 @@ public class Monde extends JPanel {
         this.jeu = jeu;
         this.couleurs = couleurs;
 
-        count = 0;
         timerGraphic = new Timer(200, new GraphicsTime());
         timerPause = new java.util.Timer();
         timerEffacement = new Timer(100,new EffacementTime());
@@ -45,7 +44,7 @@ public class Monde extends JPanel {
         isStarted = false;
         isPaused = true;
 
-        this.setBorder(BorderFactory.createLineBorder(couleurs.getCouleurTexte()));
+        //this.setBorder(BorderFactory.createLineBorder(couleurs.getCouleurTexte()));
         this.setBackground(couleurs.getCouleurFond());
     }
 
@@ -59,8 +58,12 @@ public class Monde extends JPanel {
         jeu.jouerEnregistrementPause("Pour_les_detruires", 2);
     }
 
+    /**
+     * Change le temps de chute du muffin (en millisecondes)
+     * @param t
+     */
     public void changerTemps(int t) {
-        delay = (int) ((t * 1000) / (this.getHeight() - (muffin.getTaille()+40)));
+        delay = t / (this.getHeight() - muffin.getTaille());
         this.timerGraphic.setDelay(delay);
     }
 
@@ -124,11 +127,7 @@ public class Monde extends JPanel {
 
     public void muffinFall() {
         muffin.moveOnce();
-        count++;
-        if (count > 1000 / delay) {
-            count = 0;
-            jeu.secondeEcoulee();
-        }
+        jeu.tempsEcoule(timerGraphic.getDelay());
         repaint();
     }
 
