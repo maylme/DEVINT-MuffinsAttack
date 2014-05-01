@@ -28,6 +28,7 @@ public class Jeu extends FenetreAbstraite {
     private Timer timerPause;
     private boolean timerCancelled;
     private boolean aide;
+    private boolean challenge;
 
     /**
      * @param title : titre de la fenetre
@@ -41,6 +42,7 @@ public class Jeu extends FenetreAbstraite {
         rand = new Random();
 
         aide = true;
+        challenge = false;
 
         infoBar = new InfoBar(this);
         monde = new Monde(this, Couleurs.NOIRBLANC);
@@ -285,23 +287,30 @@ public class Jeu extends FenetreAbstraite {
 
     public void ajouterPoint(int i) {
         infoBar.setScore(++points);
-        verifierCapacitesJoueur();
+        challenge();
+    }
+
+    private void challenge() {
+        if(challenge) {
+            //TODO décider du type d'accelération
+            changerTemps(-tempsTotal/20);
+        } else {
+            verifierCapacitesJoueur();
+        }
     }
 
     private void verifierCapacitesJoueur() {
-        // si le joueur appuie vite sur la touche
-        if(tempsRestant >= tempsTotal-tempsTotal/3) {
-            // augmente la vitesse de 25%
-            this.changerTemps(-tempsTotal/4);
-        }
         // si les points du joueur on dépassé le seuil du niveau
         if(points >= utilisateur.getNiveau().getObjectif()) {
-            // niveau suivant
-            utilisateur.niveauSuivant();
-            infoBar.setNiveau(utilisateur.getNiveau());
-            // temps multiplié par 2
-            this.changerTemps(tempsTotal);
+            //TODO Proposer à l'utilisateur de changer de niveau
+            // OU on passe le jeu en mode challenge (temps s'accelère)
+            modeChallenge();
         }
+    }
+
+    private void modeChallenge() {
+        this.challenge = true;
+        dire("Mode tchallénge !");
     }
 
     public void viePerdue() {
