@@ -15,6 +15,7 @@ import java.util.Collection;
 public abstract class Selection<E> extends JPanel {
     private Collection<Choix> choix;
     private boolean modeMultiple;
+    private boolean locked;
 
     /**
      * Crée un panneau de selection quadrié

@@ -15,8 +15,8 @@ public class Utilisateur extends JPanel {
     private Niveau niveau;
     private Collection<Couleurs> couleursPreferees;
     private int couleursChoisies;
-    private String image;
     private static final String iconsLocation = "../ressources/images/utilisateurs/";
+    private String icon;
 
     public Utilisateur(String identifiant) {
         // création d'un utilisateur
@@ -24,7 +24,7 @@ public class Utilisateur extends JPanel {
         this.couleursPreferees = new ArrayList<Couleurs>();
         this.couleursChoisies = 0;
         this.niveau = Niveau.UN;
-        this.image = null;
+        this.icon = "alligator";
     }
 
     public Collection<Couleurs> getCouleursPreferees() {
@@ -60,5 +60,9 @@ public class Utilisateur extends JPanel {
 
     public String getIdentifiant() {
         return identifiant;
+    }
+
+    public String getIcon() {
+        return icon;
     }
 }

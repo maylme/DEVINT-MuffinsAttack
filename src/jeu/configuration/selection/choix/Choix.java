@@ -30,6 +30,10 @@ public abstract class Choix<E> extends JPanel {
         init();
     }
 
+    public Selection<E> getSelecteur() {
+        return selecteur;
+    }
+
     public abstract void init();
 
     public void setSelected() {

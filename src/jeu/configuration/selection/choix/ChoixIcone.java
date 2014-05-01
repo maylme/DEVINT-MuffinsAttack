@@ -3,7 +3,9 @@ package jeu.configuration.selection.choix;
 import devintAPI.Preferences;
 import jeu.configuration.selection.Selection;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.text.IconView;
 import java.awt.*;
 import java.io.File;
 
@@ -20,10 +22,11 @@ public class ChoixIcone extends Choix<String> {
     @Override
     public void init() {
         File image = new File(Preferences.getIconsdirectory() + getIcone() + ".ico");
-        if(image.isFile())
-            label = new JLabel(new ImageIcon(String.valueOf(image)));
-        else
+        if(image.isFile()) {
+            label = new JLabel();
+        } else {
             label = new JLabel("ERROR");
+        }
         this.add(label, BorderLayout.CENTER);
     }
 

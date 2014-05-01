@@ -1,6 +1,7 @@
 package jeu.configuration;
 
 import devintAPI.FenetreAbstraite;
+import jeu.configuration.selection.Selection;
 import jeu.configuration.selection.SelectionUtilisateur;
 
 import javax.swing.*;
@@ -19,7 +20,9 @@ public class SelecteurUtilisateur extends FenetreAbstraite {
 
     @Override
     protected void init() {
-        this.add(new SelectionUtilisateur());
+        Selection selection = new SelectionUtilisateur();
+        selection.setModeMultiple(false);
+        this.add(selection);
     }
 
     @Override

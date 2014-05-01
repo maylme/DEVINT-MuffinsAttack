@@ -19,8 +19,7 @@ public class ChoixCouleurs extends Choix<Couleurs> {
 
     @Override
     public void init() {
-        jlabel = new JLabel("Aa");
-        jlabel.setHorizontalAlignment(0); //centrage du text
+        jlabel = new JLabel("Aa", SwingConstants.CENTER);
         jlabel.setForeground(getCouleurs().getCouleurTexte());
         jlabel.setFont(new java.awt.Font("Arial", Font.BOLD, 60));
 
