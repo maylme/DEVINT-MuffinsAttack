@@ -60,7 +60,6 @@ public class MenuJeu extends MenuAbstrait {
             case 1:
                 Apprentissage a = new Apprentissage(nomJeu + ": apprentissage");
                 a.setUtilisateur(utilisateur);
-                a.setNiveau(Niveau.DEUX); // PAR DEFAULT !!! 
                 a.changeColor();
                 break;
             case 2:

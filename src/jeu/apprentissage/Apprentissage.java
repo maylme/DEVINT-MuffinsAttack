@@ -123,6 +123,7 @@ public class Apprentissage extends FenetreAbstraite {
 
     public void setUtilisateur(Utilisateur u) {
         this.utilisateur = u;
+        setNiveau(u.getNiveau());
     }
 
     public void setNiveau(Niveau n) {

@@ -4,7 +4,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 import devintAPI.*;
-import jeu.global.couleurs.SelectionCouleurs;
+import jeu.configuration.selection.Selection;
+import jeu.configuration.selection.SelectionCouleurs;
 import jeu.global.Utilisateur;
 
 /**
@@ -48,7 +49,7 @@ public class Option extends FenetreAbstraite {
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
         System.out.println(utilisateur.getCouleursPreferees());
-        selectioncouleurs.setConfiguration(utilisateur.getCouleursPreferees());
+        selectioncouleurs.setConfigurationCouleurs(utilisateur.getCouleursPreferees());
     }
 
     @Override

@@ -8,13 +8,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Created by Jicé on 06/04/2014.
+ * @author Jean-Christophe Isoard
  */
 public class Utilisateur extends JPanel {
     private String identifiant;
     private Niveau niveau;
     private Collection<Couleurs> couleursPreferees;
     private int couleursChoisies;
+    private String image;
+    private static final String iconsLocation = "../ressources/images/utilisateurs/";
 
     public Utilisateur(String identifiant) {
         // création d'un utilisateur
@@ -22,6 +24,7 @@ public class Utilisateur extends JPanel {
         this.couleursPreferees = new ArrayList<Couleurs>();
         this.couleursChoisies = 0;
         this.niveau = Niveau.UN;
+        this.image = null;
     }
 
     public Collection<Couleurs> getCouleursPreferees() {
@@ -53,5 +56,9 @@ public class Utilisateur extends JPanel {
 
     public void niveauSuivant() {
         niveau = niveau.suivant();
+    }
+
+    public String getIdentifiant() {
+        return identifiant;
     }
 }

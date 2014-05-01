@@ -1,6 +1,6 @@
 /**
  * @author LOGRE Ivan, MULLER Stephane, GUYADER Erwan
- * Elèves SI3 en 2010-2011
+ * Elï¿½ves SI3 en 2010-2011
  **/
 
 package devintAPI;
@@ -16,7 +16,7 @@ import t2s.SIVOXDevint;
 import devintAPI.FenetreAbstraite;
 
 /**
- * classe pour stocker les préférences de couleurs et de voix SIVOX
+ * classe pour stocker les prï¿½fï¿½rences de couleurs et de voix SIVOX
  * 
  * On change de jeu de couleurs en tapant F3.
  * On choisi la voix en tapant 
@@ -27,8 +27,8 @@ public class Preferences {
 	/** The instance of the singleton. */
 	private static Preferences instance;
 
-	/** liste des classes (i.e. fenêtres) qui vont utiliser ces préférences
-	 *  ces classes héritent de MenuAbstrait ou DevintFrame
+	/** liste des classes (i.e. fenï¿½tres) qui vont utiliser ces prï¿½fï¿½rences
+	 *  ces classes hï¿½ritent de MenuAbstrait ou DevintFrame
 	 *  */
 	private List<DevintFrameListener> openedWinndows;
 	
@@ -41,8 +41,16 @@ public class Preferences {
 	private int currentSetOfColor;
 	private Color foregroundColor;
 	private Color backgroundColor;
-	
-	/** pour créer l'instance de Data */
+
+    public static String getIconsdirectory() {
+        return ICONSDIRECTORY;
+    }
+
+    // le dossier des icones pour les avatars
+    private static final String ICONSDIRECTORY = "../ressources/images/utilisateurs/";
+
+
+    /** pour crï¿½er l'instance de Data */
 	public static Preferences getData() {
 		if (instance == null) {
 			instance = new Preferences();
@@ -64,7 +72,7 @@ public class Preferences {
 
 	/**
 	 * pour changer la couleur
-	 * on passe d'un jeu prédéfini à un autre
+	 * on passe d'un jeu prï¿½dï¿½fini ï¿½ un autre
 	 */
 	public void changeColor() {
 		if (currentSetOfColor == 0) {
@@ -83,14 +91,14 @@ public class Preferences {
 			this.backgroundColor = Color.WHITE;
 			currentSetOfColor = 0;
 		}
-		// on met à jour toutes les menus avec ce nouveau jeu de couleurs
+		// on met ï¿½ jour toutes les menus avec ce nouveau jeu de couleurs
 		for (DevintFrameListener fenetre : openedWinndows) {
 			fenetre.changeColor();
 		}
 
 	}
 
-	// pour changer la voix en passant à la suivante
+	// pour changer la voix en passant ï¿½ la suivante
 	public void changeVoice() {
 		if(currentVoice == 7)
 			currentVoice = 0;
@@ -109,7 +117,7 @@ public class Preferences {
 		return this.backgroundColor;
 	}
 	
-	// pour ajouter une fenêtre à la liste des fenêtres dont on peut fixer les préférences
+	// pour ajouter une fenï¿½tre ï¿½ la liste des fenï¿½tres dont on peut fixer les prï¿½fï¿½rences
 	public void addDevintFrame(DevintFrameListener frame) {
 		if (!openedWinndows.contains(frame))
 			this.openedWinndows.add(frame);
