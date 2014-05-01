@@ -2,6 +2,7 @@ package jeu.configuration.selection.choix;
 
 import devintAPI.Preferences;
 import jeu.configuration.selection.Selection;
+import jeu.global.ChargerAvatar;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,12 +22,8 @@ public class ChoixIcone extends Choix<String> {
 
     @Override
     public void init() {
-        File image = new File(Preferences.getIconsdirectory() + getIcone() + ".ico");
-        if(image.isFile()) {
-            label = new JLabel();
-        } else {
-            label = new JLabel("ERROR");
-        }
+        label = new JLabel(ChargerAvatar.charger(getObjetChoix()));
+        this.setPreferredSize(label.getSize());
         this.add(label, BorderLayout.CENTER);
     }
 

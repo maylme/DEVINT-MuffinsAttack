@@ -24,7 +24,7 @@ public class Utilisateur extends JPanel {
         this.couleursPreferees = new ArrayList<Couleurs>();
         this.couleursChoisies = 0;
         this.niveau = Niveau.UN;
-        this.icon = "alligator";
+        this.icon = null;
     }
 
     public Collection<Couleurs> getCouleursPreferees() {
