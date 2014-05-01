@@ -11,13 +11,13 @@ import java.awt.event.MouseEvent;
  * @author Jean-Christophe Isoard
  */
 public abstract class Choix<E> extends JPanel {
-    private static final int ESPACEMENT = 20;
     private final Selection<E> selecteur;
     private boolean selected;
     private E objetChoix;
 
     /**
      * Instancie un choix avec pour paramètre son objet choisi
+     *
      * @param o L'objet choisi
      */
     public Choix(Selection<E> selecteur, E o) {
@@ -27,12 +27,12 @@ public abstract class Choix<E> extends JPanel {
 
         this.setLayout(new BorderLayout());
         this.addMouseListener(new EcouteurSouris(this));
+        init();
     }
 
     public abstract void init();
 
     public void setSelected() {
-        selecteur.nouveauSelectionne(objetChoix);
         this.selected = true;
         refresh();
     }
@@ -42,7 +42,12 @@ public abstract class Choix<E> extends JPanel {
     }
 
     public void overlay() {
-        this.selected = !selected;
+        if (selected) {
+            setUnselected();
+        } else {
+            selecteur.nouveauSelectionne(objetChoix);
+            setSelected();
+        }
         refresh();
     }
 
@@ -57,6 +62,11 @@ public abstract class Choix<E> extends JPanel {
 
     public E getObjetChoix() {
         return objetChoix;
+    }
+
+    public void setUnselected() {
+        this.selected = false;
+        refresh();
     }
 
     private class EcouteurSouris extends MouseAdapter {

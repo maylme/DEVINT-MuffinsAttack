@@ -19,7 +19,7 @@ public class SelectionAvatar extends Selection<String> {
         for(String s:recupererListeFichiers()) {
             liste.add(new ChoixIcone(this, s));
         }
-        return null;
+        return liste;
     }
 
     private Collection<String> recupererListeFichiers() {

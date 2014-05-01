@@ -32,12 +32,19 @@ public abstract class Selection<E> extends JPanel {
     public abstract Collection<Choix> getChoix();
 
     public void setConfiguration(Collection<E> choixPersonnels) {
+        resetAll();
         for (E choixPerso : choixPersonnels) {
             for (Choix c : choix) {
                 if (c.isChoix(choixPerso)) {
                     c.setSelected();
                 }
             }
+        }
+    }
+
+    private void resetAll() {
+        for(Choix c:choix) {
+            c.setUnselected();
         }
     }
 
