@@ -7,29 +7,27 @@ import java.awt.*;
 import java.util.Random;
 
 /**
- * Created by Jicé on 24/03/2014.
+ * @author Jean-Christophe Isoard
  */
 public class Muffin {
     private static Random rand;
-    private char lettre;
+    private String lettre;
     private Point position;
     private int taille;
     private Couleurs couleurs;
     private Caractere caractere;
+    private int sautMuffin;
 
     /**
-     * Instancie un muffin avec une lettre et sa taille
-     *
-     * @param lettre
-     * @param taille
+     * Instancie un muffin non affiché de taille 100px
      */
-    public Muffin(char lettre, int taille) {
-        this.lettre = lettre;
-        this.caractere = Caractere.valueOf(String.valueOf(lettre));
-        this.taille = taille;
+    public Muffin() {
         this.rand = new Random();
+        this.lettre = null;
+        this.caractere = null;
+        this.taille = 100;
         this.position = new Point(0,0);
-        this.couleurs = Couleurs.NOIRBLANC;
+        this.sautMuffin = 1;
     }
 
     /**
@@ -40,29 +38,10 @@ public class Muffin {
     }
 
     /**
-     * Renvoie true si le muffin à dépassé la valeur sol donnée en paramètre
-     *
-     * @param sol la position du sol, un entier
-     * @return un booléen indiquant si le muffin à dépassé la valeur sol ou non
-     */
-    public boolean toucheSol(int sol) {
-        return position.getY() + taille > sol;
-    }
-
-    /**
      * Permet de faire tomber le muffin d'un pixel
      */
     public void moveOnce() {
-        position.move((int) position.getX(), (int) position.getY() + 1);
-    }
-
-    /**
-     * Récupére la position du muffin (point en haut à gauche)
-     *
-     * @return Point coordonnées du point supérieur gauche du muffin
-     */
-    public Point getPosition() {
-        return position;
+        position.move((int) position.getX(), (int) position.getY() + sautMuffin);
     }
 
     /**
@@ -74,7 +53,23 @@ public class Muffin {
         return taille;
     }
 
+    /**
+     * Redessine le muffin de façon réduite à chaque appel
+     * <br />Pour réinitialiser l'action de cette fonction, il faut réinitialiser la variable effacement à 0
+     * @param g
+     */
+    public void dessineMuffinPartiel(Graphics g, int efface) {
+        int x1 = (int) position.getX();
+        int y1 = (int) position.getY()+efface;
+        int x2 = taille;
+        int y2 = taille-efface*2;
+        g.setColor(couleurs.getCouleurTexte());
+        g.fillRect(x1, y1, x2, y2);
+    }
+
     public void paint(Graphics g) {
+        if(lettre == null || caractere == null)
+            return;
         int x = (int) position.getX();
         int y = (int) position.getY();
         g.setColor(couleurs.getCouleurTexte());
@@ -87,16 +82,20 @@ public class Muffin {
      *
      * @return lettre du muffin
      */
-    public char getLettre() {
+    public String getLettre() {
         return lettre;
     }
 
-    public void setLettre(char lettre) {
+    public void setLettre(String lettre) {
         this.lettre = lettre;
-        this.caractere = Caractere.valueOf(String.valueOf(lettre));
+        this.caractere = Caractere.valueOf(lettre);
     }
 
     public void setCouleurs(Couleurs couleurs) {
         this.couleurs = couleurs;
+    }
+
+    public void changerSaut(int n) {
+        this.sautMuffin = n;
     }
 }

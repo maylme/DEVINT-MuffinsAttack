@@ -1,6 +1,7 @@
 package jeu.global;
 
 import jeu.global.couleurs.Couleurs;
+import jeu.global.difficultes.Niveau;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Collection;
  */
 public class Utilisateur extends JPanel {
     private String identifiant;
+    private Niveau niveau;
     private Collection<Couleurs> couleursPreferees;
     private int couleursChoisies;
 
@@ -19,6 +21,7 @@ public class Utilisateur extends JPanel {
         this.identifiant = identifiant;
         this.couleursPreferees = new ArrayList<Couleurs>();
         this.couleursChoisies = 0;
+        this.niveau = Niveau.UN;
     }
 
     public Collection<Couleurs> getCouleursPreferees() {
@@ -34,9 +37,21 @@ public class Utilisateur extends JPanel {
         return (Couleurs) (couleursPreferees.toArray())[couleursChoisies];
     }
 
+    public void setNiveau(Niveau niveau) {
+        this.niveau = niveau;
+    }
+
     public void couleursSuivantes() {
         if(++couleursChoisies > couleursPreferees.toArray().length) {
             couleursChoisies = 1;
         }
+    }
+
+    public Niveau getNiveau() {
+        return niveau;
+    }
+
+    public void niveauSuivant() {
+        niveau = niveau.suivant();
     }
 }

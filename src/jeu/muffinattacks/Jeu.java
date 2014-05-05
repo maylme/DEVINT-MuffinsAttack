@@ -3,25 +3,24 @@ package jeu.muffinattacks;
 import devintAPI.FenetreAbstraite;
 import jeu.global.Utilisateur;
 import jeu.global.couleurs.Couleurs;
+import jeu.muffinattacks.infobar.InfoBar;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import java.awt.event.KeyEvent;
+import java.util.Random;
 import java.util.Timer;
+import java.util.TimerTask;
 
 /**
- * Created by Jicé on 24/03/2014.
+ * @author Jean-Christophe Isoard
  */
-public class Jeu extends FenetreAbstraite implements KeyListener {
+public class Jeu extends FenetreAbstraite {
     private Utilisateur utilisateur;
 
-    private static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private Random rand;
-    private Vies vies;
-    private Temps temps;
+
+    private InfoBar infoBar;
     private Monde monde;
-    private JLabel status;
 
     private int points;
     private int tempsRestant;
@@ -29,7 +28,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     private Timer timerPause;
     private boolean timerCancelled;
     private boolean aide;
-    private JPanel statsJeu;
+    private boolean challenge;
 
     /**
      * @param title : titre de la fenetre
@@ -41,35 +40,29 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     @Override
     protected void init() {
         rand = new Random();
-        status = new JLabel("Attends le démarrage du jeu");
-        vies = new Vies(this);
-        temps = new Temps(0);
-        aide = true;
 
+        aide = true;
+        challenge = false;
+
+        infoBar = new InfoBar(this);
         monde = new Monde(this, Couleurs.NOIRBLANC);
         timerPause = new Timer();
 
         this.setLayout(new BorderLayout());
 
-        statsJeu = new JPanel(new BorderLayout());
-        statsJeu.setBackground(Color.BLACK);
-        statsJeu.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-        statsJeu.add(vies,BorderLayout.WEST);
-        statsJeu.add(temps,BorderLayout.EAST);
-
-        this.add(statsJeu, BorderLayout.NORTH);
+        this.add(infoBar, BorderLayout.NORTH);
         this.add(monde, BorderLayout.CENTER);
-        this.add(status, BorderLayout.SOUTH);
 
         //dire("Presse la touche ESPACE pour démarrer le jeu.");
-        jouerEnregistrementPause("espace_pour_demarrer",1);
+        jouerEnregistrementPause("espace_pour_demarrer", 1);
     }
 
     private void preparerJeu() {
-        vies.setVies(3);
         points = 0;
-        tempsTotal = 25;
-        updateStatusBar();
+        tempsTotal = 20000;
+        infoBar.setTempsTotal(tempsTotal);
+        infoBar.setVies(3);
+        infoBar.setNiveau(utilisateur.getNiveau());
     }
 
     private void preparerMonde() {
@@ -80,7 +73,8 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     /**
      * Utilise sivox pour lire la phrase donnée en paramètres
      * <br />La phrase est lue aprés le paramètres secondes
-     * @param chaine la phrase à lire
+     *
+     * @param chaine   la phrase à lire
      * @param secondes le temps à attendre avant la lecture
      */
     public void direPause(final String chaine, double secondes) {
@@ -90,14 +84,15 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
                 dire(chaine);
             }
         };
-        if(timerCancelled) timerUncancel();
+        if (timerCancelled) timerUncancel();
         timerPause.schedule(unpauseTask, (int) secondes * 1000);
     }
 
     /**
      * Lit la lettre correspondante du fichier audio dans le dossier
      * <br />ressources/sons/alphabet/
-     * @param lettre la lettre à dire
+     *
+     * @param lettre   la lettre à dire
      * @param secondes le temps à attendre avant la lecture
      */
     public void direLettrePause(final String lettre, double secondes) {
@@ -107,24 +102,25 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
                 direLettre(lettre);
             }
         };
-        if(timerCancelled) timerUncancel();
+        if (timerCancelled) timerUncancel();
         timerPause.schedule(unpauseTask, (int) secondes * 1000);
     }
 
     /**
      * Joue l'enregistrement du dossier donné par le fichier string.wav
      * <br />Après le temps donnée secondes
-     * @param string Enregistrement
+     *
+     * @param string   Enregistrement
      * @param secondes
      */
-    public void jouerEnregistrementPause(final String string, int secondes) {
+    public void jouerEnregistrementPause(final String string, double secondes) {
         TimerTask unpauseTask = new TimerTask() {
             @Override
             public void run() {
                 jouerEnregistrement(string);
             }
         };
-        if(timerCancelled) timerUncancel();
+        if (timerCancelled) timerUncancel();
         timerPause.schedule(unpauseTask, (int) secondes * 1000);
     }
 
@@ -140,13 +136,13 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     public void direLettre(String lettre) {
         voix.stop();
-        String chemin = "../ressources/sons/alphabet/"+lettre.toLowerCase()+".wav";
+        String chemin = "../ressources/sons/alphabet/" + lettre.toLowerCase() + ".wav";
         voix.playWav(chemin);
     }
 
     public void jouerEnregistrement(String nom) {
         voix.stop();
-        voix.playWav("../ressources/sons/jeu/"+nom+".wav");
+        voix.playWav("../ressources/sons/jeu/" + nom + ".wav");
     }
 
     // renvoie le fichier wave contenant le message d'accueil
@@ -160,13 +156,13 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
     protected String wavRegleJeu() {
         jouerEnregistrement("muffins_attaquent_la_ville");
         jouerEnregistrementPause("tu_as_3_vie", 2);
-        jouerEnregistrementPause("Pour_les_detruires",3);
+        jouerEnregistrementPause("Pour_les_detruires", 3);
         return "";
     }
 
     // renvoie le fichier wave contenant l'aide du jeu
     protected String wavAide() {
-        if(!monde.getDemarre()) {
+        if (!monde.getStarted()) {
             return "../ressources/sons/jeu/espace_pour_demarrer.wav";
         } else {
             return "../ressources/sons/jeu/Pour_les_detruires.wav";
@@ -180,22 +176,20 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     public void setCouleurs(Couleurs c) {
         this.setBackground(c.getCouleurFond());
-        statsJeu.setBackground(c.getCouleurFond());
-        temps.changeCouleur(c.getCouleurTexte());
+        infoBar.changeCouleur(c);
         monde.setColors(c);
     }
 
-    public void updateStatusBar() {
-        temps.update(tempsRestant);
-        status.setText("Temps total:"+tempsTotal+" Vies:" + vies.getVies() + " Points:" + points + " Temps restant:" + tempsRestant);
+    public String getAlphabet() {
+        return utilisateur.getNiveau().getAlphabet();
     }
 
     public boolean isInAlphabet(char lettre) {
-        return alphabet.contains(String.valueOf(lettre));
+        return getAlphabet().contains(String.valueOf(lettre));
     }
 
     public char getRandomLetter() {
-        return alphabet.charAt(rand.nextInt(alphabet.length()));
+        return getAlphabet().charAt(rand.nextInt(getAlphabet().length()));
     }
 
     @Override
@@ -204,13 +198,13 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
         int keycode = e.getKeyCode();
 
-        if(keycode == KeyEvent.VK_F1 || keycode == KeyEvent.VK_F2 || keycode == KeyEvent.VK_F3 || keycode == KeyEvent.VK_F4) {
+        if (keycode == KeyEvent.VK_F1 || keycode == KeyEvent.VK_F2 || keycode == KeyEvent.VK_F3 || keycode == KeyEvent.VK_F4) {
             return;
         }
 
-        if(keycode == KeyEvent.VK_F12) {
+        if (keycode == KeyEvent.VK_F12) {
             aide = !aide;
-            if(aide) {
+            if (aide) {
                 dire("Assistance Vocale activée.");
             } else {
                 dire("Assistance Vocale éteinte");
@@ -218,27 +212,22 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
             return;
         }
 
-        if (!(monde.getStarted()) && (keycode == KeyEvent.VK_SPACE)) {
-            preparerJeu();
-            preparerMonde();
-            timerPause.cancel();
-            timerCancelled = true;
-            monde.jouer(tempsTotal);
-            return;
+        if (keycode == KeyEvent.VK_SPACE) {
+            demarrerJeu();
         }
 
         if (!(monde.getStarted())) {
             return;
         }
 
-        if(keycode == KeyEvent.VK_ESCAPE) {
+        if (keycode == KeyEvent.VK_ESCAPE) {
             monde.arreter();
             timerPause.cancel();
             dire("La partie a été interrompue. La reprise n'est pas encore gérée.");
             return;
         }
 
-        if (keycode == KeyEvent.VK_PAUSE) {
+        if (keycode == KeyEvent.VK_F11 || keycode == KeyEvent.VK_PAUSE) {
             monde.pause();
             if (monde.getPaused()) {
                 dire("Le jeu est en pause.");
@@ -248,19 +237,22 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
             return;
         }
 
-        if (monde.getPaused()) {
-            return;
-        }
-
-        if(keycode == KeyEvent.VK_UP) {
-            changerTemps(2);
-            return;
-        }
-
-        if(keycode == KeyEvent.VK_DOWN) {
-            if(tempsTotal > 2) {
-                changerTemps(-2);
+        /*if(monde.getPaused()) {
+            if (keycode == KeyEvent.VK_UP) {
+                changerTemps(500);
+                return;
             }
+
+            if (keycode == KeyEvent.VK_DOWN) {
+                if (tempsTotal > 500) {
+                    changerTemps(-500);
+                }
+                return;
+            }
+        }*/
+
+        if(monde.getPaused()) {
+            dire("Le jeu est en pause.");
             return;
         }
 
@@ -268,38 +260,65 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
             dire("Tu cherches la lettre " + monde.getMuffin().getLettre());
         } else {
             if (!isInAlphabet((char) keycode)) {
-                dire("Attention, c'est une lettre que tu cherches.");
+                dire("Mauvaise touche ! La touche numéro " +keycode+" ne fait pas partie du dictionnaire");
+                System.out.println(keycode);
             } else {
                 monde.lettreEntree((char) keycode);
             }
         }
     }
 
+    private void demarrerJeu() {
+        if (monde.getStarted() || utilisateur == null)
+            return;
+        preparerJeu();
+        preparerMonde();
+        timerPause.cancel();
+        timerCancelled = true;
+        monde.jouer(tempsTotal);
+    }
+
     private void changerTemps(int i) {
         tempsTotal += i;
         tempsRestant += i;
         monde.changerTemps(tempsTotal);
-        updateStatusBar();
+        infoBar.setTempsTotal(tempsTotal);
     }
 
     public void ajouterPoint(int i) {
-        this.points++;
-        updateStatusBar();
+        infoBar.setScore(++points);
+        challenge();
+    }
+
+    private void challenge() {
+        if(challenge) {
+            //TODO décider du type d'accelération
+            changerTemps(-tempsTotal/20);
+        } else {
+            verifierCapacitesJoueur();
+        }
+    }
+
+    private void verifierCapacitesJoueur() {
+        // si les points du joueur on dépassé le seuil du niveau
+        if(points >= utilisateur.getNiveau().getObjectif()) {
+            //TODO Proposer à l'utilisateur de changer de niveau
+            // OU on passe le jeu en mode challenge (temps s'accelère)
+            modeChallenge();
+        }
+    }
+
+    private void modeChallenge() {
+        this.challenge = true;
+        dire("Mode tchallénge !");
     }
 
     public void viePerdue() {
-        vies.viePerdue();
-        updateStatusBar();
-    }
-
-    public void secondeEcoulee() {
-        //TODO Ajouter des bips pour informer de l'écoulement du temps ?
-        this.tempsRestant--;
-        updateStatusBar();
+        infoBar.viePerdue();
     }
 
     public int getVies() {
-        return vies.getVies();
+        return infoBar.getNbVies();
     }
 
     public boolean getTimeOut() {
@@ -308,7 +327,7 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
 
     public void timeReset() {
         this.tempsRestant = tempsTotal;
-        updateStatusBar();
+        infoBar.resetTime();
     }
 
     public void jeuFini() {
@@ -327,7 +346,16 @@ public class Jeu extends FenetreAbstraite implements KeyListener {
         return aide;
     }
 
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
+    }
+
+    public void tempsEcoule(int temps) {
+        tempsRestant -= temps;
+        infoBar.forwardTime(temps);
     }
 }
