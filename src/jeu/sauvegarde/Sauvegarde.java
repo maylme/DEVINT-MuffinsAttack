@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.*;
 import jeu.global.Utilisateur;
 import jeu.global.couleurs.Couleurs;
+import jeu.global.difficultes.Niveau;
 import static jeu.sauvegarde.Config.*;
 import org.jdom2.*;
 import org.jdom2.output.*;
@@ -30,10 +31,13 @@ public class Sauvegarde {
      */
     public static void main(String[] args) {
         HashMap<String, Utilisateur> test = new HashMap<>();
+        HashMap<Niveau, Integer> scores = new HashMap<>();
+        scores.put(Niveau.UN, 12);
         Utilisateur Thomas = new Utilisateur("Thomas");
         Collection<Couleurs> couleur = new ArrayList<>();
         couleur.add(Couleurs.JAUNENOIR);
         couleur.add(Couleurs.BEIGEBLEU);
+        Thomas.setMeilleursScores(scores);
         Thomas.setCouleursPreferees(couleur);
         Utilisateur Maylanie = new Utilisateur("Maylanie");
         Collection<Couleurs> couleur1 = new ArrayList<>();
@@ -87,7 +91,15 @@ public class Sauvegarde {
 
     public static Element saveScores(Utilisateur user) {
         Element score = new Element(SCORE_UTILISATEUR);
-        score.setAttribute(SCORE_VALUE, Integer.toString(12));
+        HashMap<Niveau,Integer> scoreASauvegarder = user.getMeilleursScores();
+        Set key = scoreASauvegarder.keySet();
+        Iterator it = key.iterator();
+        while (it.hasNext()) {
+            Object niv = it.next();
+            Element niveau = new Element(((Niveau)niv).getName());
+            niveau.setAttribute(SCORE_VALUE, Integer.toString(scoreASauvegarder.get(niv)));
+            score.addContent(niveau);
+        }
         return score;
     }
 }
