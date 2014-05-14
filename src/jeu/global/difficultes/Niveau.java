@@ -21,6 +21,9 @@ public enum Niveau {
         this.objectif = objectifScore;
     }
 
+    public String getName(){
+        return this.name();
+    }
     public int getNbLettres() {
         return nbLettres;
     }
