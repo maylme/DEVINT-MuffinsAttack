@@ -51,6 +51,7 @@ public class Utilisateur extends JPanel {
      * @param couleursPreferees une collection de Couleurs
      */
     public void setCouleursPreferees(Collection<Couleurs> couleursPreferees) {
+        this.couleursChoisies = 0;
         this.couleursPreferees = couleursPreferees;
     }
 
@@ -70,8 +71,8 @@ public class Utilisateur extends JPanel {
      * Permet de changer les couleurs choisies par une autre dans la liste des couleurs préférées de l'utilisateur
      */
     public void couleursSuivantes() {
-        if (++couleursChoisies > couleursPreferees.toArray().length) {
-            couleursChoisies = 1;
+        if (++couleursChoisies >= couleursPreferees.toArray().length) {
+            couleursChoisies = 0;
         }
     }
 
