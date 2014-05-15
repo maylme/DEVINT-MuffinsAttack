@@ -3,9 +3,8 @@ package jeu;
 import jeu.configuration.AssistantUtilisateur;
 
 /**
- * classe pour lancer le jeu Elle créé simplement une instance de MenuJeu
- *
- * @author helene
+ * Classe principale
+ * Lance l'assistant utilisateur pour la selection/creation d'un nouvel utilisateur
  *
  */
 public class LancementJeu {

@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
+ * Représente un panneau de selection d'un objet
  * @author Jean-Christophe Isoard
  */
 public abstract class Selection<E> extends JPanel {
     private Collection<Choix> choix;
     private boolean modeMultiple;
-    private boolean locked;
 
     /**
      * Crée un panneau de selection quadrié
@@ -30,8 +30,15 @@ public abstract class Selection<E> extends JPanel {
         }
     }
 
+    /**
+     * Doit renvoyer la collection des choix possibles (la représentation d'une case)
+     */
     public abstract Collection<Choix> getChoix();
 
+    /**
+     * Permet de mettre les élements de la Collection d'objets contenu dans le panneau dans l'état selectionné
+     * @param choixPersonnels la collection d'élements à passer en état sélectionné
+     */
     public void setConfiguration(Collection<E> choixPersonnels) {
         resetAll();
         for (E choixPerso : choixPersonnels) {
@@ -43,12 +50,19 @@ public abstract class Selection<E> extends JPanel {
         }
     }
 
+    /**
+     * Reinitialise tous les élements à l'état non selectionné
+     */
     private void resetAll() {
         for(Choix c:choix) {
             c.setUnselected();
         }
     }
 
+    /**
+     * Met l'element passé en paramètre dans l'état selectionné
+     * @param nouveauChoix l'element à passer en état sélectionné
+     */
     public void nouveauSelectionne(E nouveauChoix) {
         if(modeMultiple)
             return;
@@ -57,6 +71,10 @@ public abstract class Selection<E> extends JPanel {
         setConfiguration(config);
     }
 
+    /**
+     * Renvoie les élements selectionné dans une collection
+     * @return les élement selectionnés sur le panneau
+     */
     public Collection<E> getSelectedChoix() {
         Collection<E> choixSelection = new ArrayList<E>();
         for (Choix<E> c : choix) {
@@ -67,6 +85,10 @@ public abstract class Selection<E> extends JPanel {
         return choixSelection;
     }
 
+    /**
+     * Change le mode de selection
+     * @param b booléen: true = multiple, false = un seul choix possible
+     */
     public void setModeMultiple(boolean b) {
         this.modeMultiple = b;
     }

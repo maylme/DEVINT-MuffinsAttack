@@ -22,6 +22,7 @@ public class Restauration {
 
     public static void main(String[] args) {
         HashMap<String, Utilisateur> test = restoreUsers();
+        System.out.println(test);
     }
 
     /**
