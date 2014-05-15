@@ -15,7 +15,7 @@ import java.util.Collection;
  * @author Jean-Christophe Isoard
  */
 public class ChargerAvatar {
-    public static ImageIcon charger(String nom) {
+    public static ImageIcon charger(String nom, int width, int heigth) {
         String lien = Preferences.getIconsdirectory() + nom + ".png";
         BufferedImage icon = null;
         boolean chargee = false;
@@ -30,7 +30,7 @@ public class ChargerAvatar {
             System.out.println("Erreur à la lecture de "+lien);
         }
         if (chargee)
-            return new ImageIcon(icon);
+            return new ImageIcon(icon.getScaledInstance(width,heigth,Image.SCALE_DEFAULT));
         return new ImageIcon();
     }
 

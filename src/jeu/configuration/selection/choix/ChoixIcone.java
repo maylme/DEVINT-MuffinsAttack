@@ -22,8 +22,8 @@ public class ChoixIcone extends Choix<String> {
 
     @Override
     public void init() {
-        label = new JLabel(ChargerAvatar.charger(getObjetChoix()));
-        this.setPreferredSize(label.getSize());
+        label = new JLabel(ChargerAvatar.charger(getObjetChoix(),200,200));
+        this.setMinimumSize(label.getSize());
         this.add(label, BorderLayout.CENTER);
     }
 

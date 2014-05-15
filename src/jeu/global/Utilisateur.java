@@ -23,17 +23,16 @@ public class Utilisateur extends JPanel {
     private Map<Niveau, Integer> meilleursScores;
 
     /**
-     * Construit un utilisateur avec un identifiant
+     * Construit un utilisateur configuré par défaut
      *
-     * @param identifiant le prénom par exemple
      */
-    public Utilisateur(String identifiant) {
+    public Utilisateur(String icone) {
         // création d'un utilisateur
-        this.identifiant = identifiant;
+        this.identifiant = "";
         this.couleursPreferees = new ArrayList<Couleurs>();
         this.meilleursScores = new HashMap<>();
         this.couleursChoisies = 0;
-        this.icone = "";
+        this.icone = icone;
         this.niveau = Niveau.UN;
     }
 

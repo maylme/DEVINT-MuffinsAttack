@@ -91,7 +91,7 @@ public class Sauvegarde {
 
     public static Element saveScores(Utilisateur user) {
         Element score = new Element(SCORE_UTILISATEUR);
-        HashMap<Niveau,Integer> scoreASauvegarder = user.getMeilleursScores();
+        Map<Niveau,Integer> scoreASauvegarder = user.getMeilleursScores();
         Set key = scoreASauvegarder.keySet();
         Iterator it = key.iterator();
         while (it.hasNext()) {
