@@ -18,7 +18,8 @@ public class Config {
      */
 
     public final static String FILE_NAME = "users.xml";
-    public final static Element RACINE_UTILISATEURS = new Element("utilisateur");
+    public final static String RACINE_NOM = "utilisateur";
+    public final static Element RACINE_UTILISATEURS = new Element(RACINE_NOM);
     public final static Document UTILISATEUR = new Document(RACINE_UTILISATEURS);
     public final static String COULEUR_UTILISATEUR = "Couleurs";
     public final static String SCORE_UTILISATEUR = "Scores";

@@ -8,11 +8,15 @@ package jeu.sauvegarde;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jeu.global.Utilisateur;
 import jeu.global.couleurs.Couleurs;
 import jeu.global.difficultes.Niveau;
 import static jeu.sauvegarde.Config.*;
+import static jeu.sauvegarde.Restauration.restoreUsers;
 import org.jdom2.*;
+import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.*;
 
 /**
@@ -22,7 +26,8 @@ import org.jdom2.output.*;
  */
 public class Sauvegarde {
 
-    
+    private static Document document;
+    private static Element racine;
 
     /**
      * Un main juste pour tester l'enregistrement. A supprimer plus tard
@@ -47,6 +52,9 @@ public class Sauvegarde {
         test.put("Thomas", Thomas);
         test.put("Maylanie", Maylanie);
         saveUsers(test);
+        scores.put(Niveau.DEUX, 50);
+        Thomas.setMeilleursScores(scores);
+        saveUser(Thomas);
     }
 
     /**
@@ -62,8 +70,7 @@ public class Sauvegarde {
 
         while (it.hasNext()) {
             Object user = it.next();
-            Element userName = new Element(user.toString());
-            userName.setAttribute(ICONE_UTILISATEUR, users.get(user).getIcone());
+            Element userName = new Element(users.get(user).getIcone());
             RACINE_UTILISATEURS.addContent(userName);
             @SuppressWarnings("element-type-mismatch")
             Element couleur = saveColors(users.get(user));
@@ -72,12 +79,44 @@ public class Sauvegarde {
             userName.addContent(score);
         }
         try {
-            XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
-            sortie.output(UTILISATEUR, new FileOutputStream(FILE_NAME));
-        } catch (IOException ex) {
+            enregistreFichier(FILE_NAME);
+        } catch (Exception ex) {
+            Logger.getLogger(Sauvegarde.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    public static void saveUser(Utilisateur user) {
+        SAXBuilder sxb = new SAXBuilder();
+        try {
+            lireFichier(FILE_NAME);
+            List listEtudiant = racine.getChildren();
+            Iterator i = listEtudiant.iterator();
+            while (i.hasNext()) {
+                Element courant = (Element) i.next();
+                if (courant.getName().equals(user.getIcone())) {
+                    racine.removeChild(courant.getName());
+
+                }
+            }
+            Element userName = new Element(user.getIcone());
+            racine.addContent(userName);
+            Element couleur = saveColors(user);
+            userName.addContent(couleur);
+            Element score = saveScores(user);
+            userName.addContent(score);
+            System.out.println(userName.getChild(SCORE_UTILISATEUR).getChildren());
+            System.out.println(racine.getChildren());
+            enregistreFichier(FILE_NAME);
+        } catch (Exception e) {
+        }
+    }
+
+    /**
+     * Sauvegarde les préférence de couleurs associées à l'utilisateur
+     *
+     * @param user
+     * @return un Element contenant les couleurs préférées
+     */
     public static Element saveColors(Utilisateur user) {
         Element couleur = new Element(COULEUR_UTILISATEUR);
         int i = 0;
@@ -90,17 +129,35 @@ public class Sauvegarde {
         return couleur;
     }
 
+    /**
+     * Sauvegarde le meilleur score par niveau de l'utilisateur.
+     *
+     * @param user
+     * @return un Element contenant les meilleurs scores de l'utilisateur
+     */
     public static Element saveScores(Utilisateur user) {
         Element score = new Element(SCORE_UTILISATEUR);
-        Map<Niveau,Integer> scoreASauvegarder = user.getMeilleursScores();
+        Map<Niveau, Integer> scoreASauvegarder = user.getMeilleursScores();
+        System.out.println(scoreASauvegarder);
         Set key = scoreASauvegarder.keySet();
         Iterator it = key.iterator();
         while (it.hasNext()) {
             Object niv = it.next();
-            Element niveau = new Element(((Niveau)niv).getName());
+            Element niveau = new Element(((Niveau) niv).getName());
             niveau.setAttribute(SCORE_VALUE, Integer.toString(scoreASauvegarder.get(niv)));
             score.addContent(niveau);
         }
         return score;
+    }
+
+    public static void lireFichier(String fichier) throws Exception {
+        SAXBuilder sxb = new SAXBuilder();
+        document = Config.UTILISATEUR;
+        racine = document.getRootElement();
+    }
+
+    public static void enregistreFichier(String fichier) throws Exception {
+        XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
+        sortie.output(UTILISATEUR, new FileOutputStream(FILE_NAME));
     }
 }
