@@ -14,7 +14,7 @@ import java.util.Map;
  *
  * @author Jean-Christophe Isoard
  */
-public class Utilisateur extends JPanel {
+public class Utilisateur{
     private String identifiant;
     private Niveau niveau;
     private Collection<Couleurs> couleursPreferees;

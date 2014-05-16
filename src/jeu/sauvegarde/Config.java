@@ -23,4 +23,5 @@ public class Config {
     public final static String COULEUR_UTILISATEUR = "Couleurs";
     public final static String SCORE_UTILISATEUR = "Scores";
     public final static String SCORE_VALUE = "valeur";
+    public final static String ICONE_UTILISATEUR = "icone";
 }

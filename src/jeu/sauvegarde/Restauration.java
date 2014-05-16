@@ -37,7 +37,7 @@ public class Restauration {
             Document document = sxb.build(Config.FILE_NAME);
             Element racine = document.getRootElement();
             for (Element elem : racine.getChildren()) {
-                Utilisateur current = new Utilisateur(elem.getName());
+                Utilisateur current = new Utilisateur(elem.getAttributeValue(ICONE_UTILISATEUR));
                 current.setCouleursPreferees(restoreColors(elem));
                 current.setMeilleursScores(restoreScores(elem));
                 users.put(elem.getName(), current);
