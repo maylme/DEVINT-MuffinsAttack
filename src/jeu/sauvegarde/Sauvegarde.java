@@ -33,13 +33,13 @@ public class Sauvegarde {
         HashMap<String, Utilisateur> test = new HashMap<>();
         HashMap<Niveau, Integer> scores = new HashMap<>();
         scores.put(Niveau.UN, 12);
-        Utilisateur Thomas = new Utilisateur("Thomas");
+        Utilisateur Thomas = new Utilisateur("Tom");
         Collection<Couleurs> couleur = new ArrayList<>();
         couleur.add(Couleurs.JAUNENOIR);
         couleur.add(Couleurs.BEIGEBLEU);
         Thomas.setMeilleursScores(scores);
         Thomas.setCouleursPreferees(couleur);
-        Utilisateur Maylanie = new Utilisateur("Maylanie");
+        Utilisateur Maylanie = new Utilisateur("Mayl");
         Collection<Couleurs> couleur1 = new ArrayList<>();
         couleur1.add(Couleurs.BEIGEMARRON);
         couleur1.add(Couleurs.NOIRBLANC);
@@ -63,6 +63,7 @@ public class Sauvegarde {
         while (it.hasNext()) {
             Object user = it.next();
             Element userName = new Element(user.toString());
+            userName.setAttribute(ICONE_UTILISATEUR, users.get(user).getIcone());
             RACINE_UTILISATEURS.addContent(userName);
             @SuppressWarnings("element-type-mismatch")
             Element couleur = saveColors(users.get(user));
