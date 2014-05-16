@@ -259,12 +259,7 @@ public class Jeu extends FenetreAbstraite {
         if (keycode == KeyEvent.VK_SPACE) {
             dire("Tu cherches la lettre " + monde.getMuffin().getLettre());
         } else {
-            if (!isInAlphabet((char) keycode)) {
-                dire("Ce n'est pas la bonne touche !");
-                infoBar.viePerdue(1);
-            } else {
-                monde.lettreEntree((char) keycode);
-            }
+            monde.lettreEntree((char) keycode);
         }
     }
 
@@ -353,5 +348,13 @@ public class Jeu extends FenetreAbstraite {
     public void tempsEcoule(int temps) {
         tempsRestant -= temps;
         infoBar.forwardTime(temps);
+    }
+
+    /**
+     * Attends le temps passé en paramètre avant d'effectuer la perte d'une vie
+     * @param wait le temps à attendre en (secondes)
+     */
+    public void viePerdue(int wait) {
+        infoBar.viePerdue(wait);
     }
 }

@@ -189,8 +189,8 @@ public class Monde extends JPanel {
         if (Character.compare(muffin.getLettre().charAt(0),lettre) == 0) {
             killMuffin();
         } else {
-            //TODO Voix quand ce n'est pas la bonne lettre
-
+            jeu.dire("Ce n'est pas la bonne touche !");
+            jeu.viePerdue(1);
         }
     }
 
