@@ -7,6 +7,7 @@ import jeu.configuration.selection.SelectionAvatar;
 import jeu.configuration.selection.SelectionCouleurs;
 import jeu.global.Utilisateur;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Collection;
@@ -15,9 +16,12 @@ import java.util.Collection;
  * @author Jean-Christophe Isoard
  */
 public class NouvelUtilisateur extends FenetreAbstraite {
+    private enum Etape {AVATAR, NOM, COULEURS}
+
     private Etape etape = Etape.AVATAR;
-    ;
+
     private Utilisateur utilisateur;
+    private EntrerNom formulaireNom;
     private Selection selection;
 
     /**
@@ -30,6 +34,7 @@ public class NouvelUtilisateur extends FenetreAbstraite {
     @Override
     protected void init() {
         this.setLayout(new BorderLayout());
+        formulaireNom = new EntrerNom();
         selection = new SelectionAvatar();
         selection.setModeMultiple(false);
         this.add(selection, BorderLayout.CENTER);
@@ -58,12 +63,22 @@ public class NouvelUtilisateur extends FenetreAbstraite {
                 String icone = (String) collection.iterator().next();
                 utilisateur = new Utilisateur(icone);
                 this.remove(selection);
-                // on passe à l'étape suivante
+                // on passe à l'étape nom
+                //TODO permettre à l'utilisateur de rentrer son nom
+                    /*etape = Etape.NOM;
+                    this.add(formulaireNom);*/
                 etape = Etape.COULEURS;
                 selection = new SelectionCouleurs();
                 this.add(selection);
                 revalidate();
                 break;
+            case NOM:
+                utilisateur.setNom(formulaireNom.getNom());
+                etape = Etape.COULEURS;
+                selection = new SelectionCouleurs();
+                this.removeAll();
+                this.add(selection);
+                revalidate();
             case COULEURS:
                 // on associe les couleurs choisies de l'utilisateur
                 utilisateur.setCouleursPreferees(collection);
@@ -93,8 +108,4 @@ public class NouvelUtilisateur extends FenetreAbstraite {
     public void changeColor() {
 
     }
-
-    private enum Etape {AVATAR, COULEURS}
-
-
 }

@@ -28,7 +28,7 @@ public class ChoixUtilisateur extends Choix<Utilisateur> {
     @Override
     public void init() {
         Utilisateur u = getObjetChoix();
-        JLabel label = new JLabel(u.getIdentifiant(), ChargerAvatar.charger(u.getIcone(), 200, 200), SwingConstants.CENTER);
+        JLabel label = new JLabel(u.getNom(), ChargerAvatar.charger(u.getIcone(), 200, 200), SwingConstants.CENTER);
         this.add(label, BorderLayout.CENTER);
     }
 

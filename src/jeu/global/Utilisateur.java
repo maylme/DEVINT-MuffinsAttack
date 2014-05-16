@@ -14,8 +14,8 @@ import java.util.Map;
  *
  * @author Jean-Christophe Isoard
  */
-public class Utilisateur extends JPanel {
-    private String identifiant;
+public class Utilisateur {
+    private String nom;
     private Niveau niveau;
     private Collection<Couleurs> couleursPreferees;
     private int couleursChoisies;
@@ -28,7 +28,7 @@ public class Utilisateur extends JPanel {
      */
     public Utilisateur(String icone) {
         // création d'un utilisateur
-        this.identifiant = "";
+        this.nom = "";
         this.couleursPreferees = new ArrayList<Couleurs>();
         this.meilleursScores = new HashMap<>();
         this.couleursChoisies = 0;
@@ -122,8 +122,16 @@ public class Utilisateur extends JPanel {
      *
      * @return String
      */
-    public String getIdentifiant() {
-        return identifiant;
+    public String getNom() {
+        return nom;
+    }
+
+    /**
+     * Change le nom de l'utilisateur
+     * @param nom le nouveau nom à lui donner
+     */
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     /**
