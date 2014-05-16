@@ -37,7 +37,7 @@ public class Restauration {
             Document document = sxb.build(Config.FILE_NAME);
             Element racine = document.getRootElement();
             for (Element elem : racine.getChildren()) {
-                Utilisateur current = new Utilisateur(elem.getAttributeValue(ICONE_UTILISATEUR));
+                Utilisateur current = new Utilisateur(elem.getName());
                 current.setCouleursPreferees(restoreColors(elem));
                 current.setMeilleursScores(restoreScores(elem));
                 users.put(elem.getName(), current);
@@ -53,7 +53,7 @@ public class Restauration {
      * couleurs.
      *
      * @param user
-     * @return Collection content les couleurs préférées de l'utilisateur
+     * @return Collection contenant les couleurs préférées de l'utilisateur
      */
     public static Collection<Couleurs> restoreColors(Element user) {
         Collection<Couleurs> couleur = new ArrayList<>();
@@ -72,6 +72,13 @@ public class Restauration {
         return couleur;
     }
 
+    /**
+     * Retourne l'ensemble des meilleurs scores de l'utilisateur. Le meilleur
+     * score par niveau.
+     *
+     * @param user
+     * @return HashMap contenant le meilleur score par niveau
+     */
     public static HashMap<Niveau, Integer> restoreScores(Element user) {
         HashMap<Niveau, Integer> scores = new HashMap<>();
         for (Element tmp : user.getChildren()) {
