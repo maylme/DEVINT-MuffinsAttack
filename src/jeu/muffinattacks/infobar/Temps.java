@@ -52,7 +52,6 @@ public class Temps extends JPanel {
      */
     public void forward(int t) {
         tempsEcoule += t;
-        System.out.println(tempsEcoule);
         repaint();
     }
 

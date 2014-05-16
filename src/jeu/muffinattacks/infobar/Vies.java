@@ -36,9 +36,13 @@ public class Vies extends JPanel {
         this.setPreferredSize(new Dimension((coeurImg.getWidth()+ESPACEMENT)*vies, hauteurVies()));
     }
 
-    public void viePerdue() {
+    /**
+     * Attends le temps passé en paramètre (en secondes) avant d'annoncer et effectuer la perte d'une vie
+     * @param wait le temps en secondes
+     */
+    public void viePerdue(int wait) {
         this.vies--;
-        jeu.jouerEnregistrementPause(String.valueOf(vies),1);
+        jeu.jouerEnregistrementPause(String.valueOf(vies),wait);
         repaint();
     }
 
