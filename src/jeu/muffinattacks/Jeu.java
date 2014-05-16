@@ -261,8 +261,8 @@ public class Jeu extends FenetreAbstraite {
             dire("Tu cherches la lettre " + monde.getMuffin().getLettre());
         } else {
             if (!isInAlphabet((char) keycode)) {
-                dire("Mauvaise touche ! La touche numéro " +keycode+" ne fait pas partie du dictionnaire");
-                System.out.println(keycode);
+                dire("Ce n'est pas la bonne touche !");
+                infoBar.viePerdue(1);
             } else {
                 monde.lettreEntree((char) keycode);
             }
@@ -314,10 +314,6 @@ public class Jeu extends FenetreAbstraite {
         dire("Mode tchallénge !");
     }
 
-    public void viePerdue() {
-        infoBar.viePerdue();
-    }
-
     public int getVies() {
         return infoBar.getNbVies();
     }
@@ -339,7 +335,7 @@ public class Jeu extends FenetreAbstraite {
 
     public void timeOut() {
         jouerEnregistrement("muffin_tombé");
-        viePerdue();
+        infoBar.viePerdue(0);
         // on fait une pause de 3 secondes pour ne pas trop perturber le joueur
         monde.newMuffinPause(3);
     }

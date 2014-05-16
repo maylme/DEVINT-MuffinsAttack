@@ -28,8 +28,12 @@ public class InfoBar extends JPanel {
         this.setBackground(Color.BLACK);
     }
 
-    public void viePerdue() {
-        vies.viePerdue();
+    /**
+     * Attends le temps passé en paramètre (en secondes) avant d'annoncer et effectuer la perte d'une vie
+     * @param wait le temps en secondes
+     */
+    public void viePerdue(int wait) {
+        vies.viePerdue(wait);
     }
 
     public int getNbVies() {
