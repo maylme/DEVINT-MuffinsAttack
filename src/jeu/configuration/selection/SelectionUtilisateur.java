@@ -16,7 +16,8 @@ public class SelectionUtilisateur extends Selection<Utilisateur> {
     @Override
     public Collection<Choix> getChoix() {
         Collection<Choix> choixUtilisateurs = new ArrayList<>();
-        for(Utilisateur u: Restauration.restoreUsers().values()) {
+        Collection<Utilisateur> collectionUtilisateur = Restauration.restoreUsers().values();
+        for(Utilisateur u: collectionUtilisateur) {
             choixUtilisateurs.add(new ChoixUtilisateur(this, u));
         }
         return choixUtilisateurs;
