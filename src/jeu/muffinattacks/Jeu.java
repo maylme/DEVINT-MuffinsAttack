@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import jeu.sauvegarde.Sauvegarde;
 
 /**
  * @author Jean-Christophe Isoard
@@ -332,6 +333,7 @@ public class Jeu extends FenetreAbstraite {
 
     public void jeuFini() {
         monde.arreter();
+        Sauvegarde.saveUser(utilisateur);
         jouerEnregistrement("fin");
     }
 
