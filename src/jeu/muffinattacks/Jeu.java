@@ -324,6 +324,7 @@ public class Jeu extends FenetreAbstraite {
 
     public void jeuFini() {
         monde.arreter();
+        utilisateur.setMeilleurScore(utilisateur.getNiveau(), points);
         Sauvegarde.saveUser(utilisateur);
         jouerEnregistrement("fin");
     }

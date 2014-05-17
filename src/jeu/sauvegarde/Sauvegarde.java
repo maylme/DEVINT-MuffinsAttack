@@ -36,13 +36,11 @@ public class Sauvegarde {
      */
     public static void main(String[] args) {
         HashMap<String, Utilisateur> test = new HashMap<>();
-        HashMap<Niveau, Integer> scores = new HashMap<>();
-        scores.put(Niveau.UN, 12);
         Utilisateur Thomas = new Utilisateur("Tom");
         Collection<Couleurs> couleur = new ArrayList<>();
         couleur.add(Couleurs.JAUNENOIR);
         couleur.add(Couleurs.BEIGEBLEU);
-        Thomas.setMeilleursScores(scores);
+        Thomas.setMeilleurScore(Niveau.UN, 12);
         Thomas.setCouleursPreferees(couleur);
         Utilisateur Maylanie = new Utilisateur("Mayl");
         Collection<Couleurs> couleur1 = new ArrayList<>();
@@ -52,9 +50,9 @@ public class Sauvegarde {
         test.put("Thomas", Thomas);
         test.put("Maylanie", Maylanie);
         saveUsers(test);
-        scores.put(Niveau.DEUX, 50);
-        Thomas.setMeilleursScores(scores);
+        Thomas.setMeilleurScore(Niveau.DEUX, 50);
         saveUser(Thomas);
+        saveUser(Maylanie);
     }
 
     /**
@@ -85,6 +83,11 @@ public class Sauvegarde {
         }
     }
 
+    /**
+     * Permet de sauvegarder un utilisateur.
+     *
+     * @param user l'utilisateur à sauvegarder
+     */
     public static void saveUser(Utilisateur user) {
         SAXBuilder sxb = new SAXBuilder();
         try {
@@ -104,8 +107,6 @@ public class Sauvegarde {
             userName.addContent(couleur);
             Element score = saveScores(user);
             userName.addContent(score);
-            System.out.println(userName.getChild(SCORE_UTILISATEUR).getChildren());
-            System.out.println(racine.getChildren());
             enregistreFichier(FILE_NAME);
         } catch (Exception e) {
         }
@@ -138,7 +139,6 @@ public class Sauvegarde {
     public static Element saveScores(Utilisateur user) {
         Element score = new Element(SCORE_UTILISATEUR);
         Map<Niveau, Integer> scoreASauvegarder = user.getMeilleursScores();
-        System.out.println(scoreASauvegarder);
         Set key = scoreASauvegarder.keySet();
         Iterator it = key.iterator();
         while (it.hasNext()) {

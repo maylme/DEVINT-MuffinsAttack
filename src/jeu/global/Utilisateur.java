@@ -15,6 +15,7 @@ import java.util.Map;
  * @author Jean-Christophe Isoard
  */
 public class Utilisateur {
+
     private String nom;
     private Niveau niveau;
     private Collection<Couleurs> couleursPreferees;
@@ -34,6 +35,7 @@ public class Utilisateur {
         this.couleursChoisies = 0;
         this.icone = icone;
         this.niveau = Niveau.UN;
+        iniMeilleursScores();
     }
 
     /**
@@ -56,7 +58,8 @@ public class Utilisateur {
     }
 
     /**
-     * Renvoie la paire de couleur (un objet Couleurs) que l'utilisateur a choisi d'afficher
+     * Renvoie la paire de couleur (un objet Couleurs) que l'utilisateur a
+     * choisi d'afficher
      *
      * @return Couleurs les couleurs que l'utilisateur veux utiliser
      */
@@ -68,7 +71,8 @@ public class Utilisateur {
     }
 
     /**
-     * Permet de changer les couleurs choisies par une autre dans la liste des couleurs préférées de l'utilisateur
+     * Permet de changer les couleurs choisies par une autre dans la liste des
+     * couleurs préférées de l'utilisateur
      */
     public void couleursSuivantes() {
         if (++couleursChoisies >= couleursPreferees.toArray().length) {
@@ -103,6 +107,7 @@ public class Utilisateur {
 
     /**
      * Retourne la liste des scores enregistré à l'utilisateur
+     *
      * @return Map Niveau(enum) <-> Valeur(int)
      */
     public Map<Niveau, Integer> getMeilleursScores() {
@@ -111,10 +116,17 @@ public class Utilisateur {
 
     /**
      * Remplace la Map des meilleur par celle passée en paramétre
+     *
      * @param meilleursScores la map Niveau(enum)<->Valeur(int) à entrer
      */
     public void setMeilleursScores(Map<Niveau, Integer> meilleursScores) {
         this.meilleursScores = meilleursScores;
+    }
+
+    public void setMeilleurScore(Niveau niv, int scores) {
+        if (this.meilleursScores.get(niv) < scores) {
+            this.meilleursScores.put(niv, scores);
+        }
     }
 
     /**
@@ -128,6 +140,7 @@ public class Utilisateur {
 
     /**
      * Change le nom de l'utilisateur
+     *
      * @param nom le nouveau nom à lui donner
      */
     public void setNom(String nom) {
@@ -150,5 +163,11 @@ public class Utilisateur {
      */
     public void setIcone(String icone) {
         this.icone = icone;
+    }
+
+    private void iniMeilleursScores() {
+        for (Niveau niv : Niveau.values()) {
+            this.meilleursScores.put(niv, 0);
+        }
     }
 }
