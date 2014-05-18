@@ -17,12 +17,11 @@ import java.util.Collection;
  * @author Jean-Christophe Isoard
  */
 public class NouvelUtilisateur extends FenetreAbstraite {
-    private enum Etape {AVATAR, NOM, COULEURS}
+    private enum Etape {AVATAR, COULEURS}
 
     private Etape etape = Etape.AVATAR;
 
     private Utilisateur utilisateur;
-    private EntrerNom formulaireNom;
     private Selection selection;
 
     /**
@@ -35,7 +34,6 @@ public class NouvelUtilisateur extends FenetreAbstraite {
     @Override
     protected void init() {
         this.setLayout(new BorderLayout());
-        formulaireNom = new EntrerNom(this);
         selection = new SelectionAvatar();
         selection.setModeMultiple(false);
         this.add(selection, BorderLayout.CENTER);
