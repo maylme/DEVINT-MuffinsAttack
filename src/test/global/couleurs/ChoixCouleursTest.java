@@ -1,11 +1,20 @@
 package test.global.couleurs;
 
+import jeu.global.couleurs.ChoixCouleurs;
+import org.junit.Before;
+
 /**
  * Created by Mayl on 13/05/2014.
  */
 public class ChoixCouleursTest {
+
+    @Before
+    private void setUp(){
+    }
+
     @org.junit.Test
     public void testOverlay() throws Exception {
+
 
     }
 

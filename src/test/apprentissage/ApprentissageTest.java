@@ -1,5 +1,6 @@
 package test.apprentissage;
 
+import jeu.apprentissage.Apprentissage;
 import org.junit.*;
 /**
  * Created by Mayl on 13/05/2014.
@@ -10,8 +11,6 @@ public class ApprentissageTest {
 
     @Before
     public void setUp(){
-        app = new Apprentisage();
-        app.init();
     }
 
     @Test

@@ -14,7 +14,7 @@ public enum Couleurs {
     JAUNENOIR(Color.YELLOW, Color.BLACK, 89),
     JAUNEMARRON(Color.YELLOW, CouleurAjoutee.MARRON, 80),
     JAUNEVERT(Color.YELLOW, Color.GREEN, 76),
-    JAUNEBLEU(Color.YELLOW, Color.BLACK, 79),
+    JAUNEBLEU(Color.YELLOW, Color.BLUE, 79),
     BLEUBLANC(Color.BLUE, Color.WHITE, 82),
     BLEUBEIGE(Color.BLUE, CouleurAjoutee.BEIGE, 75),
     BLEUJAUNE(Color.BLUE, Color.YELLOW, 79),

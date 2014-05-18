@@ -1,4 +1,4 @@
-package test.global.voix;
+package test.global;
 
 import jeu.global.Utilisateur;
 import jeu.global.couleurs.Couleurs;
