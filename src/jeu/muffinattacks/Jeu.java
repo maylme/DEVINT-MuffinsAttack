@@ -62,7 +62,7 @@ public class Jeu extends FenetreAbstraite {
         points = 0;
         tempsTotal = 20000;
         infoBar.setTempsTotal(tempsTotal);
-        infoBar.setVies(3);
+        infoBar.resetVies();
         infoBar.setNiveau(utilisateur.getNiveau());
     }
 
@@ -213,18 +213,18 @@ public class Jeu extends FenetreAbstraite {
             return;
         }
 
-        if (keycode == KeyEvent.VK_SPACE) {
-            demarrerJeu();
-        }
-
         if (!(monde.getStarted())) {
+            if (keycode == KeyEvent.VK_SPACE) {
+                demarrerJeu();
+                return;
+            }
             return;
         }
 
         if (keycode == KeyEvent.VK_ESCAPE) {
             monde.arreter();
             timerPause.cancel();
-            dire("La partie a été interrompue. La reprise n'est pas encore gérée.");
+            dire("La partie a été interrompue.");
             return;
         }
 
@@ -237,20 +237,6 @@ public class Jeu extends FenetreAbstraite {
             }
             return;
         }
-
-        /*if(monde.getPaused()) {
-            if (keycode == KeyEvent.VK_UP) {
-                changerTemps(500);
-                return;
-            }
-
-            if (keycode == KeyEvent.VK_DOWN) {
-                if (tempsTotal > 500) {
-                    changerTemps(-500);
-                }
-                return;
-            }
-        }*/
 
         if(monde.getPaused()) {
             dire("Le jeu est en pause.");
@@ -331,7 +317,7 @@ public class Jeu extends FenetreAbstraite {
 
     public void timeOut() {
         jouerEnregistrement("muffin_tombé");
-        infoBar.viePerdue(0);
+        infoBar.viePerdue(1);
         // on fait une pause de 3 secondes pour ne pas trop perturber le joueur
         monde.newMuffinPause(3);
     }

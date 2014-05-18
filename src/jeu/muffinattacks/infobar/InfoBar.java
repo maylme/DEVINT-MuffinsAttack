@@ -69,4 +69,8 @@ public class InfoBar extends JPanel {
     public void resetTime() {
         temps.reset();
     }
+
+    public void resetVies() {
+        vies.resetVies();
+    }
 }
