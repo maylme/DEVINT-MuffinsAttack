@@ -9,15 +9,16 @@ import java.awt.*;
 public class EntrerNom extends JPanel {
     JTextField textFieldNom;
 
-    public EntrerNom() {
+    public EntrerNom(NouvelUtilisateur parent) {
         this.setLayout(new FlowLayout());
 
         JLabel entrerNom = new JLabel("Entre ton nom :");
         textFieldNom = new JTextField();
+        textFieldNom.setPreferredSize(new Dimension(400,80));
         entrerNom.setLabelFor(textFieldNom);
 
+        this.add(entrerNom, CENTER_ALIGNMENT);
         this.add(textFieldNom, CENTER_ALIGNMENT);
-
     }
 
     public String getNom() {

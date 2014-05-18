@@ -3,6 +3,7 @@ package jeu.configuration.selection.choix;
 import devintAPI.Preferences;
 import jeu.configuration.selection.Selection;
 import jeu.global.ChargerAvatar;
+import jeu.global.voix.Voix;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -30,6 +31,7 @@ public class ChoixIcone extends Choix<String> {
     @Override
     public void refresh() {
         if (isSelected()) {
+            Voix.dire(getObjetChoix());
             this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         } else {
             this.setBorder(null);

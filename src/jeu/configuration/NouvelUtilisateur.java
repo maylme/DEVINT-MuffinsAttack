@@ -10,6 +10,7 @@ import jeu.global.Utilisateur;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Collection;
 
 /**
@@ -34,7 +35,7 @@ public class NouvelUtilisateur extends FenetreAbstraite {
     @Override
     protected void init() {
         this.setLayout(new BorderLayout());
-        formulaireNom = new EntrerNom();
+        formulaireNom = new EntrerNom(this);
         selection = new SelectionAvatar();
         selection.setModeMultiple(false);
         this.add(selection, BorderLayout.CENTER);
@@ -63,22 +64,12 @@ public class NouvelUtilisateur extends FenetreAbstraite {
                 String icone = (String) collection.iterator().next();
                 utilisateur = new Utilisateur(icone);
                 this.remove(selection);
-                // on passe à l'étape nom
-                //TODO permettre à l'utilisateur de rentrer son nom
-                    /*etape = Etape.NOM;
-                    this.add(formulaireNom);*/
+                // on passe à l'étape couleurs
                 etape = Etape.COULEURS;
                 selection = new SelectionCouleurs();
                 this.add(selection);
                 revalidate();
                 break;
-            case NOM:
-                utilisateur.setNom(formulaireNom.getNom());
-                etape = Etape.COULEURS;
-                selection = new SelectionCouleurs();
-                this.removeAll();
-                this.add(selection);
-                revalidate();
             case COULEURS:
                 // on associe les couleurs choisies de l'utilisateur
                 utilisateur.setCouleursPreferees(collection);
