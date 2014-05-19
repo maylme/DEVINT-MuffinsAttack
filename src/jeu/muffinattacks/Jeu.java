@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import jeu.sauvegarde.Sauvegarde;
 
 /**
  * @author Jean-Christophe Isoard
@@ -61,7 +62,7 @@ public class Jeu extends FenetreAbstraite {
         points = 0;
         tempsTotal = 20000;
         infoBar.setTempsTotal(tempsTotal);
-        infoBar.setVies(3);
+        infoBar.resetVies();
         infoBar.setNiveau(utilisateur.getNiveau());
     }
 
@@ -212,18 +213,18 @@ public class Jeu extends FenetreAbstraite {
             return;
         }
 
-        if (keycode == KeyEvent.VK_SPACE) {
-            demarrerJeu();
-        }
-
         if (!(monde.getStarted())) {
+            if (keycode == KeyEvent.VK_SPACE) {
+                demarrerJeu();
+                return;
+            }
             return;
         }
 
         if (keycode == KeyEvent.VK_ESCAPE) {
             monde.arreter();
             timerPause.cancel();
-            dire("La partie a été interrompue. La reprise n'est pas encore gérée.");
+            dire("La partie a été interrompue.");
             return;
         }
 
@@ -237,20 +238,6 @@ public class Jeu extends FenetreAbstraite {
             return;
         }
 
-        /*if(monde.getPaused()) {
-            if (keycode == KeyEvent.VK_UP) {
-                changerTemps(500);
-                return;
-            }
-
-            if (keycode == KeyEvent.VK_DOWN) {
-                if (tempsTotal > 500) {
-                    changerTemps(-500);
-                }
-                return;
-            }
-        }*/
-
         if(monde.getPaused()) {
             dire("Le jeu est en pause.");
             return;
@@ -259,12 +246,7 @@ public class Jeu extends FenetreAbstraite {
         if (keycode == KeyEvent.VK_SPACE) {
             dire("Tu cherches la lettre " + monde.getMuffin().getLettre());
         } else {
-            if (!isInAlphabet((char) keycode)) {
-                dire("Mauvaise touche ! La touche numéro " +keycode+" ne fait pas partie du dictionnaire");
-                System.out.println(keycode);
-            } else {
-                monde.lettreEntree((char) keycode);
-            }
+            monde.lettreEntree((char) keycode);
         }
     }
 
@@ -313,10 +295,6 @@ public class Jeu extends FenetreAbstraite {
         dire("Mode tchallénge !");
     }
 
-    public void viePerdue() {
-        infoBar.viePerdue();
-    }
-
     public int getVies() {
         return infoBar.getNbVies();
     }
@@ -332,12 +310,14 @@ public class Jeu extends FenetreAbstraite {
 
     public void jeuFini() {
         monde.arreter();
+        utilisateur.setMeilleurScore(utilisateur.getNiveau(), points);
+        Sauvegarde.saveUser(utilisateur);
         jouerEnregistrement("fin");
     }
 
     public void timeOut() {
         jouerEnregistrement("muffin_tombé");
-        viePerdue();
+        infoBar.viePerdue(1);
         // on fait une pause de 3 secondes pour ne pas trop perturber le joueur
         monde.newMuffinPause(3);
     }
@@ -357,5 +337,13 @@ public class Jeu extends FenetreAbstraite {
     public void tempsEcoule(int temps) {
         tempsRestant -= temps;
         infoBar.forwardTime(temps);
+    }
+
+    /**
+     * Attends le temps passé en paramètre avant d'effectuer la perte d'une vie
+     * @param wait le temps à attendre en (secondes)
+     */
+    public void viePerdue(int wait) {
+        infoBar.viePerdue(wait);
     }
 }

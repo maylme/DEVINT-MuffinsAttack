@@ -1,15 +1,14 @@
 package jeu;
 
+import devintAPI.FenetreAbstraite;
+import jeu.configuration.selection.SelectionCouleurs;
+import jeu.global.Utilisateur;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-import devintAPI.*;
-import jeu.global.couleurs.SelectionCouleurs;
-import jeu.global.Utilisateur;
-
 /**
  * Cette classe représente les options
- *
  */
 public class Option extends FenetreAbstraite {
     private Utilisateur utilisateur;
@@ -48,14 +47,14 @@ public class Option extends FenetreAbstraite {
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
         System.out.println(utilisateur.getCouleursPreferees());
-        selectioncouleurs.setConfiguration(utilisateur.getCouleursPreferees());
+        selectioncouleurs.setConfigurationCouleurs(utilisateur.getCouleursPreferees());
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         super.keyPressed(e);
-        if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            if(utilisateur != null) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (utilisateur != null) {
                 utilisateur.setCouleursPreferees(selectioncouleurs.getSelectedCouleurs());
             }
         }

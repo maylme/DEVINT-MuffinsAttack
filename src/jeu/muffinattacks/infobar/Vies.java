@@ -14,6 +14,8 @@ import java.io.IOException;
  * Created by Jicé on 04/04/2014.
  */
 public class Vies extends JPanel {
+    public int VIESDEBUT = 3;
+
     private static final String fileImageCoeur = "../ressources/images/muffinsattack/coeur_86.png";
     private static final int ESPACEMENT = 10;
     private int vies;
@@ -21,9 +23,14 @@ public class Vies extends JPanel {
     private boolean imageChargee;
     private Jeu jeu;
 
+    /**
+     * Initialise un JPanel affichant le nombre de coeurs configuré par défaut
+     * <br />La hauteur dépend de l'image mise dans le dossier ressources
+     * @param jeu le jeu afin de jouer les enregistrements
+     */
     public Vies(Jeu jeu) {
         this.jeu = jeu;
-        this.vies = 3;
+        this.vies = VIESDEBUT;
         this.imageChargee = false;
         try {
             this.coeurImg = ImageIO.read(new File(fileImageCoeur));
@@ -36,9 +43,15 @@ public class Vies extends JPanel {
         this.setPreferredSize(new Dimension((coeurImg.getWidth()+ESPACEMENT)*vies, hauteurVies()));
     }
 
-    public void viePerdue() {
+    /**
+     * Attends le temps passé en paramètre (en secondes) avant d'annoncer et effectuer la perte d'une vie
+     * @param wait le temps en secondes
+     */
+    public void viePerdue(int wait) {
         this.vies--;
-        jeu.jouerEnregistrementPause(String.valueOf(vies),1);
+        if(vies > 0) {
+            jeu.jouerEnregistrementPause(String.valueOf(vies), wait);
+        }
         repaint();
     }
 
@@ -54,6 +67,10 @@ public class Vies extends JPanel {
         }
     }
 
+    /**
+     * Revoie le nombre de vies actuel
+     * @return le nombre de vies
+     */
     public int getVies() {
         return vies;
     }
@@ -62,8 +79,19 @@ public class Vies extends JPanel {
         return coeurImg.getHeight();
     }
 
+    /**
+     * Permet de mettre une valeur de nombre de vies à la main
+     * @param n le nombre de vies à afficher
+     */
     public void setVies(int n) {
         this.vies = n;
         repaint();
+    }
+
+    /**
+     * Réinitialise le nombre de vies à celui du début de partie
+     */
+    public void resetVies() {
+        this.vies = VIESDEBUT;
     }
 }

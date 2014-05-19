@@ -1,19 +1,14 @@
 package jeu;
 
-import jeu.global.Utilisateur;
+import jeu.configuration.AssistantUtilisateur;
 
 /**
- * classe pour lancer le jeu Elle créé simplement une instance de MenuJeu
- *
- * @author helene
+ * Classe principale
+ * Lance l'assistant utilisateur pour la selection/creation d'un nouvel utilisateur
  *
  */
 public class LancementJeu {
-
     public static void main(String args[]) {
-        //TODO charger utilisateur depuis un fichier
-        Utilisateur u = new Utilisateur("Testeur");
-        MenuJeu mj = new jeu.MenuJeu("Muffins Attack");
-        mj.setUtilisateur(u);
+        new AssistantUtilisateur("Muffins Attack");
     }
 }

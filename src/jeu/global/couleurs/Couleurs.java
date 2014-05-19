@@ -1,6 +1,9 @@
 package jeu.global.couleurs;
 
+import jeu.configuration.selection.choix.Choix;
+
 import java.awt.*;
+import java.util.Collection;
 
 /**
  * Created by Jicé on 25/03/2014.
