@@ -21,15 +21,12 @@ public class Vies extends JPanel {
     private int vies;
     private BufferedImage coeurImg;
     private boolean imageChargee;
-    private Jeu jeu;
 
     /**
      * Initialise un JPanel affichant le nombre de coeurs configuré par défaut
      * <br />La hauteur dépend de l'image mise dans le dossier ressources
-     * @param jeu le jeu afin de jouer les enregistrements
      */
-    public Vies(Jeu jeu) {
-        this.jeu = jeu;
+    public Vies() {
         this.vies = VIESDEBUT;
         this.imageChargee = false;
         try {
@@ -44,14 +41,10 @@ public class Vies extends JPanel {
     }
 
     /**
-     * Attends le temps passé en paramètre (en secondes) avant d'annoncer et effectuer la perte d'une vie
-     * @param wait le temps en secondes
+     * Retire un coeur de l'affichage
      */
-    public void viePerdue(int wait) {
+    public void viePerdue() {
         this.vies--;
-        if(vies > 0) {
-            jeu.jouerEnregistrementPause(String.valueOf(vies), wait);
-        }
         repaint();
     }
 
@@ -93,5 +86,6 @@ public class Vies extends JPanel {
      */
     public void resetVies() {
         this.vies = VIESDEBUT;
+        repaint();
     }
 }

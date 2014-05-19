@@ -16,7 +16,7 @@ public class InfoBar extends JPanel {
     private Niveaux niveaux;
 
     public InfoBar(Jeu jeu) {
-        vies = new Vies(jeu);
+        vies = new Vies();
         temps = new Temps();
         niveaux = new Niveaux(jeu);
 
@@ -28,12 +28,8 @@ public class InfoBar extends JPanel {
         this.setBackground(Color.BLACK);
     }
 
-    /**
-     * Attends le temps passé en paramètre (en secondes) avant d'annoncer et effectuer la perte d'une vie
-     * @param wait le temps en secondes
-     */
-    public void viePerdue(int wait) {
-        vies.viePerdue(wait);
+    public void viePerdue() {
+        vies.viePerdue();
     }
 
     public int getNbVies() {

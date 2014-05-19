@@ -94,6 +94,21 @@ public class Monde extends JPanel {
     }
 
     /**
+     * Crée une pause de la durée donnée en paramètre
+     * @param seconds le temps (en secondes)
+     */
+    public void attendre(double seconds) {
+        TimerTask unpauseTask = new TimerTask() {
+            @Override
+            public void run() {
+                pause();
+            }
+        };
+        pause();
+        timerPause.schedule(unpauseTask, (int) seconds * 1000);
+    }
+
+    /**
      * Met en ou sort le jeu de pause
      */
     public void pause() {
@@ -189,13 +204,16 @@ public class Monde extends JPanel {
         if (Character.compare(muffin.getLettre().charAt(0),lettre) == 0) {
             killMuffin();
         } else {
-            jeu.dire("Ce n'est pas la bonne touche !");
-            jeu.viePerdue(1);
+            jeu.mauvaiseTouche();
         }
     }
 
     public Muffin getMuffin() {
         return muffin;
+    }
+
+    public void repeterLettre() {
+        jeu.direLettre(muffin.getLettre());
     }
 
     private class EffacementTime implements ActionListener {

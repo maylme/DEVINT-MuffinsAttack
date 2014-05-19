@@ -31,6 +31,7 @@ public class Jeu extends FenetreAbstraite {
     private boolean timerCancelled;
     private boolean aide;
     private boolean challenge;
+    private boolean userPause;
 
     /**
      * @param title : titre de la fenetre
@@ -244,23 +245,31 @@ public class Jeu extends FenetreAbstraite {
         if (keycode == KeyEvent.VK_F11 || keycode == KeyEvent.VK_PAUSE) {
             monde.pause();
             if (monde.getPaused()) {
+                this.userPause = true;
                 dire("Le jeu est en pause.");
             } else {
+                this.userPause = false;
                 dire("Le jeu reprends.");
             }
             return;
         }
 
         if(monde.getPaused()) {
-            dire("Le jeu est en pause.");
+            if(userPause) {
+                dire("Le jeu est en pause.");
+            }
             return;
         }
 
         if (keycode == KeyEvent.VK_SPACE) {
-            dire("Tu cherches la lettre " + monde.getMuffin().getLettre());
+            repeterLettre();
         } else {
             monde.lettreEntree((char) keycode);
         }
+    }
+
+    private void repeterLettre() {
+        monde.repeterLettre();
     }
 
     private void demarrerJeu() {
@@ -337,9 +346,16 @@ public class Jeu extends FenetreAbstraite {
 
     public void timeOut() {
         jouerEnregistrement("muffin_tombé");
-        infoBar.viePerdue(1);
+        viePerdue(1);
         // on fait une pause de 3 secondes pour ne pas trop perturber le joueur
         monde.newMuffinPause(3);
+    }
+
+    private void viePerdue(int wait) {
+        infoBar.viePerdue();
+        if(infoBar.getNbVies() > 0) {
+            jouerEnregistrementPause(String.valueOf(infoBar.getNbVies()), wait);
+        }
     }
 
     public boolean aideActive() {
@@ -360,11 +376,12 @@ public class Jeu extends FenetreAbstraite {
         infoBar.forwardTime(temps);
     }
 
-    /**
-     * Attends le temps passé en paramètre avant d'effectuer la perte d'une vie
-     * @param wait le temps à attendre en (secondes)
-     */
-    public void viePerdue(int wait) {
-        infoBar.viePerdue(wait);
+    public void mauvaiseTouche() {
+        monde.attendre(3);
+        dire("Ce n'est pas la bonne touche !");
+        viePerdue(1);
+        if(infoBar.getNbVies() > 0) {
+            jouerEnregistrementPause(String.valueOf(infoBar.getNbVies()), 1);
+        }
     }
 }
