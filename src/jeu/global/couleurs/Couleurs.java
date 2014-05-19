@@ -42,28 +42,54 @@ public enum Couleurs {
         this.contraste = contraste;
     }
 
+    /**
+     * Classe decrivant les couleurs n'existant pas dans la classe Color
+     */
     private static class CouleurAjoutee {
 
         private static final Color BEIGE = new Color(200, 173, 127);
         private static final Color MARRON = new Color(91, 59, 17);
     }
 
+    /**
+     * Retourne la couleur du fond de la fenetre
+     * @return Color la couleur du fond de la fenetre
+     */
     public Color getCouleurFond() {
         return couleurFond;
     }
 
+    /**
+     * Retourne la couleur du texte de la fenetre
+     * @return Color la couleur du texte de la fenetre
+     */
     public Color getCouleurTexte() {
         return couleurTexte;
     }
 
+    /**
+     * Retourne le contraste
+     * @return contraste
+     */
     public int getContraste() {
         return contraste;
     }
 
+    /**
+     * Fonction pour recurer le ième couple de couleur
+     * @param i le ième configuration de couleur
+     * @return l'objet Couleurs demandé
+     */
     public static Couleurs getOne(int i) {
         return Couleurs.values()[i];
     }
 
+
+    /**
+     * Renvoie la couleur 'inverse' (negatif)
+     * @param c la couleur à inverser
+     * @return la couleur en negatif
+     */
     public static Color revertColor(Color c) {
         int r = 255-c.getRed();
         int g = 255-c.getGreen();
