@@ -51,8 +51,8 @@ public class Sauvegarde {
         test.put("Maylanie", Maylanie);
         saveUsers(test);
         Thomas.setMeilleurScore(Niveau.DEUX, 50);
-        saveUser(Thomas);
-        saveUser(Maylanie);
+        //saveUser(Thomas);
+        //saveUser(Maylanie);
     }
 
     /**
@@ -68,13 +68,7 @@ public class Sauvegarde {
 
         while (it.hasNext()) {
             Object user = it.next();
-            Element userName = new Element(users.get(user).getIcone());
-            RACINE_UTILISATEURS.addContent(userName);
-            @SuppressWarnings("element-type-mismatch")
-            Element couleur = saveColors(users.get(user));
-            userName.addContent(couleur);
-            Element score = saveScores(users.get(user));
-            userName.addContent(score);
+            saveUser(users.get(user));
         }
         try {
             enregistreFichier(FILE_NAME);
@@ -98,7 +92,6 @@ public class Sauvegarde {
                 Element courant = (Element) i.next();
                 if (courant.getName().equals(user.getIcone())) {
                     racine.removeChild(courant.getName());
-
                 }
             }
             Element userName = new Element(user.getIcone());

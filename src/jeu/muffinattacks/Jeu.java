@@ -7,9 +7,11 @@ import jeu.muffinattacks.infobar.InfoBar;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import jeu.configuration.selection.SelectionUtilisateur;
 import jeu.sauvegarde.Sauvegarde;
 
 /**
@@ -311,7 +313,9 @@ public class Jeu extends FenetreAbstraite {
     public void jeuFini() {
         monde.arreter();
         utilisateur.setMeilleurScore(utilisateur.getNiveau(), points);
-        Sauvegarde.saveUser(utilisateur);
+        HashMap<String, Utilisateur> tmp = SelectionUtilisateur.getListUtilisateur();
+        tmp.put(utilisateur.getIcone(), utilisateur);
+        Sauvegarde.saveUsers(tmp);
         jouerEnregistrement("fin");
     }
 
