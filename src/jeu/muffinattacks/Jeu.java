@@ -1,16 +1,15 @@
 package jeu.muffinattacks;
 
 import devintAPI.FenetreAbstraite;
+import jeu.configuration.AssistantUtilisateur;
 import jeu.global.Utilisateur;
 import jeu.global.couleurs.Couleurs;
 import jeu.muffinattacks.infobar.InfoBar;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
+
 import jeu.configuration.selection.SelectionUtilisateur;
 import jeu.sauvegarde.Sauvegarde;
 
@@ -313,7 +312,7 @@ public class Jeu extends FenetreAbstraite {
     public void jeuFini() {
         monde.arreter();
         utilisateur.setMeilleurScore(utilisateur.getNiveau(), points);
-        HashMap<String, Utilisateur> tmp = SelectionUtilisateur.getListUtilisateur();
+        Map<String, Utilisateur> tmp = AssistantUtilisateur.getMapUtilisateur();
         tmp.put(utilisateur.getIcone(), utilisateur);
         Sauvegarde.saveUsers(tmp);
         jouerEnregistrement("fin");

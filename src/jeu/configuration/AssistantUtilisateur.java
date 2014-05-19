@@ -2,14 +2,19 @@ package jeu.configuration;
 
 import devintAPI.MenuAbstrait;
 import jeu.configuration.selection.SelectionUtilisateur;
+import jeu.global.Utilisateur;
+import jeu.sauvegarde.Restauration;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Jean-Christophe Isoard
  */
 public class AssistantUtilisateur extends MenuAbstrait {
-    /**
-     * constructeur,
-     */
+    private static HashMap<String, Utilisateur> listUtilisateur = Restauration.restoreUsers();
+
     public AssistantUtilisateur(String title) {
         super(title);
     }
@@ -43,5 +48,9 @@ public class AssistantUtilisateur extends MenuAbstrait {
     @Override
     protected String wavRegleJeu() {
         return null;
+    }
+
+    public static Map<String, Utilisateur> getMapUtilisateur(){
+        return listUtilisateur;
     }
 }

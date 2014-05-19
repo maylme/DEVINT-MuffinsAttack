@@ -35,7 +35,7 @@ public class Sauvegarde {
      * @param args
      */
     public static void main(String[] args) {
-        HashMap<String, Utilisateur> test = new HashMap<>();
+        Map<String, Utilisateur> test = new HashMap<>();
         Utilisateur Thomas = new Utilisateur("Tom");
         Collection<Couleurs> couleur = new ArrayList<>();
         couleur.add(Couleurs.JAUNENOIR);
@@ -62,7 +62,7 @@ public class Sauvegarde {
      *
      * @param users
      */
-    public static void saveUsers(HashMap<String, Utilisateur> users) {
+    public static void saveUsers(Map<String, Utilisateur> users) {
         Set key = users.keySet();
         Iterator it = key.iterator();
 

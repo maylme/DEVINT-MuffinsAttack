@@ -5,6 +5,7 @@ import jeu.MenuJeu;
 import jeu.configuration.selection.SelectionUtilisateur;
 import jeu.global.ChargerAvatar;
 import jeu.global.Utilisateur;
+import jeu.global.voix.Voix;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -37,6 +38,7 @@ public class ChoixUtilisateur extends Choix<Utilisateur> {
     @Override
     public void refresh() {
         if(isSelected()) {
+            Voix.dire(getObjetChoix().getIcone());
             this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         } else {
             this.setBorder(null);
