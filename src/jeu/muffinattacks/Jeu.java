@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.*;
 
-import jeu.configuration.selection.SelectionUtilisateur;
 import jeu.sauvegarde.Sauvegarde;
 
 /**
@@ -25,6 +24,7 @@ public class Jeu extends FenetreAbstraite {
     private Monde monde;
 
     private int points;
+    private Scores scores;
     private int tempsRestant;
     private int tempsTotal;
     private Timer timerPause;
@@ -47,13 +47,14 @@ public class Jeu extends FenetreAbstraite {
         challenge = false;
 
         infoBar = new InfoBar(this);
+        scores = new Scores();
         monde = new Monde(this, Couleurs.NOIRBLANC);
         timerPause = new Timer();
 
         this.setLayout(new BorderLayout());
 
         this.add(infoBar, BorderLayout.NORTH);
-        this.add(monde, BorderLayout.CENTER);
+        this.add(scores, BorderLayout.CENTER);
 
         //dire("Presse la touche ESPACE pour démarrer le jeu.");
         jouerEnregistrementPause("espace_pour_demarrer", 1);
@@ -68,8 +69,18 @@ public class Jeu extends FenetreAbstraite {
     }
 
     private void preparerMonde() {
+        this.remove(scores);
+        this.add(monde, BorderLayout.CENTER);
+        revalidate();
         tempsRestant = tempsTotal;
         monde.changerTemps(tempsTotal);
+    }
+
+    private void retirerMonde() {
+        this.remove(monde);
+        this.add(scores, BorderLayout.CENTER);
+        revalidate();
+        scores.repaint();
     }
 
     /**
@@ -178,7 +189,8 @@ public class Jeu extends FenetreAbstraite {
 
     public void setCouleurs(Couleurs c) {
         this.setBackground(c.getCouleurFond());
-        infoBar.changeCouleur(c);
+        infoBar.changeCouleurs(c);
+        scores.changeCouleurs(c);
         monde.setColors(c);
     }
 
@@ -312,9 +324,14 @@ public class Jeu extends FenetreAbstraite {
     public void jeuFini() {
         monde.arreter();
         utilisateur.setMeilleurScore(utilisateur.getNiveau(), points);
+
+        retirerMonde();
+
+        // sauvegarde utilisateur
         Map<String, Utilisateur> tmp = AssistantUtilisateur.getMapUtilisateur();
         tmp.put(utilisateur.getIcone(), utilisateur);
         Sauvegarde.saveUsers(tmp);
+
         jouerEnregistrement("fin");
     }
 
@@ -335,6 +352,7 @@ public class Jeu extends FenetreAbstraite {
 
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
+        scores.setMeilleursScores(utilisateur.getMeilleursScores());
     }
 
     public void tempsEcoule(int temps) {

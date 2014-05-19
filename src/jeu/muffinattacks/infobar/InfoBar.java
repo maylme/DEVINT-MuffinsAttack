@@ -40,7 +40,7 @@ public class InfoBar extends JPanel {
         return vies.getVies();
     }
 
-    public void changeCouleur(Couleurs couleurs) {
+    public void changeCouleurs(Couleurs couleurs) {
         this.setBackground(couleurs.getCouleurFond());
         temps.setCouleurs(couleurs);
         niveaux.setCouleurs(couleurs);
