@@ -14,8 +14,8 @@ public class Intro {
     private final String img1 = "ressources/images/intro/image1-fini.png";
     private final String img2 = "ressources/images/intro/image2-fini.png";
     private final String img3 = "ressources/images/intro/image3-fini.png";
-    private final String img4 = "ressources/images/intro/image4-fini.png";
-    private final String img5 = "ressources/images/intro/image5-fini.png";
+    private final String img4 = "ressources/images/intro/image-4-fini.png";
+    private final String img5 = "ressources/images/intro/image-5-fini.png";
 
 
     // Label de L'image :
@@ -42,11 +42,37 @@ public class Intro {
 
 
         Thread.sleep(2000); // suspendu pendant 2 seconde (chiffre en millisecondes)
-
         contentPane = new Image(ImageIO.read(new File(img2)));
         f.setContentPane(contentPane);
+        f.revalidate();
         f.repaint();
 
+
+        Thread.sleep(2000); // suspendu pendant 2 seconde (chiffre en millisecondes)
+        contentPane = new Image(ImageIO.read(new File(img3)));
+        f.setContentPane(contentPane);
+        f.revalidate();
+        f.repaint();
+
+
+        Thread.sleep(2000); // suspendu pendant 2 seconde (chiffre en millisecondes)
+        contentPane = new Image(ImageIO.read(new File(img4)));
+        f.setContentPane(contentPane);
+        f.revalidate();
+        f.repaint();
+
+
+        Thread.sleep(2000); // suspendu pendant 2 seconde (chiffre en millisecondes)
+        contentPane = new Image(ImageIO.read(new File(img5)));
+        f.setContentPane(contentPane);
+        f.revalidate();
+        f.repaint();
+
+
+
+        Thread.sleep(2000); // suspendu pendant 2 seconde (chiffre en millisecondes)
+
+        //fermer la fenetre et appeller une autre fenetre.
     }
 
 }
