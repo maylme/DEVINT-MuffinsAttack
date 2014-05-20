@@ -6,24 +6,26 @@
 package jeu.sauvegarde;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import jeu.global.Utilisateur;
 import jeu.global.couleurs.Couleurs;
 import jeu.global.difficultes.Niveau;
-import static jeu.sauvegarde.Config.*;
-import org.jdom2.*;
-import org.jdom2.input.*;
+import static jeu.sauvegarde.Config.COULEUR_PREFEREE;
+import static jeu.sauvegarde.Config.COULEUR_UTILISATEUR;
+import static jeu.sauvegarde.Config.SCORE_UTILISATEUR;
+import static jeu.sauvegarde.Config.SCORE_VALUE;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
 /**
  *
  * @author Thomas
  */
 public class Restauration {
-
-    public static void main(String[] args) {
-        HashMap<String, Utilisateur> test = restoreUsers();
-        System.out.println(test);
-    }
 
     /**
      * Récupération de l'ensemble des utilisateurs sauvegardés.
@@ -40,6 +42,7 @@ public class Restauration {
                 Utilisateur current = new Utilisateur(elem.getName());
                 current.setCouleursPreferees(restoreColors(elem));
                 current.setMeilleursScores(restoreScores(elem));
+                current.setCouleursPreferee(Integer.parseInt(elem.getChildren(COULEUR_UTILISATEUR).get(0).getAttribute(COULEUR_PREFEREE).getValue()));
                 users.put(elem.getName(), current);
             }
         } catch (JDOMException | IOException ex) {
@@ -57,14 +60,12 @@ public class Restauration {
      */
     public static Collection<Couleurs> restoreColors(Element user) {
         Collection<Couleurs> couleur = new ArrayList<>();
-        for (Element tmp : user.getChildren()) {
-            if (tmp.getName().equals(COULEUR_UTILISATEUR)) {
-                for (Element colorTmp : tmp.getChildren()) {
-                    for (Couleurs color : Couleurs.values()) {
-                        if (colorTmp.getName().equals(color.toString())) {
-                            couleur.add(color);
-                            break;
-                        }
+        for (Element tmp : user.getChildren(COULEUR_UTILISATEUR)) {
+            for (Element colorTmp : tmp.getChildren()) {
+                for (Couleurs color : Couleurs.values()) {
+                    if (colorTmp.getName().equals(color.toString())) {
+                        couleur.add(color);
+                        break;
                     }
                 }
             }

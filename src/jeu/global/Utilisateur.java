@@ -170,4 +170,13 @@ public class Utilisateur {
             this.meilleursScores.put(niv, 0);
         }
     }
+    
+    
+    public int getCouleursPreferee() {
+        return this.couleursChoisies;
+    }
+
+    public void setCouleursPreferee(int couleursChoisies) {
+        this.couleursChoisies = couleursChoisies;
+    }
 }
