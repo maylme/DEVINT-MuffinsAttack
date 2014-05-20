@@ -2,6 +2,7 @@ package jeu.muffinattacks;
 
 import devintAPI.FenetreAbstraite;
 import jeu.configuration.AssistantUtilisateur;
+import jeu.configuration.MenuNiveaux;
 import jeu.global.Utilisateur;
 import jeu.global.couleurs.Couleurs;
 import jeu.muffinattacks.infobar.InfoBar;

@@ -9,8 +9,8 @@ package jeu;
 
 import devintAPI.MenuAbstrait;
 import jeu.apprentissage.Apprentissage;
+import jeu.configuration.MenuNiveaux;
 import jeu.global.couleurs.Couleurs;
-import jeu.global.difficultes.Niveau;
 import jeu.muffinattacks.Jeu;
 import jeu.global.Utilisateur;
 
@@ -39,7 +39,7 @@ public class MenuJeu extends MenuAbstrait {
      */
     @Override
     protected String[] nomOptions() {
-        noms = new String[]{"Jouer", "Apprentissage", "Options", "Quitter"};
+        noms = new String[]{"Jouer", "Apprentissage", "Couleurs", "Choisir niveau", "Quitter"};
         return noms;
     }
 
@@ -63,10 +63,16 @@ public class MenuJeu extends MenuAbstrait {
                 a.changeColor();
                 break;
             case 2:
-                (new Option(nomJeu + ": gestion des options")).setUtilisateur(utilisateur);
+                (new OptionCouleurs(nomJeu + ": choix couleurs")).setUtilisateur(utilisateur);
                 break;
             case 3:
+                MenuNiveaux menuNiveaux = new MenuNiveaux(nomJeu + ": choix niveau");
+                menuNiveaux.setUtilisateur(utilisateur);
+                menuNiveaux.setCouleurs(utilisateur.getCouleursChoisies());
+                break;
+            case 4:
                 System.exit(0);
+                break;
             default:
                 System.err.println("action non définie");
         }
@@ -108,7 +114,7 @@ public class MenuJeu extends MenuAbstrait {
         changeColor();
     }
 
-    //@Override
+    @Override
     public void changeColor() {
         utilisateur.couleursSuivantes();
         Couleurs couleursUtilisateur = utilisateur.getCouleursChoisies();
