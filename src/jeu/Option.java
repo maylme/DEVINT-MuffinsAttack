@@ -57,6 +57,7 @@ public class Option extends FenetreAbstraite {
             if (utilisateur != null) {
                 utilisateur.setCouleursPreferees(selectioncouleurs.getSelectedCouleurs());
             }
+            dispose();
         }
 
     }
