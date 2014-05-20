@@ -114,7 +114,7 @@ public class Sauvegarde {
      */
     public static Element saveScores(Utilisateur user) {
         Element score = new Element(SCORE_UTILISATEUR);
-        score.setAttribute(NIVEAU_EN_COURS, user.getNiveau().getName());
+        score.setAttribute(NIVEAU_EN_COURS, Integer.toString(user.getNiveau().getId()));
         Map<Niveau, Integer> scoreASauvegarder = user.getMeilleursScores();
         Set key = scoreASauvegarder.keySet();
         Iterator it = key.iterator();

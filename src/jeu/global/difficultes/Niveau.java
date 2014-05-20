@@ -4,6 +4,7 @@ package jeu.global.difficultes;
  * Created by Mayl on 18/04/2014.
  */
 public enum Niveau {
+
     UN(1, 5, 30),
     DEUX(2, 10, 60),
     TROIS(3, 15, 90),
@@ -21,24 +22,29 @@ public enum Niveau {
         this.objectif = objectifScore;
     }
 
-    public String getName(){
+    public String getName() {
         return this.name();
     }
+
     public int getNbLettres() {
         return nbLettres;
     }
 
     public String getAlphabet() {
-        return alphabet.substring(0,nbLettres);
+        return alphabet.substring(0, nbLettres);
     }
 
     public int getObjectif() {
         return objectif;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public static Niveau getById(int id) {
-        for(Niveau n:Niveau.values()) {
-            if(Integer.compare(n.id,id) == 0) {
+        for (Niveau n : Niveau.values()) {
+            if (Integer.compare(n.id, id) == 0) {
                 return n;
             }
         }
@@ -50,6 +56,6 @@ public enum Niveau {
     }
 
     public Niveau suivant() {
-        return getById(id+1);
+        return getById(id + 1);
     }
 }

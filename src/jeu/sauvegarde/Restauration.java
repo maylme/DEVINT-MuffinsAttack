@@ -44,7 +44,7 @@ public class Restauration {
                 current.setCouleursPreferees(restoreColors(elem));
                 current.setMeilleursScores(restoreScores(elem));
                 current.setCouleursPreferee(Integer.parseInt(elem.getChildren(COULEUR_UTILISATEUR).get(0).getAttribute(COULEUR_PREFEREE).getValue()));
-                current.setNiveau(restoreNiveau(elem));
+                current.setNiveau(Niveau.getById(Integer.parseInt(elem.getChildren(SCORE_UTILISATEUR).get(0).getAttribute(NIVEAU_EN_COURS).getValue())));
                 users.put(elem.getName(), current);
             }
         } catch (JDOMException | IOException ex) {
