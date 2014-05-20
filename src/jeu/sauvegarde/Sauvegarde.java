@@ -6,18 +6,25 @@
 package jeu.sauvegarde;
 
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jeu.global.Utilisateur;
-import jeu.global.couleurs.Couleurs;
 import jeu.global.difficultes.Niveau;
-import static jeu.sauvegarde.Config.*;
-import static jeu.sauvegarde.Restauration.restoreUsers;
-import org.jdom2.*;
+import static jeu.sauvegarde.Config.COULEUR_PREFEREE;
+import static jeu.sauvegarde.Config.COULEUR_UTILISATEUR;
+import static jeu.sauvegarde.Config.FILE_NAME;
+import static jeu.sauvegarde.Config.SCORE_UTILISATEUR;
+import static jeu.sauvegarde.Config.SCORE_VALUE;
+import static jeu.sauvegarde.Config.UTILISATEUR;
+import org.jdom2.Document;
+import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.*;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 /**
  *
@@ -28,32 +35,6 @@ public class Sauvegarde {
 
     private static Document document;
     private static Element racine;
-
-    /**
-     * Un main juste pour tester l'enregistrement. A supprimer plus tard
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        Map<String, Utilisateur> test = new HashMap<>();
-        Utilisateur Thomas = new Utilisateur("Tom");
-        Collection<Couleurs> couleur = new ArrayList<>();
-        couleur.add(Couleurs.JAUNENOIR);
-        couleur.add(Couleurs.BEIGEBLEU);
-        Thomas.setMeilleurScore(Niveau.UN, 12);
-        Thomas.setCouleursPreferees(couleur);
-        Utilisateur Maylanie = new Utilisateur("Mayl");
-        Collection<Couleurs> couleur1 = new ArrayList<>();
-        couleur1.add(Couleurs.BEIGEMARRON);
-        couleur1.add(Couleurs.NOIRBLANC);
-        Maylanie.setCouleursPreferees(couleur1);
-        test.put("Thomas", Thomas);
-        test.put("Maylanie", Maylanie);
-        saveUsers(test);
-        Thomas.setMeilleurScore(Niveau.DEUX, 50);
-        //saveUser(Thomas);
-        //saveUser(Maylanie);
-    }
 
     /**
      * Fonction principale de sauvegarde. Liste les utilisateurs et recherche
@@ -113,6 +94,7 @@ public class Sauvegarde {
      */
     public static Element saveColors(Utilisateur user) {
         Element couleur = new Element(COULEUR_UTILISATEUR);
+        couleur.setAttribute(COULEUR_PREFEREE, Integer.toString(user.getCouleursPreferee()));
         int i = 0;
         do {
             Element nameColor = new Element(user.getCouleursChoisies().toString());
