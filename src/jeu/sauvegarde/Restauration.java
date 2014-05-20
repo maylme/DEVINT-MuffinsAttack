@@ -14,6 +14,7 @@ import jeu.global.couleurs.Couleurs;
 import jeu.global.difficultes.Niveau;
 import static jeu.sauvegarde.Config.COULEUR_PREFEREE;
 import static jeu.sauvegarde.Config.COULEUR_UTILISATEUR;
+import static jeu.sauvegarde.Config.NIVEAU_EN_COURS;
 import static jeu.sauvegarde.Config.SCORE_UTILISATEUR;
 import static jeu.sauvegarde.Config.SCORE_VALUE;
 import org.jdom2.Document;
@@ -43,6 +44,7 @@ public class Restauration {
                 current.setCouleursPreferees(restoreColors(elem));
                 current.setMeilleursScores(restoreScores(elem));
                 current.setCouleursPreferee(Integer.parseInt(elem.getChildren(COULEUR_UTILISATEUR).get(0).getAttribute(COULEUR_PREFEREE).getValue()));
+                current.setNiveau(restoreNiveau(elem));
                 users.put(elem.getName(), current);
             }
         } catch (JDOMException | IOException ex) {
@@ -94,5 +96,14 @@ public class Restauration {
             }
         }
         return scores;
+    }
+
+    public static Niveau restoreNiveau(Element user) {
+        for (Niveau niv : Niveau.values()) {
+            if (user.getChildren(SCORE_UTILISATEUR).get(0).getAttribute(NIVEAU_EN_COURS).getValue().equals(niv.getName())){
+                return niv;
+            }
+        }
+        return Niveau.UN;
     }
 }
