@@ -26,4 +26,5 @@ public class Config {
     public final static String SCORE_VALUE = "valeur";
     public final static String ICONE_UTILISATEUR = "icone";
     public final static String COULEUR_PREFEREE = "favori";
+    public final static String NIVEAU_EN_COURS = "en_cours";
 }

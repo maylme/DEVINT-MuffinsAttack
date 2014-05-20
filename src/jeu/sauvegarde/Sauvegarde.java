@@ -17,6 +17,7 @@ import jeu.global.difficultes.Niveau;
 import static jeu.sauvegarde.Config.COULEUR_PREFEREE;
 import static jeu.sauvegarde.Config.COULEUR_UTILISATEUR;
 import static jeu.sauvegarde.Config.FILE_NAME;
+import static jeu.sauvegarde.Config.NIVEAU_EN_COURS;
 import static jeu.sauvegarde.Config.SCORE_UTILISATEUR;
 import static jeu.sauvegarde.Config.SCORE_VALUE;
 import static jeu.sauvegarde.Config.UTILISATEUR;
@@ -113,6 +114,7 @@ public class Sauvegarde {
      */
     public static Element saveScores(Utilisateur user) {
         Element score = new Element(SCORE_UTILISATEUR);
+        score.setAttribute(NIVEAU_EN_COURS, user.getNiveau().getName());
         Map<Niveau, Integer> scoreASauvegarder = user.getMeilleursScores();
         Set key = scoreASauvegarder.keySet();
         Iterator it = key.iterator();
