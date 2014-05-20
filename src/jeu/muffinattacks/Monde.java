@@ -53,7 +53,7 @@ public class Monde extends JPanel {
         timerGraphic.start();
         pause();
         newMuffinPause(5);
-        jeu.jouerEnregistrement("attention_muffins_attaquent_la_ville");
+        jeu.jouerEnregistrement("debutjeu");
         jeu.jouerEnregistrementPause("Pour_les_detruires", 2);
     }
 
