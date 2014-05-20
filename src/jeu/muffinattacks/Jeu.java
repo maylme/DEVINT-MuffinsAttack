@@ -169,7 +169,7 @@ public class Jeu extends FenetreAbstraite {
     // renvoie le fichier wave contenant la règle du jeu
     @Override
     protected String wavRegleJeu() {
-        jouerEnregistrement("muffins_attaquent_la_ville");
+        jouerEnregistrement("debutjeu");
         jouerEnregistrementPause("tu_as_3_vie", 2);
         jouerEnregistrementPause("Pour_les_detruires", 3);
         return "";

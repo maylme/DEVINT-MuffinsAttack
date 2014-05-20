@@ -42,19 +42,18 @@ public class MenuNiveaux extends MenuAbstrait {
             dispose();
             return;
         }
-        utilisateur.setNiveau(Niveau.getById(i));
+        utilisateur.setNiveau(Niveau.getById(i+1));
         dispose();
     }
 
     @Override
     protected String wavAccueil() {
-        Voix.dire("Ici tu peux sélectionner ton niveau.");
-        return "";
+        return "../ressources/sons/menus/choixniv.wav";
     }
 
     @Override
     protected String wavRegleJeu() {
-        return "";
+        return "../ressources/sons/menus/choixniv.wav";
     }
 
     @Override
@@ -84,6 +83,5 @@ public class MenuNiveaux extends MenuAbstrait {
 
     public void setUtilisateur(Utilisateur u) {
         this.utilisateur = u;
-        Voix.dire("Tu es actuellement au niveau "+utilisateur.getNiveau().getName());
     }
 }

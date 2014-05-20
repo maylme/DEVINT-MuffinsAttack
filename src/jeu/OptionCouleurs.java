@@ -22,14 +22,14 @@ public class OptionCouleurs extends FenetreAbstraite {
     // renvoie le fichier wave contenant le message d'accueil
     @Override
     protected String wavAccueil() {
-        return "../ressources/sons/accueilOption.wav";
+        return "../ressources/sons/choixcouleurs.wav";
     }
 
     // renvoie le fichier wave contenant la règle du jeu
     @Override
     protected String wavRegleJeu() {
         Voix.dire("La selection se fait avec la souris, on valide avec la touche Entrée.");
-        return "../ressources/sons/accueilOption.wav";
+        return "../ressources/sons/menus/choixcouleurs.wav";
     }
 
     // renvoie le fichier wave contenant la règle du jeu

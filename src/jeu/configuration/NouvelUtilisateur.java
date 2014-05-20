@@ -6,6 +6,7 @@ import jeu.configuration.selection.Selection;
 import jeu.configuration.selection.SelectionAvatar;
 import jeu.configuration.selection.SelectionCouleurs;
 import jeu.global.Utilisateur;
+import jeu.global.voix.Voix;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,6 +39,7 @@ public class NouvelUtilisateur extends FenetreAbstraite {
         selection = new SelectionAvatar();
         selection.setModeMultiple(false);
         this.add(selection, BorderLayout.CENTER);
+        voix.playWav(wavAccueil());
     }
 
     @Override
@@ -81,17 +83,17 @@ public class NouvelUtilisateur extends FenetreAbstraite {
 
     @Override
     protected String wavAide() {
-        return null;
+        return "../ressources/sons/menus/choixavatar.wav";
     }
 
     @Override
     protected String wavAccueil() {
-        return null;
+        return "../ressources/sons/menus/choixavatar.wav";
     }
 
     @Override
     protected String wavRegleJeu() {
-        return null;
+        return "../ressources/sons/menus/choixavatar.wav";
     }
 
     @Override

@@ -38,7 +38,7 @@ public enum Niveau {
 
     public static Niveau getById(int id) {
         for(Niveau n:Niveau.values()) {
-            if(id == n.id) {
+            if(Integer.compare(n.id,id) == 0) {
                 return n;
             }
         }

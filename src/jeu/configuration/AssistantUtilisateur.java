@@ -1,6 +1,7 @@
 package jeu.configuration;
 
 import devintAPI.MenuAbstrait;
+import jeu.MenuJeu;
 import jeu.configuration.selection.SelectionUtilisateur;
 import jeu.global.Utilisateur;
 import jeu.sauvegarde.Restauration;
@@ -42,12 +43,12 @@ public class AssistantUtilisateur extends MenuAbstrait {
 
     @Override
     protected String wavAccueil() {
-        return null;
+        return "../ressources/sons/menus/souris.wav";
     }
 
     @Override
     protected String wavRegleJeu() {
-        return null;
+        return "../ressources/sons/menus/souris.wav";
     }
 
     public static Map<String, Utilisateur> getMapUtilisateur(){
