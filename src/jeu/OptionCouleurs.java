@@ -3,6 +3,7 @@ package jeu;
 import devintAPI.FenetreAbstraite;
 import jeu.configuration.selection.SelectionCouleurs;
 import jeu.global.Utilisateur;
+import jeu.global.voix.Voix;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -10,11 +11,11 @@ import java.awt.event.KeyEvent;
 /**
  * Cette classe représente les options
  */
-public class Option extends FenetreAbstraite {
+public class OptionCouleurs extends FenetreAbstraite {
     private Utilisateur utilisateur;
     private SelectionCouleurs selectioncouleurs;
 
-    public Option(String title) {
+    public OptionCouleurs(String title) {
         super(title);
     }
 
@@ -27,6 +28,7 @@ public class Option extends FenetreAbstraite {
     // renvoie le fichier wave contenant la règle du jeu
     @Override
     protected String wavRegleJeu() {
+        Voix.dire("La selection se fait avec la souris, on valide avec la touche Entrée.");
         return "../ressources/sons/accueilOption.wav";
     }
 
