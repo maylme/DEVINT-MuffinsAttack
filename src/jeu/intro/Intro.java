@@ -15,6 +15,7 @@ import javax.swing.*;
 
 public class Intro extends DevintFrameListener{
     //liste des images:
+    private final String img0 = "../ressources/images/intro/image0-fini.png";
     private final String img1 = "../ressources/images/intro/image1-fini.png";
     private final String img2 = "../ressources/images/intro/image2-fini.png";
     private final String img3 = "../ressources/images/intro/image3-fini.png";
@@ -31,9 +32,10 @@ public class Intro extends DevintFrameListener{
     public Intro(String title) throws Exception{
 
             super(title);
+        this.setBackground(Color.black);
 
             voix.playWav("../ressources/sons/intro1.wav");
-            String path = img1;
+            String path = img0;
             BufferedImage image = ImageIO.read(new File(path));
             Image contentPane = new Image(image);
 
@@ -46,30 +48,47 @@ public class Intro extends DevintFrameListener{
         this.setLocation(100, 100);
         this.setVisible(true);
 
+        Thread.sleep(10000); // suspendu pendant 35 seconde (chiffre en millisecondes)
 
+        contentPane = new Image(ImageIO.read(new File(img1)));
+        this.setContentPane(contentPane);
+        this.revalidate();
+        this.repaint();
 
-        Thread.sleep(2000); // suspendu pendant 2 seconde (chiffre en millisecondes)
+        Thread.sleep(25000); // suspendu pendant 35 seconde (chiffre en millisecondes)
+        voix.stop();
+
+        voix.playWav("../ressources/sons/intro2.wav");
+
         contentPane = new Image(ImageIO.read(new File(img2)));
         this.setContentPane(contentPane);
         this.revalidate();
         this.repaint();
 
 
-        Thread.sleep(2000); // suspendu pendant 2 seconde (chiffre en millisecondes)
+        Thread.sleep(9000); // suspendu pendant 9 seconde (chiffre en millisecondes)
+        voix.stop();
+        voix.playWav("../ressources/sons/intro3.wav");
+
         contentPane = new Image(ImageIO.read(new File(img3)));
         this.setContentPane(contentPane);
         this.revalidate();
         this.repaint();
 
 
-        Thread.sleep(2000); // suspendu pendant 2 seconde (chiffre en millisecondes)
+        this.setBackground(Color.black);
+        Thread.sleep(16000); // suspendu pendant 20 seconde (chiffre en millisecondes)
+        voix.stop();
+        voix.playWav("../ressources/sons/intro4.wav");
         contentPane = new Image(ImageIO.read(new File(img4)));
         this.setContentPane(contentPane);
         this.revalidate();
         this.repaint();
 
 
-        Thread.sleep(2000); // suspendu pendant 2 seconde (chiffre en millisecondes)
+        Thread.sleep(13000); // suspendu pendant 2 seconde (chiffre en millisecondes)
+        voix.stop();
+        voix.playWav("../ressources/sons/intro5.wav");
         contentPane = new Image(ImageIO.read(new File(img5)));
         this.setContentPane(contentPane);
         this.revalidate();
@@ -77,7 +96,7 @@ public class Intro extends DevintFrameListener{
 
 
 
-        Thread.sleep(2000); // suspendu pendant 2 seconde (chiffre en millisecondes)
+        Thread.sleep(22000); // suspendu pendant 2 seconde (chiffre en millisecondes)
 
         //fermer la fenetre et appeller une autre fenetre.
     }
