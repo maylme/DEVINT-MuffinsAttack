@@ -15,11 +15,11 @@ import javax.swing.*;
 
 public class Intro extends DevintFrameListener{
     //liste des images:
-    private final String img1 = "ressources/images/intro/image1-fini.png";
-    private final String img2 = "ressources/images/intro/image2-fini.png";
-    private final String img3 = "ressources/images/intro/image3-fini.png";
-    private final String img4 = "ressources/images/intro/image-4-fini.png";
-    private final String img5 = "ressources/images/intro/image-5-fini.png";
+    private final String img1 = "../ressources/images/intro/image1-fini.png";
+    private final String img2 = "../ressources/images/intro/image2-fini.png";
+    private final String img3 = "../ressources/images/intro/image3-fini.png";
+    private final String img4 = "../ressources/images/intro/image-4-fini.png";
+    private final String img5 = "../ressources/images/intro/image-5-fini.png";
 
 
     // Label de L'image :
@@ -30,10 +30,12 @@ public class Intro extends DevintFrameListener{
     // appel au constructeur de la classe mère
     public Intro(String title) throws Exception{
 
-        super(title);
-        String path = img1;
-        BufferedImage image = ImageIO.read(new File(path));
-        Image contentPane = new Image(image);
+            super(title);
+
+            voix.playWav("../ressources/sons/intro1.wav");
+            String path = img1;
+            BufferedImage image = ImageIO.read(new File(path));
+            Image contentPane = new Image(image);
 
 
 
@@ -42,8 +44,6 @@ public class Intro extends DevintFrameListener{
 
 
         this.setLocation(100, 100);
-        this.setResizable(false);
-
         this.setVisible(true);
 
 
@@ -95,13 +95,13 @@ public class Intro extends DevintFrameListener{
     // renvoie le fichier wave contenant le message d'accueil
     @Override
     protected String wavAccueil() {
-        return "../ressources/sons/apprentissage/accueil.wav";
+        return null;
     }
 
     // renvoie le fichier wave contenant la règle du jeu
     @Override
     protected String wavRegleJeu() {
-        return "../ressources/sons/apprentissage/aideF1.wav";
+        return null;
     }
 
 }
