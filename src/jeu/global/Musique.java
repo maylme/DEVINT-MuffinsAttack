@@ -15,6 +15,7 @@ public class Musique implements Runnable {
     private Player player;
     private int reading = 0;
     private Thread playerThread;
+    private int essais = 0;
 
     private String recupererMusique(int n) {
         File repertoire = new File(musiquesSrc);
@@ -32,8 +33,9 @@ public class Musique implements Runnable {
 
     public void demarrer() {
         String mp3 = recupererMusique(++reading);
-        if(mp3 == null) {
+        if(mp3 == null && essais < 5) {
             reading = 0;
+            essais++;
             demarrer();
         }
         try {
