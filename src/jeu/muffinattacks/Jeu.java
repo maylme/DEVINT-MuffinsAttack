@@ -200,10 +200,6 @@ public class Jeu extends FenetreAbstraite {
         return utilisateur.getNiveau().getAlphabet();
     }
 
-    public boolean isInAlphabet(char lettre) {
-        return getAlphabet().contains(String.valueOf(lettre));
-    }
-
     public char getRandomLetter() {
         return getAlphabet().charAt(rand.nextInt(getAlphabet().length()));
     }

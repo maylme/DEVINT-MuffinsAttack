@@ -178,9 +178,8 @@ public class Monde extends JPanel {
             if (muffin != null) {
                 muffin.paint(g);
                 g.setColor(couleurs.getCouleurTexte());
-                if(jeu.aideActive()) {
-                    g.drawString(String.valueOf(muffin.getLettre()), this.getWidth() - 20, this.getHeight() - 20);
-                }
+                // affiche la lettre en bas à droite de l'écran
+                //g.drawString(String.valueOf(muffin.getLettre()), this.getWidth() - 20, this.getHeight() - 20);
             }
         }
     }
