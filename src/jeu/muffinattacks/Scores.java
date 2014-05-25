@@ -2,6 +2,7 @@ package jeu.muffinattacks;
 
 import jeu.global.couleurs.Couleurs;
 import jeu.global.difficultes.Niveau;
+import jeu.global.voix.Voix;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,6 +45,14 @@ public class Scores extends JPanel {
             y += hauteurString;
             g.drawString("Niveau " + n.toString() + " : " + meilleursScores.get(n), x, y);
         }
+    }
+
+    public String texteScores() {
+        String score = "Tes meilleurs scores...";
+        for (Niveau n : Niveau.values()) {
+            score += "Au niveau " + n.toString() + ", tu as battu " + meilleursScores.get(n) + " meuffines.";
+        }
+        return score;
     }
 
     public void setMeilleursScores(Map<Niveau, Integer> meilleursScores) {

@@ -344,6 +344,7 @@ public class Jeu extends FenetreAbstraite {
         Sauvegarde.saveUsers(tmp);
 
         jouerEnregistrement("fin");
+        direPause(scores.texteScores(), 3);
     }
 
     public void timeOut() {
