@@ -3,6 +3,7 @@ package jeu.muffinattacks;
 import devintAPI.FenetreAbstraite;
 import jeu.configuration.AssistantUtilisateur;
 import jeu.configuration.MenuNiveaux;
+import jeu.global.Musique;
 import jeu.global.Utilisateur;
 import jeu.global.couleurs.Couleurs;
 import jeu.muffinattacks.infobar.InfoBar;
@@ -33,6 +34,7 @@ public class Jeu extends FenetreAbstraite {
     private boolean aide;
     private boolean challenge;
     private boolean userPause;
+    private Musique musique;
 
     /**
      * @param title : titre de la fenetre
@@ -48,6 +50,7 @@ public class Jeu extends FenetreAbstraite {
         aide = true;
         challenge = false;
 
+        musique = new Musique();
         infoBar = new InfoBar(this);
         scores = new Scores();
         monde = new Monde(this, Couleurs.NOIRBLANC);
@@ -277,6 +280,7 @@ public class Jeu extends FenetreAbstraite {
         timerPause.cancel();
         timerCancelled = true;
         monde.jouer(tempsTotal);
+        musique.demarrer();
     }
 
     private void changerTemps(int i) {
@@ -328,6 +332,7 @@ public class Jeu extends FenetreAbstraite {
     }
 
     public void jeuFini() {
+        musique.arreter();
         monde.arreter();
         utilisateur.setMeilleurScore(utilisateur.getNiveau(), points);
 
