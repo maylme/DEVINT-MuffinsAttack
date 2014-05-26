@@ -52,9 +52,8 @@ public class Monde extends JPanel {
         isStarted = true;
         timerGraphic.start();
         pause();
-        newMuffinPause(5);
-        jeu.jouerEnregistrement("debutjeu");
-        jeu.jouerEnregistrementPause("Pour_les_detruires", 2);
+        newMuffinPause(4.5);
+        jeu.wavRegleJeu();
     }
 
     /**

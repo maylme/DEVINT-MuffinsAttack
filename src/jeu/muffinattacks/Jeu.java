@@ -173,8 +173,7 @@ public class Jeu extends FenetreAbstraite {
     @Override
     protected String wavRegleJeu() {
         jouerEnregistrement("debutjeu");
-        jouerEnregistrementPause("tu_as_3_vie", 2);
-        jouerEnregistrementPause("Pour_les_detruires", 3);
+        jouerEnregistrementPause("tu_as_3_vies", 3);
         return "";
     }
 
