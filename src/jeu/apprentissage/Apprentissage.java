@@ -28,7 +28,7 @@ public class Apprentissage extends FenetreAbstraite {
     // renvoie le fichier wave contenant le message d'accueil
     @Override
     protected String wavAccueil() {
-        return "../ressources/sons/apprentissage/accueil.wav";
+        return "../ressources/sons/jeu/acceuilApprentissage.wav";
     }
 
     // renvoie le fichier wave contenant la règle du jeu
