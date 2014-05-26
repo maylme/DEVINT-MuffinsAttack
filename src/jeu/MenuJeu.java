@@ -74,7 +74,7 @@ public class MenuJeu extends MenuAbstrait {
                 catch(Exception e){System.out.print(e);}
                 break;
             case 3:
-                (new OptionCouleurs(nomJeu + ": choix couleurs")).setUtilisateur(utilisateur);
+                (new OptionCouleurs("Choix couleurs")).setUtilisateur(utilisateur);
                 break;
             case 4:
                 MenuNiveaux menuNiveaux = new MenuNiveaux(nomJeu + ": choix niveau");

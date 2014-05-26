@@ -22,7 +22,7 @@ public class AssistantUtilisateur extends MenuAbstrait {
 
     @Override
     protected String[] nomOptions() {
-        return new String[] {"Nouveau joueur","Choisir son image","Quitter"};
+        return new String[] {"Nouveau joueur","Choisir son image", "Partie Rapide (Invité)","Quitter"};
     }
 
     @Override
@@ -35,6 +35,13 @@ public class AssistantUtilisateur extends MenuAbstrait {
                 new SelecteurUtilisateur(getTitle());
                 break;
             case 2:
+                Utilisateur invite = Restauration.restoreUsers().get("Invité");
+                if(invite == null) {
+                    invite = new Utilisateur("Invité");
+                }
+                new MenuJeu("Muffins Attack").setUtilisateur(invite);
+                break;
+            case 3:
                 System.exit(0);
             default:
                 break;

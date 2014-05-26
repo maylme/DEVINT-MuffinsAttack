@@ -237,6 +237,7 @@ public class Jeu extends FenetreAbstraite {
         if (keycode == KeyEvent.VK_ESCAPE) {
             monde.arreter();
             timerPause.cancel();
+            musique.arreter();
             dire("La partie a été interrompue.");
             return;
         }
