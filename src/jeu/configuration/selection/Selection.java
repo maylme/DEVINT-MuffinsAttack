@@ -1,5 +1,6 @@
 package jeu.configuration.selection;
 
+import devintAPI.Preferences;
 import jeu.configuration.selection.choix.Choix;
 import jeu.configuration.selection.choix.ChoixCouleurs;
 import jeu.global.ChangerCurseur;
@@ -23,6 +24,7 @@ public abstract class Selection<E> extends JPanel {
      * <br />Par défaut, la selection est multiple
      */
     public Selection() {
+
         this.choix = getChoix();
         this.modeMultiple = true;
         this.setLayout(new GridLayout(0, 6, 10, 10));
@@ -30,6 +32,9 @@ public abstract class Selection<E> extends JPanel {
             this.add(c);
         }
         new ChangerCurseur(this).grosseSouris();
+        Preferences.getData().getVoice().playWav("../ressources/sons/menus/souris.wav");
+
+
     }
 
     /**

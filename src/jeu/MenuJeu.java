@@ -11,6 +11,7 @@ import devintAPI.MenuAbstrait;
 import jeu.apprentissage.Apprentissage;
 import jeu.configuration.MenuNiveaux;
 import jeu.global.couleurs.Couleurs;
+import jeu.intro.Intro;
 import jeu.muffinattacks.Jeu;
 import jeu.global.Utilisateur;
 
@@ -21,6 +22,8 @@ import java.util.Collection;
 public class MenuJeu extends MenuAbstrait {
     private Utilisateur utilisateur;
     private String[] noms;
+    private Thread cinematique;
+    private Intro introFrame;
 
     /**
      * constructeur
@@ -39,7 +42,7 @@ public class MenuJeu extends MenuAbstrait {
      */
     @Override
     protected String[] nomOptions() {
-        noms = new String[]{"Jouer", "Apprentissage", "Couleurs", "Choisir niveau", "Quitter"};
+        noms = new String[]{"Jouer", "Apprentissage","Voir la cinématique", "Couleurs", "Choisir niveau", "Quitter"};
         return noms;
     }
 
@@ -63,14 +66,22 @@ public class MenuJeu extends MenuAbstrait {
                 a.changeColor();
                 break;
             case 2:
-                (new OptionCouleurs(nomJeu + ": choix couleurs")).setUtilisateur(utilisateur);
+                try{
+                    introFrame = new Intro(this);
+                    cinematique = new Thread(introFrame);
+                    cinematique.start();
+                }
+                catch(Exception e){System.out.print(e);}
                 break;
             case 3:
+                (new OptionCouleurs(nomJeu + ": choix couleurs")).setUtilisateur(utilisateur);
+                break;
+            case 4:
                 MenuNiveaux menuNiveaux = new MenuNiveaux(nomJeu + ": choix niveau");
                 menuNiveaux.setUtilisateur(utilisateur);
                 menuNiveaux.setCouleurs(utilisateur.getCouleursChoisies());
                 break;
-            case 4:
+            case 5:
                 System.exit(0);
                 break;
             default:
@@ -135,5 +146,11 @@ public class MenuJeu extends MenuAbstrait {
         //boutons
         this.buttonBorder = new CompoundBorder(new LineBorder(foregroundColor,5),new LineBorder(backgroundColor,3));
         this.refreshButtons();
+    }
+
+    public void stopCinematique() {
+        while(!introFrame.isFinished()) {
+            cinematique.interrupt();
+        }
     }
 }

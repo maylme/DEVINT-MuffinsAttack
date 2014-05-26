@@ -43,12 +43,12 @@ public class AssistantUtilisateur extends MenuAbstrait {
 
     @Override
     protected String wavAccueil() {
-        return "../ressources/sons/menus/souris.wav";
+        return "../ressources/sons/accueil.wav";
     }
 
     @Override
     protected String wavRegleJeu() {
-        return "../ressources/sons/menus/souris.wav";
+        return "";
     }
 
     public static Map<String, Utilisateur> getMapUtilisateur(){

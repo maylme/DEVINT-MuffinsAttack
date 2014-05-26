@@ -2,9 +2,13 @@ package jeu.intro;
 
 import devintAPI.DevintFrameListener;
 import devintAPI.FenetreAbstraite;
+import devintAPI.Preferences;
+import jeu.MenuJeu;
 import jeu.global.couleurs.Couleurs;
+import t2s.SIVOXDevint;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -13,7 +17,10 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 
-public class Intro extends DevintFrameListener{
+public class Intro extends JFrame implements Runnable {
+    private SIVOXDevint voix = Preferences.getData().getVoice();
+    private boolean finished;
+
     //liste des images:
     private final String img0 = "../ressources/images/intro/image0-fini.png";
     private final String img1 = "../ressources/images/intro/image1-fini.png";
@@ -28,99 +35,156 @@ public class Intro extends DevintFrameListener{
 
 
 
-    // appel au constructeur de la classe mère
-    public Intro(String title) throws Exception{
+    // appel au constructeur la classe mère
+    public Intro(MenuJeu parent) {
+        this.setBackground(Color.BLACK);
 
-            super(title);
-        this.setBackground(Color.black);
+        this.setLayout(new BorderLayout());
 
-            voix.playWav("../ressources/sons/intro1.wav");
-            String path = img0;
-            BufferedImage image = ImageIO.read(new File(path));
-            Image contentPane = new Image(image);
+        this.image = new JLabel();
+        this.add(image, BorderLayout.CENTER);
 
+        this.image.setBackground(null);
+        this.image.setHorizontalAlignment(SwingConstants.CENTER);
 
+        this.addKeyListener(new EchapListener(parent));
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setContentPane(contentPane);
+        this.setExtendedState(MAXIMIZED_BOTH);
 
-
+       // this.setSize(new Dimension(850,600));
         this.setLocation(100, 100);
         this.setVisible(true);
+    }
 
-        Thread.sleep(10000); // suspendu pendant 35 seconde (chiffre en millisecondes)
+    public boolean isFinished() {
+        return finished;
+    }
 
-        contentPane = new Image(ImageIO.read(new File(img1)));
-        this.setContentPane(contentPane);
+    @Override
+    public void run() {
+        ImageIcon contentPane;
+
+        voix.playWav("../ressources/sons/intro1.wav");
+        String path = img0;
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(new File(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        contentPane = new ImageIcon(image);
+        this.image.setIcon(contentPane);
+
+
+        try {
+            Thread.sleep(10000); // suspendu pendant 35 seconde (chiffre en millisecondes)
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            contentPane = new ImageIcon(ImageIO.read(new File(img1)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.image.setIcon(contentPane);
         this.revalidate();
         this.repaint();
 
-        Thread.sleep(25000); // suspendu pendant 35 seconde (chiffre en millisecondes)
+        try {
+            Thread.sleep(25000); // suspendu pendant 35 seconde (chiffre en millisecondes)
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         voix.stop();
 
         voix.playWav("../ressources/sons/intro2.wav");
 
-        contentPane = new Image(ImageIO.read(new File(img2)));
-        this.setContentPane(contentPane);
+        try {
+            contentPane = new ImageIcon(ImageIO.read(new File(img2)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.image.setIcon(contentPane);
         this.revalidate();
         this.repaint();
 
 
-        Thread.sleep(9000); // suspendu pendant 9 seconde (chiffre en millisecondes)
+        try {
+            Thread.sleep(9000); // suspendu pendant 9 seconde (chiffre en millisecondes)
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         voix.stop();
         voix.playWav("../ressources/sons/intro3.wav");
 
-        contentPane = new Image(ImageIO.read(new File(img3)));
-        this.setContentPane(contentPane);
+        try {
+            contentPane = new ImageIcon(ImageIO.read(new File(img3)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.image.setIcon(contentPane);
         this.revalidate();
         this.repaint();
 
 
         this.setBackground(Color.black);
-        Thread.sleep(16000); // suspendu pendant 20 seconde (chiffre en millisecondes)
+        try {
+            Thread.sleep(16000); // suspendu pendant 20 seconde (chiffre en millisecondes)
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         voix.stop();
         voix.playWav("../ressources/sons/intro4.wav");
-        contentPane = new Image(ImageIO.read(new File(img4)));
-        this.setContentPane(contentPane);
+        try {
+            contentPane = new ImageIcon(ImageIO.read(new File(img4)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.image.setIcon(contentPane);
         this.revalidate();
         this.repaint();
 
 
-        Thread.sleep(13000); // suspendu pendant 2 seconde (chiffre en millisecondes)
+        try {
+            Thread.sleep(13000); // suspendu pendant 2 seconde (chiffre en millisecondes)
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         voix.stop();
         voix.playWav("../ressources/sons/intro5.wav");
-        contentPane = new Image(ImageIO.read(new File(img5)));
-        this.setContentPane(contentPane);
+        try {
+            contentPane = new ImageIcon(ImageIO.read(new File(img5)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.image.setIcon(contentPane);
         this.revalidate();
         this.repaint();
 
 
-
-        Thread.sleep(22000); // suspendu pendant 2 seconde (chiffre en millisecondes)
-
-        //fermer la fenetre et appeller une autre fenetre.
+        try {
+            Thread.sleep(22000); // suspendu pendant 2 seconde (chiffre en millisecondes)
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        voix.stop();
+        this.finished = true;
+        dispose();
     }
 
-    /**
-     * Pour modifier les couleurs de fond et de premier plan de la fenêtre Cette
-     * fonction est appelée par la fonction "changeColor" de la classe
-     * "Preferences" à chaque fois que l'on presse F3 on change la couleur du
-     * texte principal
-     *
-     */
-    @Override
-    public void changeColor() {}
+    class EchapListener extends KeyAdapter {
 
-    // renvoie le fichier wave contenant le message d'accueil
-    @Override
-    protected String wavAccueil() {
-        return null;
+        private final MenuJeu parent;
+
+        public EchapListener(MenuJeu parent) {
+            this.parent = parent;
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+                parent.stopCinematique();
+        }
     }
-
-    // renvoie le fichier wave contenant la règle du jeu
-    @Override
-    protected String wavRegleJeu() {
-        return null;
-    }
-
 }
