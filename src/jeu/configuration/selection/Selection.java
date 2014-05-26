@@ -2,6 +2,7 @@ package jeu.configuration.selection;
 
 import jeu.configuration.selection.choix.Choix;
 import jeu.configuration.selection.choix.ChoixCouleurs;
+import jeu.global.ChangerCurseur;
 import jeu.global.couleurs.Couleurs;
 
 import javax.swing.*;
@@ -28,6 +29,7 @@ public abstract class Selection<E> extends JPanel {
         for (Choix c:choix) {
             this.add(c);
         }
+        new ChangerCurseur(this).grosseSouris();
     }
 
     /**

@@ -23,6 +23,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
+import jeu.global.ChangerCurseur;
 import t2s.SIVOXDevint;
 
 public abstract class MenuAbstrait extends DevintFrameListener implements
@@ -107,7 +108,7 @@ public abstract class MenuAbstrait extends DevintFrameListener implements
     	this.requestFocus();
 		// lit le message d'accueil
 		voix.playWav(wavAccueil());
- 
+        new ChangerCurseur(this).grosseSouris();
 	}
 
 	// -------------------------------------------------------
