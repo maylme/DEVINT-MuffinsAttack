@@ -2,15 +2,14 @@
 <infos>
   <year><![CDATA[2014]]></year>
   <gamecategories>
-    <gamecategory><![CDATA[Lettres]]></gamecategory>
     <gamecategory><![CDATA[Rapidité]]></gamecategory>
     <gamecategory><![CDATA[Réflexe]]></gamecategory>
-    <gamecategory><![CDATA[Atelier DeViNT]]></gamecategory>
+    <gamecategory><![CDATA[Lettres]]></gamecategory>
   </gamecategories>
-  <shortdescription><![CDATA[Le jeu consiste à taper la lettre demandée dans un laps de temps.]]></shortdescription>
+  <shortdescription><![CDATA[Le jeu consiste à taper la lettre demandée dans un laps de temps sur un clavier braille.]]></shortdescription>
   <public><![CDATA[MV et NV]]></public>
   <gamestate><![CDATA[Valider pour le CD]]></gamestate>
-  <age><![CDATA[Enfants capables de presser une touche sur un clavier.]]></age>
+  <age><![CDATA[Toute personne capable de presser une touche sur un clavier et d'en mémoriser la valeur.]]></age>
   <title><![CDATA[Muffins Attack]]></title>
   <authors>
     <author><![CDATA[Mesnier Maylanie]]></author>
@@ -18,9 +17,9 @@
     <author><![CDATA[Clop Thomas]]></author>
   </authors>
   <notes>
-    <note />
+    <note><![CDATA[<a href="MuffinsAttack/Dossier_Devint">Description du jeu</a>]]></note>
   </notes>
-  <gameplay><![CDATA[Il faut sauver une ville sur laquelle tombe des objets. Quand le muffin apparaît à l’écran la lettre est dite. Le joueur a alors un cours moment pour trouver la lettre sur le clavier et la taper afin de détruire le muffin avant qu'il ne tombe sur la ville. Pour qu'un non voyant perçoive la chute du muffin, un son de chute est émis et amplifié au fur et à mesure que le muffin tombe.]]></gameplay>
-  <gamerules><![CDATA[Quand le muffin atteint le sol, le joueur perd une vie (notifié par un dessin et un son : « il vous reste X vies »). Lorsque le joueur n'a plus de vie, la partie est fini et son score est enregistré.]]></gamerules>
+  <gameplay><![CDATA[Il faut sauver un enfant attaqué par un vieille dame. Quand le muffin apparaît à l’écran la lettre est dite. Le joueur a alors un cours moment pour trouver la lettre sur le clavier et la taper afin de détruire le muffin avant qu'il ne blesse Théo.]]></gameplay>
+  <gamerules><![CDATA[Quand le muffin atteint le bas de l'écran ou que la jauge de temps est pleine, le joueur perd une vie (notifié par un dessin et un son : « il vous reste X vies »). Lorsque le joueur n'a plus de vie, la partie est finie et son score est enregistré.]]></gamerules>
 </infos>
 
