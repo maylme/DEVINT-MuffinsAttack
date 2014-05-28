@@ -174,6 +174,7 @@ public class Jeu extends FenetreAbstraite {
     protected String wavRegleJeu() {
         jouerEnregistrement("debutjeu");
         jouerEnregistrementPause("tu_as_3_vies", 3);
+        jouerEnregistrementPause("reentendre_lettre_espace", 4);
         return "";
     }
 

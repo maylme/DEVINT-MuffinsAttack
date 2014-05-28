@@ -43,7 +43,6 @@ public class Monde extends JPanel {
         isStarted = false;
         isPaused = true;
 
-        //this.setBorder(BorderFactory.createLineBorder(couleurs.getCouleurTexte()));
         this.setBackground(couleurs.getCouleurFond());
     }
 
@@ -52,7 +51,7 @@ public class Monde extends JPanel {
         isStarted = true;
         timerGraphic.start();
         pause();
-        newMuffinPause(4.5);
+        newMuffinPause(5);
         jeu.wavRegleJeu();
     }
 

@@ -4,6 +4,7 @@ import devintAPI.MenuAbstrait;
 import jeu.MenuJeu;
 import jeu.configuration.selection.SelectionUtilisateur;
 import jeu.global.Utilisateur;
+import jeu.global.voix.Voix;
 import jeu.sauvegarde.Restauration;
 
 import java.util.Collection;
@@ -22,7 +23,7 @@ public class AssistantUtilisateur extends MenuAbstrait {
 
     @Override
     protected String[] nomOptions() {
-        return new String[] {"Nouveau joueur","Choisir son image", "Partie Rapide (Invité)","Quitter"};
+        return new String[] {"Nouveau joueur","Charger un joueur", "Partie Rapide (Invité)","Quitter"};
     }
 
     @Override
@@ -50,11 +51,13 @@ public class AssistantUtilisateur extends MenuAbstrait {
 
     @Override
     protected String wavAccueil() {
-        return "../ressources/sons/accueil.wav";
+        voix.stop();
+        return "../ressources/sons/assistantUtilisateur.wav";
     }
 
     @Override
     protected String wavRegleJeu() {
+        Voix.dire("Si tu est Non Voyant, tu peux sélectionner, Partie Rapide, pour accéder directement au jeu.");
         return "";
     }
 

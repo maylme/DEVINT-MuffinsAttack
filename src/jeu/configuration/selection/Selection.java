@@ -32,9 +32,6 @@ public abstract class Selection<E> extends JPanel {
             this.add(c);
         }
         new ChangerCurseur(this).grosseSouris();
-        Preferences.getData().getVoice().playWav("../ressources/sons/menus/souris.wav");
-
-
     }
 
     /**

@@ -6,10 +6,10 @@ package jeu.global.difficultes;
 public enum Niveau {
 
     UN(1, 5, 30),
-    DEUX(2, 10, 60),
-    TROIS(3, 15, 90),
-    QUATRE(4, 20, 150),
-    CINQ(5, 26, 200);
+    DEUX(2, 10, 30),
+    TROIS(3, 15, 30),
+    QUATRE(4, 20, 30),
+    CINQ(5, 26, 30);
 
     private static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private int id;

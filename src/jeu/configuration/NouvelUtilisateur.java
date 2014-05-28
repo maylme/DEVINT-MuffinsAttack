@@ -1,6 +1,7 @@
 package jeu.configuration;
 
 import devintAPI.FenetreAbstraite;
+import devintAPI.Preferences;
 import jeu.MenuJeu;
 import jeu.configuration.selection.Selection;
 import jeu.configuration.selection.SelectionAvatar;
@@ -39,7 +40,8 @@ public class NouvelUtilisateur extends FenetreAbstraite {
         selection = new SelectionAvatar();
         selection.setModeMultiple(false);
         this.add(selection, BorderLayout.CENTER);
-        voix.playWav(wavAccueil());
+        voix.stop();
+        voix.playWav("../ressources/sons/menus/souris.wav");
     }
 
     @Override
@@ -70,6 +72,8 @@ public class NouvelUtilisateur extends FenetreAbstraite {
                 selection = new SelectionCouleurs();
                 this.add(selection);
                 revalidate();
+                voix.stop();
+                voix.playWav("../ressources/sons/menus/contraste.wav");
                 break;
             case COULEURS:
                 // on associe les couleurs choisies de l'utilisateur

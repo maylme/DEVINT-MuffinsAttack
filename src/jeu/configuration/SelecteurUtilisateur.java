@@ -14,7 +14,7 @@ import java.util.Collection;
  * @author Jean-Christophe Isoard
  */
 public class SelecteurUtilisateur extends FenetreAbstraite {
-    private Selection selection;
+    private SelectionUtilisateur selection;
 
     /**
      * @param title : titre de la fen�tre
