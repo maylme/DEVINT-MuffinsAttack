@@ -51,7 +51,7 @@ public class Monde extends JPanel {
         isStarted = true;
         timerGraphic.start();
         pause();
-        newMuffinPause(5);
+        newMuffinPause(7);
         jeu.wavRegleJeu();
     }
 

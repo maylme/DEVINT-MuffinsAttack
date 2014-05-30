@@ -172,6 +172,7 @@ public class Jeu extends FenetreAbstraite {
     // renvoie le fichier wave contenant la règle du jeu
     @Override
     protected String wavRegleJeu() {
+        voix.stop();
         jouerEnregistrement("debutjeu");
         jouerEnregistrementPause("tu_as_3_vies", 3);
         jouerEnregistrementPause("reentendre_lettre_espace", 4);
@@ -180,6 +181,7 @@ public class Jeu extends FenetreAbstraite {
 
     // renvoie le fichier wave contenant l'aide du jeu
     protected String wavAide() {
+        voix.stop();
         if (!monde.getStarted()) {
             return "../ressources/sons/jeu/espace_pour_demarrer.wav";
         } else {
